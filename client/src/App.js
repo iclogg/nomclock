@@ -7,8 +7,9 @@ import {
     Switch,
 } from "react-router-dom";
 
-import Pet from "./pets/pages/Pet";
-import NewPet from "./pets/pages/NewPet";
+import Pet from "./pets/Pet";
+import NewPet from "./pets/NewPet";
+import User from "./users/User";
 
 function App() {
     return (
@@ -19,6 +20,9 @@ function App() {
                 </Route>
                 <Route path="/pets/new" exact>
                     <NewPet />
+                </Route>
+                <Route path="/user" exact>
+                    <User />
                 </Route>
                 <Redirect to="/" />
             </Switch>
