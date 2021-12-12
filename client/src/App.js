@@ -1,7 +1,15 @@
+import React from "react";
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
+
+import Pet from "./pets/pages/Pet";
 
 function App() {
-    return <div className="App"></div>;
+    return (
+        <Routes>
+            <Route path="/" element={<Pet />} />
+        </Routes>
+    );
 }
 
 export default App;
