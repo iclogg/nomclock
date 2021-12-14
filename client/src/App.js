@@ -9,24 +9,37 @@ import {
 
 import Pet from "./pets/Pet";
 import NewPet from "./pets/NewPet";
+import UpdatePet from "./pets/UpdatePet";
 import User from "./users/User";
+import Welcome from "./info/Welcome";
+import Navbar from "./shared/Navbar";
 
 function App() {
     return (
-        <Router>
-            <Switch>
-                <Route path="/" exact>
-                    <Pet />
-                </Route>
-                <Route path="/pets/new" exact>
-                    <NewPet />
-                </Route>
-                <Route path="/user" exact>
-                    <User />
-                </Route>
-                <Redirect to="/" />
-            </Switch>
-        </Router>
+        <>
+            <Router>
+                <Switch>
+                    <Route path="/" exact>
+                        <Welcome />
+                    </Route>
+                    <Route path="/pets/new" exact>
+                        <NewPet />
+                    </Route>
+                    <Route path="/pets/:id/update" exact>
+                        <UpdatePet />
+                    </Route>
+                    <Route path="/pets/:id" exact>
+                        <Pet />
+                    </Route>
+                    <Route path="/user" exact>
+                        <User />
+                    </Route>
+                    <Redirect to="/" />
+                </Switch>
+                <hr />
+                <Navbar />
+            </Router>
+        </>
     );
 }
 
