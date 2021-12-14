@@ -4,11 +4,16 @@ export const formReducer = (state, action) => {
     switch (action.type) {
         case "INPUT_CHANGE":
             let formIsValid = true;
+            let formIsValidCount = 1;
             for (const inputId in state.inputs) {
                 if (inputId === action.inputId) {
                     formIsValid = formIsValid && action.isValid;
+
+                    formIsValidCount += 1;
                 } else {
                     formIsValid = formIsValid && state.inputs[inputId].isValid;
+
+                    formIsValidCount += 1;
                 }
             }
             return {
@@ -23,5 +28,6 @@ export const formReducer = (state, action) => {
                 isValid: formIsValid,
             };
         default:
+            return state;
     }
 };
