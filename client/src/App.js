@@ -25,10 +25,10 @@ function App() {
                     <Route path="/pets/new" exact>
                         <NewPet />
                     </Route>
-                    <Route path="/pets/:id/update" exact>
+                    <Route path="/pets/:petId/update" exact>
                         <UpdatePet />
                     </Route>
-                    <Route path="/pets/:id" exact>
+                    <Route path="/pets/:petId" exact>
                         <Pet />
                     </Route>
                     <Route path="/user" exact>

@@ -1,14 +1,14 @@
-import React, { useCallback, useReducer } from "react";
+import React from "react";
 
 import Input from "../shared/Input";
 import Button from "../shared/Button";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
 
-import { formReducer } from "../utils/form-hooks";
+import { useForm } from "../utils/form-hooks";
 
 const NewPet = () => {
-    const [formState, dispatch] = useReducer(formReducer, {
-        inputs: {
+    const [formState, inputHandler] = useForm(
+        {
             name: {
                 value: "",
                 isValid: false,
@@ -17,18 +17,13 @@ const NewPet = () => {
                 value: "",
                 isValid: false,
             },
+            maxMeals: {
+                value: 1,
+                isValid: false,
+            },
         },
-        isValid: false,
-    });
-
-    const inputHandler = useCallback((id, value, isValid) => {
-        dispatch({
-            type: "INPUT_CHANGE",
-            value: value,
-            isValid: isValid,
-            inputId: id,
-        });
-    }, []);
+        false
+    );
 
     const submitHandler = (e) => {
         e.preventDefault();

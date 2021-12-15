@@ -1,5 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
+
+/* TODO create dynamic routing based on pet and user id*/
 
 const NavBar = (props) => {
     return (
@@ -14,10 +16,10 @@ const NavBar = (props) => {
             </li>
 
             <li>
-                <NavLink to="/pets/:id/update">Update Pet Pet</NavLink>
+                <NavLink to="/pets/INSERTID/update">Update Pet</NavLink>
             </li>
             <li>
-                <NavLink to="/pets/:id">Pet's own Page</NavLink>
+                <NavLink to="/pets/INSERTID">Pet's own Page</NavLink>
             </li>
             <li>
                 <NavLink to="/user">Your Page</NavLink>

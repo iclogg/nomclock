@@ -4,12 +4,13 @@ import Avatar from "../shared/Avatar";
 import "./Pet.css";
 
 const Pet = () => {
+    /* TODO remove dummy pet once backen is up */
     const PET = {
         id: "pet1",
         name: "Lucifer",
         image: "/lucifer.png",
         description: "Best kitten EVER!!!!",
-        maxMeals: "three",
+        maxMeals: 3,
     };
     return (
         <div className="pet">
