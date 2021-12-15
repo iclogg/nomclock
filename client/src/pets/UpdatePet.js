@@ -114,19 +114,3 @@ const UpdatePet = () => {
 };
 
 export default UpdatePet;
-
-/*  {
-            name: {
-                value: PET.name,
-                isValid: true,
-            },
-            description: {
-                value: PET.description,
-                isValid: true,
-            },
-            maxMeals: {
-                value: PET.maxMeals,
-                isValid: true,
-            },
-        },
-        true */
