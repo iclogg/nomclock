@@ -1,7 +1,7 @@
 const HttpError = require("../models/http-error");
 
 /* TODO remove dummy pet once backen is up */
-const PETS = [
+let PETS = [
     {
         id: "pet1",
         name: "Lucifer",
@@ -49,5 +49,13 @@ const createPet = (req, res, next) => {
     res.status(201).json(createdPet);
 };
 
+const deletePet = (req, res, next) => {
+    const petId = req.params.petId;
+
+    PETS = PETS.filter((pet) => pet.id !== petId);
+    res.status(202).json(PETS);
+};
+
 exports.getPetById = getPetById;
 exports.createPet = createPet;
+exports.deletePet = deletePet;
