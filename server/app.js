@@ -12,8 +12,6 @@ app.use("/api/pets", petRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {
-    console.log("in error handler");
-
     if (res.headerSent) {
         return next(err);
     }
