@@ -2,6 +2,8 @@ const express = require("express");
 
 const petRoutes = require("./routes/pet-routes");
 
+const HttpError = require("./models/http-error");
+
 const app = express();
 
 // Middleware
@@ -10,14 +12,20 @@ app.use(express.json());
 // Routes
 app.use("/api/pets", petRoutes);
 
+app.use((req, res, next) => {
+    const error = new HttpError("Page not found.", 404);
+    throw error;
+});
+
 // Error handling
-app.use((err, req, res, next) => {
+
+app.use((error, req, res, next) => {
     if (res.headerSent) {
-        return next(err);
+        return next(error);
     }
 
-    res.status(err.code || 500);
-    res.json({ message: err.message || "An unknow error happened." });
+    res.status(error.code || 500);
+    res.json({ message: error.message || "An unknow error happened." });
 });
 
 // set port and start server
