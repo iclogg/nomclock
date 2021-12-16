@@ -12,6 +12,7 @@ app.use(express.json());
 // Routes
 app.use("/api/pets", petRoutes);
 
+//Catch all middleware
 app.use((req, res, next) => {
     const error = new HttpError("Page not found.", 404);
     throw error;
