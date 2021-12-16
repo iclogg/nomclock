@@ -18,6 +18,9 @@ const PETS = [
     },
 ];
 
+// TODO add package (or use mongodb? to create unique ids) uuid v4 perhaps?
+let idCount = 2;
+
 const getPetById = (req, res, next) => {
     const petId = req.params.petId;
     const pet = PETS.find((p) => {
@@ -30,4 +33,21 @@ const getPetById = (req, res, next) => {
     res.json({ pet });
 };
 
+const createPet = (req, res, next) => {
+    const { name, description, maxMeals, image } = req.body;
+
+    idCount += 1;
+    const createdPet = {
+        id: `pet${idCount}`,
+        name,
+        description,
+        maxMeals,
+        image,
+    };
+
+    PETS.push(createdPet);
+    res.status(201).json(createdPet);
+};
+
 exports.getPetById = getPetById;
+exports.createPet = createPet;
