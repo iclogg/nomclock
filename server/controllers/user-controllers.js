@@ -21,7 +21,6 @@ let idCount = 2;
 // TODO add package (or use mongodb? to create unique ids) uuid v4 perhaps?
 
 /* READ */
-
 const getUserById = (req, res, next) => {
     const userId = req.params.userId;
     const user = USER.find((u) => u.id === userId);
@@ -34,7 +33,6 @@ const getUserById = (req, res, next) => {
 };
 
 /* CREATE */
-
 const createUser = (req, res, next) => {
     idCount += 1;
     const { name, email } = req.body;
@@ -49,9 +47,29 @@ const createUser = (req, res, next) => {
     res.status(201).json(createUser);
 };
 
+/* DELETE */
 const deleteUser = (req, res, next) => {
     userId = req.params.userId;
+    USERS = USERS.filter((u) => u.id !== userId);
+    res.status(200).json();
+};
+
+/* UPDATE */
+const updateUserDetails = (req, res, next) => {
+    const userId = req.params.userId;
+    const { name, email } = req.body;
+
+    const updatedUser = { ...USERS.find((user) => user.id === userId) };
+    const index = USERS.findIndex((user) => user.id === userId);
+
+    updatedUser.name = name;
+    updatedUser.email = email;
+
+    USERS[index] = updatedUser;
+
+    res.status(200).json({ user: updatedUser });
 };
 
 exports.getUserById = getUserById;
 exports.createUser = createUser;
+exports.deleteUser = deleteUser;
