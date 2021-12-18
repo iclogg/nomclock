@@ -31,7 +31,7 @@ function App() {
                     <Route path="/pets/:petId" exact>
                         <Pet />
                     </Route>
-                    <Route path="/user" exact>
+                    <Route path="/user/:userId" exact>
                         <User />
                     </Route>
                     <Redirect to="/" />

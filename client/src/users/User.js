@@ -2,6 +2,7 @@ import React from "react";
 import PetsList from "../pets/PetsList";
 
 const User = () => {
+    /* TODO remove dummy pet and fetch from backend */
     const PETS = [{ id: "pet1", name: "Lucifer", image: "/lucifer.png" }];
 
     return (

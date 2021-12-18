@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 
 /* TODO create dynamic routing based on pet and user id*/
 
+/* TODO add logic to display appropriate links depending on auth status */
+
 const NavBar = (props) => {
     return (
         <ul>
@@ -12,17 +14,39 @@ const NavBar = (props) => {
                 </NavLink>
             </li>
             <li>
-                <NavLink to="/pets/new">Add Pet</NavLink>
-            </li>
-
-            <li>
-                <NavLink to="/pets/INSERTID/update">Update Pet</NavLink>
+                <NavLink to="/pets/new" exact>
+                    Add Pet
+                </NavLink>
             </li>
             <li>
-                <NavLink to="/pets/INSERTID">Pet's own Page</NavLink>
+                <NavLink to="/pets/:petId/update" exact>
+                    Update Pet
+                </NavLink>
             </li>
             <li>
-                <NavLink to="/user">Your Page</NavLink>
+                <NavLink to="/pets/:petId" exact>
+                    Pet's own Page
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to="/user/:userId" exact>
+                    Your Page
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to="/user/new" exact>
+                    Create Account
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to="/user/logout" exact>
+                    Logout
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to="/user/login" exact>
+                    Login
+                </NavLink>
             </li>
         </ul>
     );

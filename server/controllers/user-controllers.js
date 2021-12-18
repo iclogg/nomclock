@@ -19,6 +19,7 @@ let USERS = [
 let idCount = 2;
 
 // TODO add package (or use mongodb? to create unique ids) uuid v4 perhaps?
+
 /* READ */
 
 const getUserById = (req, res, next) => {
@@ -48,5 +49,9 @@ const createUser = (req, res, next) => {
     res.status(201).json(createUser);
 };
 
-exports.createUser = getUserById;
-exports.createUser = getUserById;
+const deleteUser = (req, res, next) => {
+    userId = req.params.userId;
+};
+
+exports.getUserById = getUserById;
+exports.createUser = createUser;
