@@ -21,6 +21,8 @@ let idCount = 2;
 // TODO add package (or use mongodb? to create unique ids) uuid v4 perhaps?
 
 /* READ */
+// TODO Add login logic based on email and password. consider password library passport (local mongoose).
+// TODO Reconsider naming routes login and logout instead
 const getUserById = (req, res, next) => {
     const userId = req.params.userId;
     const user = USER.find((u) => u.id === userId);
