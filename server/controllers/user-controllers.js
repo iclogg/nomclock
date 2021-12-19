@@ -73,3 +73,4 @@ const updateUserDetails = (req, res, next) => {
 exports.getUserById = getUserById;
 exports.createUser = createUser;
 exports.deleteUser = deleteUser;
+exports.updateUserDetails = updateUserDetails;
