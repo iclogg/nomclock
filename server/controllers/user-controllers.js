@@ -1,4 +1,5 @@
 const HttpError = require("../models/http-error");
+const { validationResult } = require("express-validator");
 
 /* TODO remove dummy user once backen is up */
 
@@ -36,6 +37,11 @@ const getUserById = (req, res, next) => {
 
 /* CREATE */
 const createUser = (req, res, next) => {
+    const error = validationResult(req);
+    if (error) {
+        throw new HttpError("Invalid inputs passed, plase check data", 422);
+    }
+
     idCount += 1;
     const { name, email } = req.body;
 
@@ -58,6 +64,11 @@ const deleteUser = (req, res, next) => {
 
 /* UPDATE */
 const updateUserDetails = (req, res, next) => {
+    const error = validationResult(req);
+    if (error) {
+        throw new HttpError("Invalid inputs passed, plase check data", 422);
+    }
+
     const userId = req.params.userId;
     const { name, email } = req.body;
 
