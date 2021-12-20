@@ -20,6 +20,7 @@ app.use((req, res, next) => {
 });
 
 // Error handling
+/* TODO decide if use package for error handling. perhaps connect-flash */
 
 app.use((error, req, res, next) => {
     if (res.headerSent) {

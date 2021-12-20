@@ -12,7 +12,6 @@ const {
 router.get("/:userId", getUserById);
 router.delete("/:userId", deleteUser);
 router.patch("/:userId", updateUserDetails);
-
 router.post("/", createUser);
 
 module.exports = router;
