@@ -67,6 +67,11 @@ const deletePet = (req, res, next) => {
 
 /* UPDATE */
 const updatePet = (req, res, next) => {
+    const error = validationResult(req);
+    if (error) {
+        throw new HttpError("Invalid inputs passed, plase check data", 422);
+    }
+
     const petId = req.params.petId;
     const { name, description, maxMeals, image } = req.body;
 

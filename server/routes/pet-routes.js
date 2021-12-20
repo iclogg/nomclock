@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/:petId", getPetById);
 router.delete("/:petId", deletePet);
-router.patch("/:petId", updatePet);
+router.patch("/:petId", [check("name").not().isEmpty()], updatePet);
 
 router.post("/", [check("name").not().isEmpty()], createPet);
 
