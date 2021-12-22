@@ -36,7 +36,7 @@ app.use((error, req, res, next) => {
 const port = process.env.PORT || 5000;
 
 mongoose
-    .connect()
+    .connect(require("./secrets.json").mogostr)
     .then(() => {
         app.listen(port, () => {
             console.log(`Serving on port ${port}`);
