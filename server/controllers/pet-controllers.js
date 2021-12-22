@@ -24,16 +24,22 @@ let PETS = [
 let idCount = 2;
 
 /* READ */
-const getPetById = (req, res, next) => {
+const getPetById = async (req, res, next) => {
     const petId = req.params.petId;
-    const pet = PETS.find((p) => {
-        return p.id === petId;
-    });
+
+    let pet;
+    try {
+        pet = await Pet.findById(petId);
+    } catch (err) {
+        const error = new HttpError("Could not fond that pet!", 500);
+        return next(error);
+    }
+
     if (!pet) {
         return next(new HttpError("Could not find that pet!", 404));
     }
 
-    res.json({ pet });
+    res.json({ pet: pet.toObject({ getters: true }) });
 };
 
 /* CREATE */
