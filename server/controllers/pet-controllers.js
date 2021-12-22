@@ -1,5 +1,6 @@
 const HttpError = require("../models/http-error");
 const { validationResult } = require("express-validator");
+const Pet = require("../models/pet");
 
 /* TODO remove dummy pet once backen is up */
 let PETS = [
@@ -37,23 +38,28 @@ const getPetById = (req, res, next) => {
 
 /* CREATE */
 /* TODO check if express validator check and validation result can be moved into their own middleware file and if there is best practise around that */
-const createPet = (req, res, next) => {
+const createPet = async (req, res, next) => {
     const error = validationResult(req);
-    if (error) {
-        throw new HttpError("Invalid inputs passed, plase check data", 422);
+    if (!error.isEmpty()) {
+        return next(
+            new HttpError("Invalid inputs passed, plase check data", 422)
+        );
     }
     const { name, description, maxMeals, image } = req.body;
 
-    idCount += 1;
-    const createdPet = {
-        id: `pet${idCount}`,
+    const createdPet = new Pet({
         name,
         description,
         maxMeals,
         image,
-    };
+    });
+    try {
+        await createdPet.save();
+    } catch (err) {
+        const error = new HttpError("Create pet failed", 500);
+        return next(error);
+    }
 
-    PETS.push(createdPet);
     res.status(201).json(createdPet);
 };
 
