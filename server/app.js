@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 
 const petRoutes = require("./routes/pet-routes");
 const userRoutes = require("./routes/user-routes");
@@ -31,8 +32,16 @@ app.use((error, req, res, next) => {
     res.json({ message: error.message || "An unknow error happened." });
 });
 
-// set port and start server
+// set port and start server, connect to database
 const port = process.env.PORT || 5000;
-app.listen(port, () => {
-    console.log(`Serving on port ${port}`);
-});
+
+mongoose
+    .connect()
+    .then(() => {
+        app.listen(port, () => {
+            console.log(`Serving on port ${port}`);
+        });
+    })
+    .catch((err) => {
+        console.log("error db connection:", err);
+    });
