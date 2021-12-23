@@ -1,4 +1,4 @@
-let PETS = [
+PETS = [
     {
         id: "pet1",
         name: "Lucifer",
