@@ -1,0 +1,16 @@
+let PETS = [
+    {
+        id: "pet1",
+        name: "Lucifer",
+        image: "/lucifer.png",
+        description: "Best kitten EVER!!!!",
+        maxMeals: 3,
+    },
+    {
+        id: "pet2",
+        name: "Mumman",
+        image: "/lucifer.png",
+        description: "Absolutely most superior kitten EVER!!!!",
+        maxMeals: 6,
+    },
+];

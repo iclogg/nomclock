@@ -2,24 +2,6 @@ const HttpError = require("../models/http-error");
 const { validationResult } = require("express-validator");
 const Pet = require("../models/pet");
 
-/* TODO remove dummy pet once backen is up */
-let PETS = [
-    {
-        id: "pet1",
-        name: "Lucifer",
-        image: "/lucifer.png",
-        description: "Best kitten EVER!!!!",
-        maxMeals: 3,
-    },
-    {
-        id: "pet2",
-        name: "Mumman",
-        image: "/lucifer.png",
-        description: "Absolutely most superior kitten EVER!!!!",
-        maxMeals: 6,
-    },
-];
-
 // TODO add package (or use mongodb? to create unique ids) uuid v4 perhaps?
 
 // TODO research and implement error handling options
@@ -71,11 +53,20 @@ const createPet = async (req, res, next) => {
 };
 
 /* DELETE */
-const deletePet = (req, res, next) => {
+const deletePet = async (req, res, next) => {
     const petId = req.params.petId;
+    let pet;
+    try {
+        pet = await Pet.findByIdAndDelete(petId);
+    } catch (err) {
+        const error = new HttpError(
+            "Something went wrong. Pet not deleted",
+            500
+        );
+        return next(error);
+    }
 
-    PETS = PETS.filter((pet) => pet.id !== petId);
-    res.status(200).json();
+    res.status(200).json({ message: "Pet deleted" });
 };
 
 /* UPDATE */
