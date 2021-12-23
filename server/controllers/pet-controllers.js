@@ -21,7 +21,8 @@ let PETS = [
 ];
 
 // TODO add package (or use mongodb? to create unique ids) uuid v4 perhaps?
-let idCount = 2;
+
+// TODO research and implement error handling options
 
 /* READ */
 const getPetById = async (req, res, next) => {
@@ -31,7 +32,7 @@ const getPetById = async (req, res, next) => {
     try {
         pet = await Pet.findById(petId);
     } catch (err) {
-        const error = new HttpError("Could not fond that pet!", 500);
+        const error = new HttpError("Could not find that pet!", 500);
         return next(error);
     }
 
@@ -78,26 +79,41 @@ const deletePet = (req, res, next) => {
 };
 
 /* UPDATE */
-const updatePet = (req, res, next) => {
+const updatePet = async (req, res, next) => {
     const error = validationResult(req);
-    if (error) {
-        throw new HttpError("Invalid inputs passed, plase check data", 422);
+    if (!error.isEmpty()) {
+        return next(
+            new HttpError("Invalid inputs passed, plase check data", 422)
+        );
     }
 
     const petId = req.params.petId;
     const { name, description, maxMeals, image } = req.body;
 
-    const updatedPet = { ...PETS.find((pet) => pet.id === petId) };
-    const index = PETS.findIndex((pet) => pet.id === petId);
+    let pet;
+    try {
+        pet = await Pet.findById(petId);
+    } catch (err) {
+        const error = new HttpError("Something whent wrong", 500);
+        return next(error);
+    }
 
-    updatedPet.name = name;
-    updatedPet.description = description;
-    updatedPet.maxMeals = maxMeals;
-    updatedPet.image = image;
+    pet.name = name;
+    pet.description = description;
+    pet.maxMeals = maxMeals;
+    pet.image = image;
 
-    PETS[index] = updatedPet;
+    try {
+        await pet.save();
+    } catch (err) {
+        const error = new HttpError(
+            "Something went wrong. Pet could not be updated.",
+            500
+        );
+        return next(error);
+    }
 
-    res.status(200).json({ pet: updatedPet });
+    res.status(200).json({ pet: pet.toObject({ getters: true }) });
 };
 
 /* EXPORTS */
