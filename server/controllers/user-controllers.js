@@ -1,5 +1,7 @@
-const HttpError = require("../models/http-error");
 const { validationResult } = require("express-validator");
+
+const HttpError = require("../models/http-error");
+const User = require("../models/user");
 
 /* TODO remove dummy user once backen is up */
 
@@ -36,23 +38,46 @@ const getUserById = (req, res, next) => {
 };
 
 /* CREATE */
-const createUser = (req, res, next) => {
+const createUser = async (req, res, next) => {
     const error = validationResult(req);
     if (error) {
         throw new HttpError("Invalid inputs passed, plase check data", 422);
     }
 
-    idCount += 1;
     const { name, email } = req.body;
 
-    const createdUser = {
-        id: idCount,
+    let exsitingUser;
+    try {
+        exsitingUser = await User.findOne({ email: email });
+    } catch (err) {
+        const error = new HttpError(
+            "Signup failed. Please try again later.",
+            500
+        );
+        return next(error);
+    }
+
+    if (exsitingUser) {
+        const error = new HttpError("User already exists.", 422);
+        return next(error);
+    }
+
+    const createdUser = new User({
         name,
         email,
-    };
-
-    USERS.push(createdUser);
-    res.status(201).json(createUser);
+        password: "dummypw",
+    });
+    try {
+        await createdUser.save();
+    } catch (err) {
+        const error = new HttpError(
+            "Signup failed. Please try again later.",
+            500
+        );
+        return next(error);
+    }
+    /* TODO! obs return now includes dummy pw */
+    res.status(201).json(createdUser.toObject({ getters: true }));
 };
 
 /* DELETE */
