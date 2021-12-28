@@ -1,6 +1,8 @@
 const HttpError = require("../models/http-error");
 const { validationResult } = require("express-validator");
 const Pet = require("../models/pet");
+const User = require("../models/user");
+const mongoose = require("mongoose");
 
 // TODO add package (or use mongodb? to create unique ids) uuid v4 perhaps?
 
@@ -34,19 +36,42 @@ const createPet = async (req, res, next) => {
             new HttpError("Invalid inputs passed, plase check data", 422)
         );
     }
-    const { name, description, maxMeals, image } = req.body;
+    const { name, description, maxMeals, image, ownerId } = req.body;
 
     const createdPet = new Pet({
         name,
         description,
         maxMeals,
         image,
+        ownerId,
     });
+
+    let owner;
     try {
-        await createdPet.save();
+        owner = await User.findById(ownerId);
     } catch (err) {
         const error = new HttpError("Create pet failed", 500);
+
         return next(error);
+    }
+
+    if (!owner) {
+        const error = new HttpError("Could not find owner.", 404);
+        return next(error);
+    }
+
+    try {
+        const sess = await mongoose.startSession();
+        sess.startTransaction();
+        await createdPet.save({ session: sess });
+
+        owner.pets.push(createdPet); //mongoose behind the scenes established the connection and saves only the id is saved to mpngo db
+        await owner.save({ session: sess });
+        await sess.commitTransaction();
+    } catch (err) {
+        const error = new HttpError("Create pet failed", 500);
+
+        return next(err);
     }
 
     res.status(201).json(createdPet);

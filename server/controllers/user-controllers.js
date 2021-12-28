@@ -124,7 +124,6 @@ const updateUserDetails = async (req, res, next) => {
         );
         return next(error);
     }
-    console.log(updatedUser);
 
     res.status(200).json(updatedUser);
 };
