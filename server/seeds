@@ -14,3 +14,17 @@ PETS = [
         maxMeals: 6,
     },
 ];
+
+USERS = [
+    {
+        id: "u1",
+        name: "Julismund",
+        email: "julismund@notanemail.com",
+        pets: ["pet1"],
+    },
+    {
+        name: "Mundus",
+        email: "mundus@notanemail.com",
+        pets: ["pet2"],
+    },
+];

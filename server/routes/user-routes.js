@@ -4,13 +4,13 @@ const { check } = require("express-validator");
 const router = express.Router();
 
 const {
-    getUserById,
+    login,
     createUser,
     deleteUser,
     updateUserDetails,
 } = require("../controllers/user-controllers");
 
-router.get("/:userId", getUserById);
+router.get("/login", login);
 router.delete("/:userId", deleteUser);
 router.patch(
     "/:userId",

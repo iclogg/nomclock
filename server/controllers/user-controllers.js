@@ -3,45 +3,44 @@ const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
 
-/* TODO remove dummy user once backen is up */
-
-let USERS = [
-    {
-        id: "u1",
-        name: "Julismund",
-        email: "julismund@notanemail.com",
-        pets: ["pet1"],
-    },
-    {
-        name: "Mundus",
-        email: "mundus@notanemail.com",
-        pets: ["pet2"],
-    },
-];
-
-let idCount = 2;
-
-// TODO add package (or use mongodb? to create unique ids) uuid v4 perhaps?
+/* TODO check that all status codes are correct after copy pasting */
+// TODO add package (or keep using mongodb? to create unique ids) uuid v4 perhaps?
 
 /* READ */
-// TODO Add login logic based on email and password. consider password library passport (local mongoose).
-// TODO Reconsider naming routes login and logout instead
-const getUserById = (req, res, next) => {
-    const userId = req.params.userId;
-    const user = USER.find((u) => u.id === userId);
+// TODO consider password library passport (local mongoose).
+// TODO Create logout route
+const login = async (req, res, next) => {
+    const { password, email } = req.body;
 
-    if (!user) {
-        return next(new HttpError("No user found.", 404));
+    let exsitingUser;
+
+    try {
+        exsitingUser = await User.findOne({ email: email });
+    } catch (err) {
+        const error = new HttpError(
+            "Login failed. Please try again later.",
+            500
+        );
+        return next(error);
     }
 
-    res.status(200).json(user);
+    if (!exsitingUser || exsitingUser.password !== password) {
+        return next(new HttpError("No user found.", 401));
+    }
+
+    /* TODO! obs return now includes dummy pw */
+    res.status(200).json(exsitingUser);
 };
 
 /* CREATE */
 const createUser = async (req, res, next) => {
     const error = validationResult(req);
-    if (error) {
-        throw new HttpError("Invalid inputs passed, plase check data", 422);
+    if (!error.isEmpty()) {
+        const error = new HttpError(
+            "Invalid inputs passed, please check data",
+            422
+        );
+        return next(error);
     }
 
     const { name, email } = req.body;
@@ -81,34 +80,56 @@ const createUser = async (req, res, next) => {
 };
 
 /* DELETE */
-const deleteUser = (req, res, next) => {
+const deleteUser = async (req, res, next) => {
     userId = req.params.userId;
-    USERS = USERS.filter((u) => u.id !== userId);
-    res.status(200).json();
+    let user;
+    try {
+        user = await User.findByIdAndDelete({ userId });
+    } catch (err) {
+        const error = new HttpError(
+            "Something went wrong. User not deleted",
+            500
+        );
+        return next(error);
+    }
+
+    res.status(200).json({ message: "User deleted" });
 };
 
 /* UPDATE */
-const updateUserDetails = (req, res, next) => {
+const updateUserDetails = async (req, res, next) => {
     const error = validationResult(req);
-    if (error) {
-        throw new HttpError("Invalid inputs passed, plase check data", 422);
+    if (!error.isEmpty()) {
+        const error = HttpError(
+            "Invalid inputs passed, please check data",
+            422
+        );
+        return next(error);
     }
 
     const userId = req.params.userId;
     const { name, email } = req.body;
 
-    const updatedUser = { ...USERS.find((user) => user.id === userId) };
-    const index = USERS.findIndex((user) => user.id === userId);
+    let updatedUser;
+    try {
+        updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { name, email },
+            { new: true }
+        );
+    } catch (err) {
+        const error = new HttpError(
+            "Something went wrong. User not updated",
+            500
+        );
+        return next(error);
+    }
+    console.log(updatedUser);
 
-    updatedUser.name = name;
-    updatedUser.email = email;
-
-    USERS[index] = updatedUser;
-
-    res.status(200).json({ user: updatedUser });
+    res.status(200).json(updatedUser);
 };
 
-exports.getUserById = getUserById;
+exports.login = login;
 exports.createUser = createUser;
 exports.deleteUser = deleteUser;
 exports.updateUserDetails = updateUserDetails;
