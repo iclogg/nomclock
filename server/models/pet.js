@@ -6,7 +6,7 @@ const petSchema = new Schema({
     description: { type: String },
     image: { type: String, default: "/lucifer.png" },
     maxMeals: { type: Number, min: 1, default: 2 },
-    ownerId: { type: mongoose.Types.ObjectId, ref: "User", required: true },
+    owner: { type: mongoose.Types.ObjectId, ref: "User", required: true },
     family: [{ type: mongoose.Types.ObjectId, ref: "User" }],
 });
 

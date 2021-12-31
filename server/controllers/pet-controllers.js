@@ -14,7 +14,7 @@ const getPetById = async (req, res, next) => {
 
     let pet;
     try {
-        pet = await Pet.findById(petId);
+        pet = await Pet.findById(petId).populate("owner");
     } catch (err) {
         const error = new HttpError("Could not find that pet!", 500);
         return next(error);
@@ -43,7 +43,7 @@ const createPet = async (req, res, next) => {
         description,
         maxMeals,
         image,
-        ownerId,
+        owner: ownerId,
     });
 
     let owner;
@@ -81,8 +81,35 @@ const createPet = async (req, res, next) => {
 const deletePet = async (req, res, next) => {
     const petId = req.params.petId;
     let pet;
+
     try {
-        pet = await Pet.findByIdAndDelete(petId);
+        pet = await Pet.findById(petId).populate("owner");
+    } catch (err) {
+        const error = new HttpError(
+            "Something went wrong. Pet not deleted",
+            500
+        );
+        return next(error);
+    }
+
+    if (!pet) {
+        const error = new HttpError(
+            "Something went wrong. Could not find pet to be deleted",
+            404
+        );
+        return next(error);
+    }
+
+    try {
+        const sess = await mongoose.startSession();
+        sess.startTransaction();
+
+        await pet.remove({ session: sess });
+
+        pet.owner.pets.pull(pet);
+        await pet.owner.save({ session: sess });
+
+        await sess.commitTransaction();
     } catch (err) {
         const error = new HttpError(
             "Something went wrong. Pet not deleted",
@@ -95,6 +122,7 @@ const deletePet = async (req, res, next) => {
 };
 
 /* UPDATE */
+/* TODO Ad change owner to change owner */
 const updatePet = async (req, res, next) => {
     const error = validationResult(req);
     if (!error.isEmpty()) {
