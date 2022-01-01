@@ -1,7 +1,9 @@
 const { validationResult } = require("express-validator");
+const mongoose = require("mongoose");
 
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
+const Pet = require("../models/pet");
 
 /* TODO check that all status codes are correct after copy pasting */
 // TODO add package (or keep using mongodb? to create unique ids) uuid v4 perhaps?
@@ -84,13 +86,42 @@ const deleteUser = async (req, res, next) => {
     userId = req.params.userId;
     let user;
     try {
-        user = await User.findByIdAndDelete({ userId });
+        user = await User.findById(userId).populate("pets");
     } catch (err) {
         const error = new HttpError(
             "Something went wrong. User not deleted",
             500
         );
         return next(error);
+    }
+
+    if (!user) {
+        const error = new HttpError(
+            "Something went wrong. Could not find user to be deleted",
+            404
+        );
+        return next(error);
+    }
+
+    try {
+        const sess = await mongoose.startSession();
+        sess.startTransaction();
+
+        const deletedPetsN = await Pet.deleteMany(
+            { owner: user._id },
+            { session: sess }
+        );
+        console.log(deletedPetsN);
+
+        await user.remove({ session: sess });
+
+        await sess.commitTransaction();
+    } catch (err) {
+        const error = new HttpError(
+            "Something went wrong. User not deleted",
+            500
+        );
+        return next(err);
     }
 
     res.status(200).json({ message: "User deleted" });

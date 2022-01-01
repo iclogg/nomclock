@@ -31,11 +31,13 @@ const getPetById = async (req, res, next) => {
 /* TODO check if express validator check and validation result can be moved into their own middleware file and if there is best practise around that */
 const createPet = async (req, res, next) => {
     const error = validationResult(req);
+
     if (!error.isEmpty()) {
         return next(
             new HttpError("Invalid inputs passed, plase check data", 422)
         );
     }
+
     const { name, description, maxMeals, image, ownerId } = req.body;
 
     const createdPet = new Pet({
@@ -65,8 +67,10 @@ const createPet = async (req, res, next) => {
         sess.startTransaction();
         await createdPet.save({ session: sess });
 
-        owner.pets.push(createdPet); //mongoose behind the scenes established the connection and saves only the id is saved to mpngo db
+        owner.pets.push(createdPet); //mongoose behind the scenes established the connection and saves only the id is saved to mpngo
+
         await owner.save({ session: sess });
+
         await sess.commitTransaction();
     } catch (err) {
         const error = new HttpError("Create pet failed", 500);
