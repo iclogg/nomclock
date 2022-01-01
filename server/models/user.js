@@ -10,6 +10,8 @@ const userSchema = new Schema({
 });
 
 /* TODO look up what happens with error in unique validator if email is not unique */
-userSchema.plugin(uniqueValidator);
+/* TODO see if possible to find other validator package or fix mongoose bug  #131 */
 
+/* userSchema.plugin(uniqueValidator);
+ */
 module.exports = mongoose.model("User", userSchema);
