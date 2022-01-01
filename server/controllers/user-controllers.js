@@ -6,7 +6,6 @@ const User = require("../models/user");
 const Pet = require("../models/pet");
 
 /* TODO check that all status codes are correct after copy pasting */
-// TODO add package (or keep using mongodb? to create unique ids) uuid v4 perhaps?
 
 /* READ */
 // TODO consider password library passport (local mongoose).
@@ -85,6 +84,8 @@ const createUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
     userId = req.params.userId;
     let user;
+    //TODO consider using fidnbyidanddelete and and removing one trycatch block
+
     try {
         user = await User.findById(userId).populate("pets");
     } catch (err) {
