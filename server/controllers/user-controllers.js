@@ -43,6 +43,8 @@ const createUser = async (req, res, next) => {
         );
         return next(error);
     }
+    console.log("req.body", req.body);
+    console.log("req.params", req.params);
 
     const { name, email } = req.body;
 

@@ -35,7 +35,7 @@ const NavBar = (props) => {
             </li>
             <li>
                 <NavLink to="/user/new" exact>
-                    Create Account
+                    Sign up
                 </NavLink>
             </li>
             <li>

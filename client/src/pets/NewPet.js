@@ -18,7 +18,7 @@ const NewPet = () => {
                 isValid: false,
             },
             maxMeals: {
-                value: 1,
+                value: 2,
                 isValid: false,
             },
         },
