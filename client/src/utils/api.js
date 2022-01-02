@@ -6,11 +6,11 @@ const axios = baseAxios.create({
 
 //TODO check what needs to be added for security to axios instance
 
-export async function createUser(data) {
-    console.log("data:", data);
+export async function sendRequest(url, method = "GET", body = null) {
+    console.log("body:", body);
 
     try {
-        const response = await axios.post("/users", { ...data });
+        const response = await axios[method](url, { ...body });
     } catch (error) {
         console.error(error);
     }

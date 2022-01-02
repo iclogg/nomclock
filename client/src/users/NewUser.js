@@ -5,7 +5,7 @@ import Button from "../shared/Button";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
 
 import { useForm } from "../utils/form-hooks";
-import { createUser } from "../utils/api";
+import { sendRequest } from "../utils/api";
 
 const NewUser = () => {
     const [formState, inputHandler] = useForm(
@@ -28,15 +28,13 @@ const NewUser = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(formState.inputs); // send to Backend
-
         try {
-            await createUser({
+            await sendRequest("users", "post", {
                 email: formState.inputs.email.value,
                 name: formState.inputs.name.value,
                 password: formState.inputs.password.value,
             });
-            console.log();
+            /* TODO add automatic login here */
         } catch (error) {
             console.log(error);
         }
