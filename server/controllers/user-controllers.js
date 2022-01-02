@@ -35,18 +35,14 @@ const login = async (req, res, next) => {
 
 /* CREATE */
 const createUser = async (req, res, next) => {
-    console.log("in create user");
-
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
+    const err = validationResult(req);
+    if (!err.isEmpty()) {
         const error = new HttpError(
             "Invalid inputs passed, please check data",
             422
         );
         return next(error);
     }
-    console.log("req.body", req.body);
-    console.log("req.params", req.params);
 
     const { name, email } = req.body;
 

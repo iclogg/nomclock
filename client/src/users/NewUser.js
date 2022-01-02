@@ -31,7 +31,12 @@ const NewUser = () => {
         console.log(formState.inputs); // send to Backend
 
         try {
-            await createUser(formState.inputs);
+            await createUser({
+                email: formState.inputs.email.value,
+                name: formState.inputs.name.value,
+                password: formState.inputs.password.value,
+            });
+            console.log();
         } catch (error) {
             console.log(error);
         }

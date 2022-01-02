@@ -10,8 +10,7 @@ export async function createUser(data) {
     console.log("data:", data);
 
     try {
-        const response = await axios.post("/users", data);
-        console.log(response);
+        const response = await axios.post("/users", { ...data });
     } catch (error) {
         console.error(error);
     }
