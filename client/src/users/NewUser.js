@@ -26,9 +26,15 @@ const NewUser = () => {
         false
     );
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         console.log(formState.inputs); // send to Backend
+
+        try {
+            await createUser(formState.inputs);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (

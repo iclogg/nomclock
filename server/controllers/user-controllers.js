@@ -35,6 +35,8 @@ const login = async (req, res, next) => {
 
 /* CREATE */
 const createUser = async (req, res, next) => {
+    console.log("in create user");
+
     const error = validationResult(req);
     if (!error.isEmpty()) {
         const error = new HttpError(
