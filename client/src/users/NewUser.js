@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Input from "../shared/Input";
 import Button from "../shared/Button";
+import Loading from "../shared/Loading";
+
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
 
 import { useForm } from "../utils/form-hooks";
 import { sendRequest } from "../utils/api";
 
 const NewUser = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(false);
     const [formState, inputHandler] = useForm(
         {
             name: {
@@ -29,19 +33,27 @@ const NewUser = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
+            setIsLoading(true);
+
             await sendRequest("users", "post", {
                 email: formState.inputs.email.value,
                 name: formState.inputs.name.value,
                 password: formState.inputs.password.value,
             });
-            /* TODO add automatic login here */
+            setIsLoading(false);
+
+            /* TODO add automatic login here and redirect here */
         } catch (error) {
             console.log(error);
+            setIsLoading(false);
+
+            setError(error.message || "Something went wrong, please try again");
         }
     };
 
     return (
         <div>
+            {isLoading && <Loading />}
             <h2>Enter your details to sign up!</h2>
             <form action="" onSubmit={submitHandler}>
                 <Input

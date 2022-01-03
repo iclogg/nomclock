@@ -12,14 +12,12 @@ app.use(express.json());
 
 // TODO read up on this CORS Error Axios Request fix. Check for alternatives and what is secure
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Origin", "*");
     res.header(
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept"
     );
     res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
-
-    console.log(req.method);
 
     if (req.method == "OPTIONS") {
         res.status(200);
