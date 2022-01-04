@@ -8,15 +8,15 @@ const axios = baseAxios.create({
 
 //TODO add error handling
 
-//TODO
-
 export async function sendRequest(url, method = "GET", body = null) {
-    console.log("body:", body);
-
     try {
         const response = await axios[method](url, { ...body });
+        /* TODO check if I need to check response.ok and manually throw an error */
+        console.log(response);
+
         return response;
     } catch (error) {
-        console.error(error);
+        console.error("in api.js", error);
+        return error.response;
     }
 }

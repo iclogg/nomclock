@@ -1,5 +1,15 @@
 import React from "react";
 
-const Error = (message) => {
-    return <h1>{message}</h1>;
+import Overlay from "./Overlay";
+import Button from "./Button";
+
+const Error = (props) => {
+    return (
+        <Overlay className="overlay">
+            <h1>{props.message}</h1>
+            <Button></Button>
+        </Overlay>
+    );
 };
+
+export default Error;

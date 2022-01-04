@@ -10,7 +10,8 @@ const app = express();
 // Middleware
 app.use(express.json());
 
-// TODO read up on this CORS Error Axios Request fix. Check for alternatives and what is secure
+//CORS FIX
+//TODO read up on this CORS Error Axios Request fix. Check for alternatives and what is secure
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
@@ -41,6 +42,8 @@ app.use((req, res, next) => {
 /* TODO decide if use package for error handling. perhaps connect-flash */
 
 app.use((error, req, res, next) => {
+    console.log("in app error handler");
+
     if (res.headerSent) {
         return next(error);
     }
