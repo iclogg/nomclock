@@ -32,12 +32,12 @@ const Login = () => {
         try {
             setIsLoading(true);
 
-            const response = await sendRequest("users/login", "post", {
+            const response = await sendRequest("users/login", "get", {
                 email: formState.inputs.email.value,
                 password: formState.inputs.password.value,
             });
 
-            console.log(response);
+            console.log("response", response);
 
             if (response.statusText !== "OK ") {
                 setError(response.data.message);
@@ -45,10 +45,9 @@ const Login = () => {
 
             setIsLoading(false);
 
-            /* TODO add automatic login here and redirect here */
+            /* TODO add login here and redirect  */
         } catch (error) {
             setIsLoading(false);
-
             setError(error.message || "Something went wrong, please try again");
         }
     };
@@ -76,6 +75,7 @@ const Login = () => {
                     id="password"
                     element="input"
                     label="Password"
+                    validators=""
                     type="password"
                     errorText="Enter your password"
                     onInput={inputHandler}
