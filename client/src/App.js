@@ -14,6 +14,7 @@ import UpdatePet from "./pets/UpdatePet";
 import User from "./users/User";
 import Welcome from "./info/Welcome";
 import Navbar from "./shared/Navbar";
+import Login from "./users/Login";
 
 function App() {
     return (
@@ -34,6 +35,9 @@ function App() {
                     </Route>
                     <Route path="/user/new" exact>
                         <NewUser />
+                    </Route>
+                    <Route path="/user/login" exact>
+                        <Login />
                     </Route>
                     <Route path="/user/:userId" exact>
                         <User />
