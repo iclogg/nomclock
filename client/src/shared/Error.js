@@ -7,7 +7,7 @@ const Error = (props) => {
     return (
         <Overlay className="overlay">
             <h1>{props.message}</h1>
-            <Button></Button>
+            <Button onClick={props.onClick}>X</Button>
         </Overlay>
     );
 };

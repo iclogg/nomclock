@@ -58,10 +58,16 @@ const NewUser = () => {
         }
     };
 
+    const clearError = () => {
+        console.log("clearError");
+
+        setError("");
+    };
+
     return (
         <div>
             {isLoading && <Loading />}
-            {error && <Error message={error} />}
+            {error && <Error message={error} onClick={clearError} />}
             <h2>Enter your details to sign up!</h2>
             <form action="" onSubmit={submitHandler}>
                 <Input
