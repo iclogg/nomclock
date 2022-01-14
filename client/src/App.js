@@ -39,9 +39,11 @@ function App() {
                 <Route path="/" exact>
                     <Welcome />
                 </Route>
+
                 <Route path="/user/:userId" exact>
                     <User />
                 </Route>
+
                 <Route path="/pets/new" exact>
                     <NewPet />
                 </Route>

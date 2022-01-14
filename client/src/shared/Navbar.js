@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 
 import { AuthContext } from "../utils/auth-context";
 
+import Logout from "../users/Logout";
+
 /* TODO create dynamic routing based on pet and user id*/
 
 /* TODO add logic to display appropriate links depending on auth status */
@@ -17,7 +19,6 @@ const NavBar = (props) => {
                     Welcome Page
                 </NavLink>
             </li>
-
             {auth.isLoggedIn && (
                 <li>
                     <NavLink to="/pets/new" exact>
@@ -48,9 +49,7 @@ const NavBar = (props) => {
             )}
             {auth.isLoggedIn && (
                 <li>
-                    <NavLink to="/user/logout" exact>
-                        Logout
-                    </NavLink>
+                    <Logout />
                 </li>
             )}
             {!auth.isLoggedIn && (

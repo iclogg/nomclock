@@ -45,12 +45,9 @@ const Login = () => {
             if (response.statusText !== "OK") {
                 setError(response.data.message);
             } else {
+                setIsLoading(false);
                 auth.login();
             }
-
-            setIsLoading(false);
-
-            /* TODO add login here and redirect  */
         } catch (error) {
             setIsLoading(false);
             setError(error.message || "Something went wrong, please try again");
