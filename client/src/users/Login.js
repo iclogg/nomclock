@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import Input from "../shared/Input";
 import Button from "../shared/Button";
@@ -6,11 +6,14 @@ import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 
 import { VALIDATOR_REQUIRE } from "../utils/validators";
+import { AuthContext } from "../utils/auth-context";
 
 import { useForm } from "../utils/form-hooks";
 import { sendRequest } from "../utils/api";
 
 const Login = () => {
+    const auth = useContext(AuthContext);
+
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
     const [formState, inputHandler] = useForm(
@@ -39,8 +42,10 @@ const Login = () => {
 
             console.log("response", response);
 
-            if (response.statusText !== "OK ") {
+            if (response.statusText !== "OK") {
                 setError(response.data.message);
+            } else {
+                auth.login();
             }
 
             setIsLoading(false);
