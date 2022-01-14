@@ -39,8 +39,7 @@ function App() {
                 <Route path="/" exact>
                     <Welcome />
                 </Route>
-
-                <Route path="/user/:userId" exact>
+                <Route path="/user" exact>
                     <User />
                 </Route>
 

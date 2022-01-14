@@ -41,11 +41,11 @@ const Login = () => {
             });
 
             console.log("response", response);
+            setIsLoading(false);
 
             if (response.statusText !== "OK") {
                 setError(response.data.message);
             } else {
-                setIsLoading(false);
                 auth.login();
             }
         } catch (error) {

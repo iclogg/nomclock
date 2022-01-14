@@ -9,6 +9,8 @@ import Logout from "../users/Logout";
 
 /* TODO add logic to display appropriate links depending on auth status */
 
+/* TODO either set a favorite pet value for a user to have as a shortcut in navbar or remove link to a pet page in navbar */
+
 const NavBar = (props) => {
     const auth = useContext(AuthContext);
 
@@ -42,7 +44,7 @@ const NavBar = (props) => {
             )}
             {auth.isLoggedIn && (
                 <li>
-                    <NavLink to="/user/:userId" exact>
+                    <NavLink to="/user" exact>
                         Your Page
                     </NavLink>
                 </li>
