@@ -7,8 +7,11 @@ const {
     createPet,
     updatePet,
 } = require("../controllers/pet-controllers");
+const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
+
+router.use(checkAuth);
 
 router.get("/:petId", getPetById);
 router.delete("/:petId", deletePet);

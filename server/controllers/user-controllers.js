@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
@@ -46,8 +47,23 @@ const login = async (req, res, next) => {
         return next(new HttpError("Invalid credentials.", 400));
     }
 
-    /* TODO! obs return now includes dummy pw */
-    res.status(200).json(exsitingUser);
+    let token;
+    try {
+        token = jwt.sign(
+            { userId: exsitingUser.id },
+            require("../secrets.json").jwtstr,
+            { expiresIn: "1h" }
+        );
+    } catch (err) {
+        const error = new HttpError(
+            "Signup failed. Please try again later.",
+            500
+        );
+        return next(error);
+    }
+
+    /* TODO populate users pets and send */
+    res.json({ userId: exsitingUser.id, token });
 };
 
 /* CREATE */
@@ -83,7 +99,7 @@ const createUser = async (req, res, next) => {
 
     try {
         hashedPw = await bcrypt.hash(password, 12);
-    } catch (error) {
+    } catch (err) {
         const error = new HttpError(
             "Signup failed. Please try again later.",
             500
@@ -105,8 +121,23 @@ const createUser = async (req, res, next) => {
         );
         return next(error);
     }
-    /* TODO! obs return now includes dummy pw */
-    res.status(201).json(createdUser.toObject({ getters: true }));
+
+    let token;
+    try {
+        token = jwt.sign(
+            { userId: createUser.id },
+            require("../secrets.json").jwtstr,
+            { expiresIn: "1h" }
+        );
+    } catch (err) {
+        const error = new HttpError(
+            "Signup failed. Please try again later.",
+            500
+        );
+        return next(error);
+    }
+
+    res.json({ userId: createdUser.id, token });
 };
 
 /* DELETE */
