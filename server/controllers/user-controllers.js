@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
@@ -25,8 +26,24 @@ const login = async (req, res, next) => {
         return next(error);
     }
 
-    if (!exsitingUser || exsitingUser.password !== password) {
-        return next(new HttpError("No user found.", 401));
+    if (!exsitingUser) {
+        return next(new HttpError("Invalid credentials.", 400));
+    }
+
+    let isValidPw;
+    try {
+        isValidPw = await bcrypt.compare(password, exsitingUser.password);
+    } catch (error) {
+        return next(
+            new HttpError(
+                "Login failed. Please check credentials and try again later.",
+                500
+            )
+        );
+    }
+
+    if (!isValidPw) {
+        return next(new HttpError("Invalid credentials.", 400));
     }
 
     /* TODO! obs return now includes dummy pw */
@@ -44,7 +61,7 @@ const createUser = async (req, res, next) => {
         return next(error);
     }
 
-    const { name, email } = req.body;
+    const { name, email, password } = req.body;
 
     let exsitingUser;
     try {
@@ -62,10 +79,22 @@ const createUser = async (req, res, next) => {
         return next(error);
     }
 
+    let hashedPw;
+
+    try {
+        hashedPw = await bcrypt.hash(password, 12);
+    } catch (error) {
+        const error = new HttpError(
+            "Signup failed. Please try again later.",
+            500
+        );
+        return next(error);
+    }
+
     const createdUser = new User({
         name,
         email,
-        password: "dummypw",
+        password: hashedPw,
     });
     try {
         await createdUser.save();
