@@ -28,7 +28,7 @@ const login = async (req, res, next) => {
     }
 
     if (!exsitingUser) {
-        return next(new HttpError("Invalid credentials.", 400));
+        return next(new HttpError("Invalid credentials.", 403));
     }
 
     let isValidPw;
@@ -44,7 +44,7 @@ const login = async (req, res, next) => {
     }
 
     if (!isValidPw) {
-        return next(new HttpError("Invalid credentials.", 400));
+        return next(new HttpError("Invalid credentials.", 403));
     }
 
     let token;

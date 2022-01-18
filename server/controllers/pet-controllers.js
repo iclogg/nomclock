@@ -126,7 +126,7 @@ const deletePet = async (req, res, next) => {
         await sess.commitTransaction();
     } catch (err) {
         const error = new HttpError(
-            "Something went wrong. Pet not deleted",
+            "Something went wrong. Pet  not deleted",
             500
         );
         return next(error);
