@@ -38,20 +38,22 @@ const createPet = async (req, res, next) => {
         );
     }
 
-    const { name, description, maxMeals, image, userId } = req.body;
+    const { name, description, maxMeals, image } = req.body;
 
     const createdPet = new Pet({
         name,
         description,
         maxMeals,
         image,
-        owner: userId,
+        owner: req.userData.userId,
     });
 
     let owner;
 
+    console.log(req.userData);
+
     try {
-        owner = await User.findById(userId);
+        owner = await User.findById(req.userData.userId);
     } catch (err) {
         const error = new HttpError("Create pet failed 1", 500);
 
@@ -76,7 +78,7 @@ const createPet = async (req, res, next) => {
     } catch (err) {
         const error = new HttpError("Create pet failed 2", 500);
 
-        return next(err);
+        return next(error);
     }
 
     res.status(201).json(createdPet);
@@ -85,6 +87,7 @@ const createPet = async (req, res, next) => {
 /* DELETE */
 const deletePet = async (req, res, next) => {
     const petId = req.params.petId;
+
     let pet;
 
     try {
@@ -102,6 +105,12 @@ const deletePet = async (req, res, next) => {
             "Something went wrong. Could not find pet to be deleted",
             404
         );
+        return next(error);
+    }
+    console.log(pet.owner);
+
+    if (pet.owner.id !== req.userData.userId) {
+        const error = new HttpError("You are not the owner.", 401);
         return next(error);
     }
 
@@ -144,6 +153,11 @@ const updatePet = async (req, res, next) => {
         pet = await Pet.findById(petId);
     } catch (err) {
         const error = new HttpError("Something whent wrong", 500);
+        return next(error);
+    }
+
+    if (pet.owner.toString() !== req.userData.userId) {
+        const error = new HttpError("You are not the owner.", 401);
         return next(error);
     }
 

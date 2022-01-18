@@ -16,6 +16,7 @@ module.exports = (req, res, next) => {
             token,
             require("../secrets.json").jwtstr
         );
+
         req.userData = { userId: decodedToken.userId };
         next();
     } catch (err) {
