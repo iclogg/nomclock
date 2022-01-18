@@ -38,23 +38,24 @@ const createPet = async (req, res, next) => {
         );
     }
 
-    const { name, description, maxMeals, image, ownerId } = req.body;
+    const { name, description, maxMeals, image, userId } = req.body;
 
     const createdPet = new Pet({
         name,
         description,
         maxMeals,
         image,
-        owner: ownerId,
+        owner: userId,
     });
 
     let owner;
-    try {
-        owner = await User.findById(ownerId);
-    } catch (err) {
-        const error = new HttpError("Create pet failed", 500);
 
-        return next(error);
+    try {
+        owner = await User.findById(userId);
+    } catch (err) {
+        const error = new HttpError("Create pet failed 1", 500);
+
+        return next(err);
     }
 
     if (!owner) {
@@ -73,7 +74,7 @@ const createPet = async (req, res, next) => {
 
         await sess.commitTransaction();
     } catch (err) {
-        const error = new HttpError("Create pet failed", 500);
+        const error = new HttpError("Create pet failed 2", 500);
 
         return next(err);
     }

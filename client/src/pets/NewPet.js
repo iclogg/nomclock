@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 
 import Input from "../shared/Input";
 import Button from "../shared/Button";
+import Loading from "../shared/Loading";
+import Error from "../shared/Error";
+
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
+import { AuthContext } from "../utils/auth-context";
 
 import { useForm } from "../utils/form-hooks";
+import { sendRequest } from "../utils/api";
 
 const NewPet = () => {
+    const auth = useContext(AuthContext);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
     const [formState, inputHandler] = useForm(
         {
             name: {
@@ -25,13 +33,46 @@ const NewPet = () => {
         false
     );
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(formState.inputs); // send to Backend
+        try {
+            setIsLoading(true);
+
+            const response = await sendRequest(
+                "pets",
+                "post",
+                {
+                    name: formState.inputs.name.value,
+                    maxMeals: formState.inputs.maxMeals.value,
+                    description: formState.inputs.description.value,
+                    userId: auth.userId,
+                },
+                { Authorization: `Bearer ${auth.token}` }
+            );
+
+            console.log(response);
+            setIsLoading(false);
+
+            if (response.statusText !== "OK") {
+                setError(response.data.message);
+            } else {
+                //TODO ad pet to state
+            }
+        } catch (error) {
+            setIsLoading(false);
+
+            setError(error.message || "Something went wrong, please try again");
+        }
+    };
+
+    const clearError = () => {
+        setError("");
     };
 
     return (
         <div>
+            {isLoading && <Loading />}
+            {error && <Error message={error} onClick={clearError} />}
             <h2>Add your darling pet!</h2>
             <form action="" onSubmit={submitHandler}>
                 <Input

@@ -8,13 +8,13 @@ const axios = baseAxios.create({
 
 //TODO add error handling
 
-export async function sendRequest(url, method = "get", body = null) {
+export async function sendRequest(url, method = "get", body = null, headers) {
     if (method === "get") {
         body = { params: { ...body } };
     }
 
     try {
-        const response = await axios[method](url, { ...body });
+        const response = await axios[method](url, { ...body }, { headers });
         /* TODO check if I need to check response.ok and manually throw an error */
 
         return response;
