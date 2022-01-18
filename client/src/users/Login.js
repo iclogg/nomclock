@@ -35,7 +35,7 @@ const Login = () => {
         try {
             setIsLoading(true);
 
-            const response = await sendRequest("users/login", "get", {
+            const response = await sendRequest("users/login", "post", {
                 email: formState.inputs.email.value,
                 password: formState.inputs.password.value,
             });

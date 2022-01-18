@@ -13,7 +13,7 @@ const Pet = require("../models/pet");
 // TODO consider password library passport (local mongoose).
 // TODO Create logout route
 const login = async (req, res, next) => {
-    const { password, email } = req.query;
+    const { password, email } = req.body;
 
     let exsitingUser;
 
@@ -28,6 +28,8 @@ const login = async (req, res, next) => {
     }
 
     if (!exsitingUser) {
+        console.log("pw");
+
         return next(new HttpError("Invalid credentials.", 400));
     }
 

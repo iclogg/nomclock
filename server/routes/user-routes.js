@@ -17,7 +17,7 @@ router.post(
     createUser
 );
 
-router.get("/login", login);
+router.post("/login", login);
 
 router.use(checkAuth);
 
