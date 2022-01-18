@@ -28,8 +28,6 @@ const login = async (req, res, next) => {
     }
 
     if (!exsitingUser) {
-        console.log("pw");
-
         return next(new HttpError("Invalid credentials.", 400));
     }
 
@@ -127,7 +125,7 @@ const createUser = async (req, res, next) => {
     let token;
     try {
         token = jwt.sign(
-            { userId: createUser.id },
+            { userId: createdUser.id },
             require("../secrets.json").jwtstr,
             { expiresIn: "1h" }
         );
