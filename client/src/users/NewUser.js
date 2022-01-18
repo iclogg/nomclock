@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import Input from "../shared/Input";
 import Button from "../shared/Button";
@@ -6,11 +6,13 @@ import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
+import { AuthContext } from "../utils/auth-context";
 
 import { useForm } from "../utils/form-hooks";
 import { sendRequest } from "../utils/api";
 
 const NewUser = () => {
+    const auth = useContext(AuthContext);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
     const [formState, inputHandler] = useForm(
@@ -43,14 +45,13 @@ const NewUser = () => {
             });
 
             console.log(response);
-
-            if (response.statusText !== "OK ") {
-                setError(response.data.message);
-            }
-
             setIsLoading(false);
 
-            /* TODO add automatic login here and redirect here */
+            if (response.statusText !== "OK") {
+                setError(response.data.message);
+            } else {
+                auth.login(response.data.userId, response.data.token);
+            }
         } catch (error) {
             setIsLoading(false);
 
@@ -60,7 +61,6 @@ const NewUser = () => {
 
     const clearError = () => {
         console.log("clearError");
-
         setError("");
     };
 
