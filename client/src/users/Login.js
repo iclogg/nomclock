@@ -46,7 +46,7 @@ const Login = () => {
             if (response.statusText !== "OK") {
                 setError(response.data.message);
             } else {
-                auth.login();
+                auth.login(response.data.userId, response.data.token);
             }
         } catch (error) {
             setIsLoading(false);
