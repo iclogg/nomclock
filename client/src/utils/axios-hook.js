@@ -40,7 +40,7 @@ export const useAxios = () => {
 
                 return response;
             } catch (error) {
-                console.error("in api.js", error);
+                console.error("in axios-hook.js", error);
                 setIsLoading(false);
 
                 return error.response.data;

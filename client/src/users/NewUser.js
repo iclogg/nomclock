@@ -60,7 +60,6 @@ const NewUser = () => {
     };
 
     const clearError = () => {
-        console.log("clearError");
         setError("");
     };
 
