@@ -199,7 +199,7 @@ const updateUserDetails = async (req, res, next) => {
         return next(error);
     }
 
-    const userId = req.params.userId;
+    const userId = req.userData.userId;
     const { name, email } = req.body;
 
     let updatedUser;
@@ -217,7 +217,7 @@ const updateUserDetails = async (req, res, next) => {
         return next(error);
     }
 
-    res.status(200).json(updatedUser);
+    res.status(200).json({ message: "User updated" });
 };
 
 exports.login = login;

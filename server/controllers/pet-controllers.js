@@ -14,7 +14,7 @@ const getPetById = async (req, res, next) => {
 
     let pet;
     try {
-        pet = await Pet.findById(petId).populate("owner");
+        pet = await Pet.findById(petId).populate("owner", "-password");
     } catch (err) {
         const error = new HttpError("Could not find that pet!", 500);
         return next(error);
@@ -91,7 +91,7 @@ const deletePet = async (req, res, next) => {
     let pet;
 
     try {
-        pet = await Pet.findById(petId).populate("owner");
+        pet = await Pet.findById(petId).populate("owner", "-password");
     } catch (err) {
         const error = new HttpError(
             "Something went wrong. Pet not deleted",
