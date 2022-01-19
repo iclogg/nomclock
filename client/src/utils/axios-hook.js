@@ -31,19 +31,21 @@ export const useAxios = () => {
                     { ...body, signal: axiosAbortCtrl },
                     { headers }
                 );
-                /* TODO check if I need to check response.ok and manually throw an error */
+
+                activeHttpRequests.current = activeHttpRequests.current.filter(
+                    (abortCtrl) => abortCtrl !== axiosAbortCtrl
+                );
 
                 if (response.statusText !== "OK") {
                     throw new Error(response.data.message);
                 }
-                setIsLoading(false);
 
+                setIsLoading(false);
                 return response;
             } catch (error) {
                 console.error("in axios-hook.js", error);
                 setIsLoading(false);
-
-                return error.response.data;
+                throw error;
             }
         },
         []
