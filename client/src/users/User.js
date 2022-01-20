@@ -18,7 +18,6 @@ const User = () => {
                     {},
                     { authorization: "Bearer " + auth.token }
                 );
-                console.log("hello");
 
                 setPets([...response.data.pets]);
             } catch (err) {}

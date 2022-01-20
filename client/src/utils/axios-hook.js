@@ -10,8 +10,6 @@ const axios = baseAxios.create({
 
 //TODO add error handling
 
-//TODO fix what ever i wrong with abort controller
-
 const useAxios = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
@@ -20,6 +18,8 @@ const useAxios = () => {
 
     const sendRequest = useCallback(
         async (url, method = "get", body = null, headers = {}) => {
+            console.log(1);
+
             if (method === "get") {
                 body = { params: { ...body } };
             }
@@ -43,11 +43,12 @@ const useAxios = () => {
                 }
 
                 setIsLoading(false);
-                console.log("response in axioshook ", response);
+                console.log("response in axioshook ", response, "url", url);
 
                 return response;
             } catch (error) {
                 console.error("in axios-hook.js", error);
+                setError(error.message);
                 setIsLoading(false);
                 throw error;
             }

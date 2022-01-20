@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import Input from "../shared/Input";
 import Button from "../shared/Button";
@@ -7,14 +7,14 @@ import Error from "../shared/Error";
 
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
 import { AuthContext } from "../utils/auth-context";
+import useAxios from "../utils/axios-hook";
 
 import { useForm } from "../utils/form-hooks";
-import { sendRequest } from "../utils/api";
 
 const NewUser = () => {
     const auth = useContext(AuthContext);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("");
+    const { sendRequest, clearError, isLoading, error } = useAxios();
+
     const [formState, inputHandler] = useForm(
         {
             name: {
@@ -36,31 +36,14 @@ const NewUser = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            setIsLoading(true);
-
             const response = await sendRequest("users", "post", {
                 email: formState.inputs.email.value,
                 name: formState.inputs.name.value,
                 password: formState.inputs.password.value,
             });
 
-            console.log(response);
-            setIsLoading(false);
-
-            if (response.statusText !== "OK") {
-                setError(response.data.message);
-            } else {
-                auth.login(response.data.userId, response.data.token);
-            }
-        } catch (error) {
-            setIsLoading(false);
-
-            setError(error.message || "Something went wrong, please try again");
-        }
-    };
-
-    const clearError = () => {
-        setError("");
+            auth.login(response.data.userId, response.data.token);
+        } catch (error) {}
     };
 
     return (
