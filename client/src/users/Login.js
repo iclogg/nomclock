@@ -7,15 +7,15 @@ import Error from "../shared/Error";
 
 import { VALIDATOR_REQUIRE } from "../utils/validators";
 import { AuthContext } from "../utils/auth-context";
+import useAxios from "../utils/axios-hook";
 
 import { useForm } from "../utils/form-hooks";
 import { sendRequest } from "../utils/api";
 
 const Login = () => {
     const auth = useContext(AuthContext);
+    const { sendRequest, clearError, isLoading, error } = useAxios();
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("");
     const [formState, inputHandler] = useForm(
         {
             email: {
@@ -33,29 +33,13 @@ const Login = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            setIsLoading(true);
-
             const response = await sendRequest("users/login", "post", {
                 email: formState.inputs.email.value,
                 password: formState.inputs.password.value,
             });
 
-            console.log("response", response);
-            setIsLoading(false);
-
-            if (response.statusText !== "OK") {
-                setError(response.data.message);
-            } else {
-                auth.login(response.data.userId, response.data.token);
-            }
-        } catch (error) {
-            setIsLoading(false);
-            setError(error.message || "Something went wrong, please try again");
-        }
-    };
-
-    const clearError = () => {
-        setError("");
+            auth.login(response.data.userId, response.data.token);
+        } catch (error) {}
     };
 
     return (

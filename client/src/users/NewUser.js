@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 
 import Input from "../shared/Input";
 import Button from "../shared/Button";
@@ -10,7 +10,6 @@ import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 
 import { useForm } from "../utils/form-hooks";
-import { sendRequest } from "../utils/api";
 
 const NewUser = () => {
     const auth = useContext(AuthContext);
@@ -46,11 +45,6 @@ const NewUser = () => {
             auth.login(response.data.userId, response.data.token);
         } catch (error) {}
     };
-
-    useEffect(() => {
-        console.log("isLoading", isLoading);
-        console.log(error, "error");
-    }, [isLoading, error]);
 
     return (
         <div>
