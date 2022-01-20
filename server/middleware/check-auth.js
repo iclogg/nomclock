@@ -3,6 +3,7 @@ const HttpError = require("../models/http-error");
 const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
+    //TODO see if I can remove this due to similar in app.js
     if (req.method === "OPTIONS") {
         return next();
     }

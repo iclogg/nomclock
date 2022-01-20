@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect, useRef } from "react";
 
 const baseAxios = require("axios");
 const axios = baseAxios.create({
@@ -10,31 +10,32 @@ const axios = baseAxios.create({
 
 //TODO add error handling
 
-export const useAxios = () => {
+//TODO
+
+const useAxios = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
-    const activeHttpRequests = useRef([]);
-
+    /*     const activeHttpRequests = useRef([]);
+     */
     const sendRequest = useCallback(
         async (url, method = "get", body = null, headers = {}) => {
             if (method === "get") {
                 body = { params: { ...body } };
             }
             setIsLoading(true);
-            const axiosAbortCtrl = new AbortController();
-            activeHttpRequests.current.push(axiosAbortCtrl);
+            /*   const axiosAbortCtrl = new AbortController();
+            activeHttpRequests.current.push(axiosAbortCtrl); */
 
             try {
-                const response = await axios[method](
-                    url,
-                    { ...body, signal: axiosAbortCtrl },
-                    { headers }
-                );
+                const response = await axios[method](url, {
+                    ...body,
+                    headers /* , signal: axiosAbortCtrl */,
+                });
 
-                activeHttpRequests.current = activeHttpRequests.current.filter(
+                /* activeHttpRequests.current = activeHttpRequests.current.filter(
                     (abortCtrl) => abortCtrl !== axiosAbortCtrl
-                );
+                ); */
 
                 if (response.statusText !== "OK") {
                     throw new Error(response.data.message);
@@ -54,14 +55,16 @@ export const useAxios = () => {
     const clearError = () => {
         setError("");
     };
-
+    /* 
     useEffect(() => {
         return () => {
             activeHttpRequests.current.forEach((abortCtrl) =>
                 abortCtrl.abort()
             );
         };
-    }, []);
+    }, []); */
 
     return { sendRequest, clearError, isLoading, error };
 };
+
+export default useAxios;
