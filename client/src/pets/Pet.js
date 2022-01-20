@@ -1,24 +1,48 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+
 import Avatar from "../shared/Avatar";
+import useAxios from "../utils/axios-hook";
+import { AuthContext } from "../utils/auth-context";
 
 import "./Pet.css";
 
 const Pet = () => {
-    /* TODO remove dummy pet once backen is up */
-    const PET = {
-        id: "pet1",
-        name: "Lucifer",
-        image: "/lucifer.png",
-        description: "Best kitten EVER!!!!",
-        maxMeals: 3,
-    };
+    const auth = useContext(AuthContext);
+    const { sendRequest } = useAxios();
+    const { petId } = useParams();
+    const [pet, setPet] = useState({});
+
+    useEffect(() => {
+        const getPet = async () => {
+            try {
+                console.log("petId", petId);
+
+                const response = await sendRequest(
+                    `pets/${petId}`,
+                    "get",
+                    {},
+                    { authorization: "Bearer " + auth.token }
+                );
+                console.log(response.data);
+
+                setPet(response.data.pet);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        getPet();
+        console.log("use effect pet");
+    }, [sendRequest, auth]);
+
     return (
         <div className="pet">
-            <h1>{PET.name}'s own page</h1>
-            <Avatar name={PET.name} image={PET.image} />
-            <p>{PET.description}</p>
+            <h1>{pet.name}'s own page</h1>
+            <Avatar name={pet.name} image={pet.image} />
+            <p>{pet.description}</p>
             <p>
-                {PET.name} is allowed {PET.maxMeals} meals each day.
+                {pet.name} is allowed {pet.maxMeals} meals each day.
             </p>
         </div>
     );
