@@ -43,9 +43,7 @@ const getPetsByOwner = async (req, res, next) => {
         return next(new HttpError("Could not find pets for this owner.", 404));
     }
 
-    pets = owner.pets.map((pet) => {
-        pet.toObject({ getters: true });
-    });
+    pets = owner.pets.map((pet) => pet.toObject({ getters: true }));
 
     res.json({ pets });
 };
