@@ -10,32 +10,33 @@ const axios = baseAxios.create({
 
 //TODO add error handling
 
-//TODO
+//TODO fix what ever i wrong with abort controller
 
 const useAxios = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
-    /*     const activeHttpRequests = useRef([]);
-     */
+    const activeHttpRequests = useRef([]);
+
     const sendRequest = useCallback(
         async (url, method = "get", body = null, headers = {}) => {
             if (method === "get") {
                 body = { params: { ...body } };
             }
             setIsLoading(true);
-            /*   const axiosAbortCtrl = new AbortController();
-            activeHttpRequests.current.push(axiosAbortCtrl); */
+            const axiosAbortCtrl = new AbortController();
+            activeHttpRequests.current.push(axiosAbortCtrl);
 
             try {
                 const response = await axios[method](url, {
                     ...body,
-                    headers /* , signal: axiosAbortCtrl */,
+                    headers,
+                    signal: axiosAbortCtrl.signal,
                 });
 
-                /* activeHttpRequests.current = activeHttpRequests.current.filter(
+                activeHttpRequests.current = activeHttpRequests.current.filter(
                     (abortCtrl) => abortCtrl !== axiosAbortCtrl
-                ); */
+                );
 
                 if (response.statusText !== "OK") {
                     throw new Error(response.data.message);
@@ -57,14 +58,14 @@ const useAxios = () => {
     const clearError = () => {
         setError("");
     };
-    /* 
+
     useEffect(() => {
         return () => {
-            activeHttpRequests.current.forEach((abortCtrl) =>
-                abortCtrl.abort()
-            );
+            activeHttpRequests.current.forEach((abortCtrl) => {
+                abortCtrl.abort();
+            });
         };
-    }, []); */
+    }, []);
 
     return { sendRequest, clearError, isLoading, error };
 };
