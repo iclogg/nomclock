@@ -18,6 +18,7 @@ const User = () => {
                     {},
                     { authorization: "Bearer " + auth.token }
                 );
+                console.log("hello");
 
                 setPets([...response.data.pets]);
             } catch (err) {}
@@ -25,9 +26,6 @@ const User = () => {
 
         getPets();
     }, [auth, sendRequest]);
-
-    /* TODO remove mmy pet and fetch from backend */
-    const PETS = [{ id: "pet1", name: "Lucifer", image: "/lucifer.png" }];
 
     return (
         <div>
