@@ -3,6 +3,7 @@ const { check } = require("express-validator");
 
 const {
     getPetById,
+    getPetsByOwner,
     deletePet,
     createPet,
     updatePet,
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.use(checkAuth);
 
+router.get("/owner/:uid", getPetsByOwner);
 router.get("/:petId", getPetById);
 router.delete("/:petId", deletePet);
 router.patch("/:petId", [check("name").not().isEmpty()], updatePet);

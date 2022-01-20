@@ -27,6 +27,29 @@ const getPetById = async (req, res, next) => {
     res.json({ pet: pet.toObject({ getters: true }) });
 };
 
+const getPetsByOwner = async (req, res, next) => {
+    const ownerId = req.params.uid;
+
+    let pets;
+    let owner;
+    try {
+        owner = await User.findById(ownerId, "-password").populate("pets");
+    } catch (err) {
+        const error = new HttpError("Could not find pets!", 500);
+        return next(error);
+    }
+
+    if (!owner || owner.pets.length === 0) {
+        return next(new HttpError("Could not find pets for this owner.", 404));
+    }
+
+    pets = owner.pets.map((pet) => {
+        pet.toObject({ getters: true });
+    });
+
+    res.json({ pets });
+};
+
 /* CREATE */
 /* TODO check if express validator check and validation result can be moved into their own middleware file and if there is best practise around that */
 const createPet = async (req, res, next) => {
@@ -49,8 +72,6 @@ const createPet = async (req, res, next) => {
     });
 
     let owner;
-
-    console.log(req.userData);
 
     try {
         owner = await User.findById(req.userData.userId);
@@ -181,6 +202,7 @@ const updatePet = async (req, res, next) => {
 
 /* EXPORTS */
 exports.getPetById = getPetById;
+exports.getPetsByOwner = getPetsByOwner;
 exports.createPet = createPet;
 exports.deletePet = deletePet;
 exports.updatePet = updatePet;
