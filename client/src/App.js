@@ -44,7 +44,6 @@ const App = () => {
                 <Route path="/pets/:petId" exact>
                     <Pet />
                 </Route>
-                <Redirect to="/" />
             </Switch>
         );
     } else {
@@ -59,7 +58,6 @@ const App = () => {
                 <Route path="/user/login" exact>
                     <Login />
                 </Route>
-                <Redirect to="/user/login" />
             </Switch>
         );
     }
@@ -67,7 +65,6 @@ const App = () => {
     return (
         <React.Fragment>
             <CssBaseline />
-
             <AuthContext.Provider
                 value={{
                     isLoggedIn: !!token,
