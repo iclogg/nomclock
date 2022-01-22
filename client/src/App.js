@@ -1,4 +1,6 @@
 import React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+
 import "./App.css";
 import {
     BrowserRouter as Router,
@@ -63,21 +65,25 @@ const App = () => {
     }
 
     return (
-        <AuthContext.Provider
-            value={{
-                isLoggedIn: !!token,
-                token,
-                userId,
-                login,
-                logout,
-            }}
-        >
-            <Router>
-                <main>{routes}</main>
-                <hr />
-                <Navbar />
-            </Router>
-        </AuthContext.Provider>
+        <React.Fragment>
+            <CssBaseline />
+
+            <AuthContext.Provider
+                value={{
+                    isLoggedIn: !!token,
+                    token,
+                    userId,
+                    login,
+                    logout,
+                }}
+            >
+                <Router>
+                    <main>{routes}</main>
+                    <hr />
+                    <Navbar />
+                </Router>
+            </AuthContext.Provider>
+        </React.Fragment>
     );
 };
 
