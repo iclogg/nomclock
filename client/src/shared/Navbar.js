@@ -1,4 +1,6 @@
 import React, { useContext } from "react";
+import AppBar from "@mui/material/AppBar";
+
 import { NavLink } from "react-router-dom";
 
 import { AuthContext } from "../utils/auth-context";

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import Input from "../shared/Input";
 import Button from "../shared/Button";
@@ -32,6 +32,10 @@ const NewPet = () => {
         },
         false
     );
+
+    useEffect(() => {
+        console.log("mounted");
+    }, []);
 
     const submitHandler = async (e) => {
         e.preventDefault();

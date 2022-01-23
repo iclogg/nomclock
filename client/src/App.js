@@ -16,6 +16,7 @@ import UpdatePet from "./pets/UpdatePet";
 import User from "./users/User";
 import Welcome from "./info/Welcome";
 import Navbar from "./shared/Navbar";
+import Navbar2 from "./shared/Navbar2";
 import Login from "./users/Login";
 import { AuthContext } from "./utils/auth-context";
 import { useAuth } from "./utils/auth-hook";
@@ -75,6 +76,8 @@ const App = () => {
                 }}
             >
                 <Router>
+                    <Navbar2 />
+
                     <main>{routes}</main>
                     <hr />
                     <Navbar />
