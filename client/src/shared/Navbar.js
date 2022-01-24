@@ -80,12 +80,8 @@ const NavBar = (props) => {
                 </Box>
                 {auth.isLoggedIn && (
                     <Button
-                        sx={{
-                            my: 1,
-                            mx: 1,
-                        }}
-                        variant="outlined"
                         color="secondary"
+                        size="small"
                         onClick={auth.logout}
                     >
                         <LogoutIcon />
