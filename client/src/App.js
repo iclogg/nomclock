@@ -1,7 +1,7 @@
 import React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import "./App.css";
 import {
     BrowserRouter as Router,
     Redirect,
@@ -16,10 +16,26 @@ import UpdatePet from "./pets/UpdatePet";
 import User from "./users/User";
 import Welcome from "./info/Welcome";
 import Navbar from "./shared/Navbar";
-import Navbar2 from "./shared/Navbar2";
 import Login from "./users/Login";
 import { AuthContext } from "./utils/auth-context";
 import { useAuth } from "./utils/auth-hook";
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            light: "#ffffff",
+            main: "#eceff1",
+            dark: "#babdbe",
+            contrastText: "#000",
+        },
+        secondary: {
+            light: "#ff608f",
+            main: "#e81e62",
+            dark: "#af0039",
+            contrastText: "#000",
+        },
+    },
+});
 
 const App = () => {
     const { token, userId, login, logout } = useAuth();
@@ -45,6 +61,7 @@ const App = () => {
                 <Route path="/pets/:petId" exact>
                     <Pet />
                 </Route>
+                <Redirect to="/" />
             </Switch>
         );
     } else {
@@ -59,30 +76,32 @@ const App = () => {
                 <Route path="/user/login" exact>
                     <Login />
                 </Route>
+                <Redirect to="/" />
             </Switch>
         );
     }
 
     return (
         <React.Fragment>
-            <CssBaseline />
-            <AuthContext.Provider
-                value={{
-                    isLoggedIn: !!token,
-                    token,
-                    userId,
-                    login,
-                    logout,
-                }}
-            >
-                <Router>
-                    <Navbar2 />
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <AuthContext.Provider
+                    value={{
+                        isLoggedIn: !!token,
+                        token,
+                        userId,
+                        login,
+                        logout,
+                    }}
+                >
+                    <Router>
+                        <Navbar />
 
-                    <main>{routes}</main>
-                    <hr />
-                    <Navbar />
-                </Router>
-            </AuthContext.Provider>
+                        <main>{routes}</main>
+                        <hr />
+                    </Router>
+                </AuthContext.Provider>
+            </ThemeProvider>
         </React.Fragment>
     );
 };
