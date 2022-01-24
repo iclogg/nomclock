@@ -1,5 +1,6 @@
 import React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import {
@@ -17,6 +18,8 @@ import User from "./users/User";
 import Welcome from "./info/Welcome";
 import Navbar from "./shared/Navbar";
 import Login from "./users/Login";
+import Footer from "./shared/Footer";
+
 import { AuthContext } from "./utils/auth-context";
 import { useAuth } from "./utils/auth-hook";
 
@@ -96,9 +99,8 @@ const App = () => {
                 >
                     <Router>
                         <Navbar />
-
-                        <main>{routes}</main>
-                        <hr />
+                        <Container component="main">{routes}</Container>
+                        <Footer />
                     </Router>
                 </AuthContext.Provider>
             </ThemeProvider>
