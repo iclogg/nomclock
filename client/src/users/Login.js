@@ -10,7 +10,6 @@ import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 
 import { useForm } from "../utils/form-hooks";
-import { sendRequest } from "../utils/api";
 
 const Login = () => {
     const auth = useContext(AuthContext);

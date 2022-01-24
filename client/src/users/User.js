@@ -31,7 +31,7 @@ const User = () => {
             <h1>Pet Owner Page</h1>
             <div>
                 <h2>Your Pets</h2>
-                {pets && <PetsList items={pets} />};
+                {pets && <PetsList items={pets} />}
             </div>
         </div>
     );
