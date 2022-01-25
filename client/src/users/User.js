@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 
 import PetsList from "../pets/PetsList";
+import Loading from "../shared/Loading";
+import Error from "../shared/Error";
+
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
 
@@ -28,10 +31,12 @@ const User = () => {
 
     return (
         <div>
+            {isLoading && <Loading />}
+            {error && <Error message={error} onClick={clearError} />}
             <h1>Pet Owner Page</h1>
             <div>
                 <h2>Your Pets</h2>
-                {pets && <PetsList items={pets} />}
+                {!isLoading && <PetsList items={pets} isLoading />}
             </div>
         </div>
     );
