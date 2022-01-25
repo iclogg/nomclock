@@ -7,14 +7,20 @@ import Error from "../shared/Error";
 
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
 import { AuthContext } from "../utils/auth-context";
+import useAxios from "../utils/axios-hook";
 
 import { useForm } from "../utils/form-hooks";
-import { sendRequest } from "../utils/api";
 
 const NewPet = () => {
     const auth = useContext(AuthContext);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("");
+    const {
+        sendRequest,
+        clearError,
+        clearIsLoading,
+        isLoading,
+        error,
+    } = useAxios();
+
     const [formState, inputHandler] = useForm(
         {
             name: {
@@ -33,15 +39,9 @@ const NewPet = () => {
         false
     );
 
-    useEffect(() => {
-        console.log("mounted");
-    }, []);
-
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            setIsLoading(true);
-
             const response = await sendRequest(
                 "pets",
                 "post",
@@ -53,25 +53,12 @@ const NewPet = () => {
                 },
                 { Authorization: `Bearer ${auth.token}` }
             );
-
-            console.log(response);
-            setIsLoading(false);
-
-            if (response.statusText !== "OK") {
-                setError(response.data.message);
-            } else {
-                //TODO ad pet to state
-            }
-        } catch (error) {
-            setIsLoading(false);
-
-            setError(error.message || "Something went wrong, please try again");
-        }
+        } catch (error) {}
     };
 
-    const clearError = () => {
-        setError("");
-    };
+    useEffect(() => {
+        clearIsLoading();
+    }, [clearIsLoading]);
 
     return (
         <div>
