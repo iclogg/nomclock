@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import Input from "../shared/Input";
 import Button from "../shared/Button";
@@ -13,7 +13,13 @@ import { useForm } from "../utils/form-hooks";
 
 const NewUser = () => {
     const auth = useContext(AuthContext);
-    const { sendRequest, clearError, isLoading, error } = useAxios();
+    const {
+        sendRequest,
+        clearError,
+        clearIsLoading,
+        isLoading,
+        error,
+    } = useAxios();
 
     const [formState, inputHandler] = useForm(
         {
@@ -45,6 +51,10 @@ const NewUser = () => {
             auth.login(response.data.userId, response.data.token);
         } catch (error) {}
     };
+
+    useEffect(() => {
+        clearIsLoading();
+    }, [clearIsLoading]);
 
     return (
         <div>
