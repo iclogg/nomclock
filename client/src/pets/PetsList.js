@@ -9,7 +9,6 @@ import { Link as RRDLink } from "react-router-dom";
 
 const PetList = (props) => {
     if (props.items.length === 0) {
-        /* TODO add a link to create pet here */
         return (
             <Typography variant="h5">
                 No Lovely little friend added yet. Click{" "}
