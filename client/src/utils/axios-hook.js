@@ -18,8 +18,6 @@ const useAxios = () => {
 
     const sendRequest = useCallback(
         async (url, method = "get", body = null, headers = {}) => {
-            console.log("method", method);
-
             setIsLoading(true);
             const axiosAbortCtrl = new AbortController();
             activeHttpRequests.current.push(axiosAbortCtrl);
@@ -44,10 +42,14 @@ const useAxios = () => {
                 activeHttpRequests.current = activeHttpRequests.current.filter(
                     (abortCtrl) => abortCtrl !== axiosAbortCtrl
                 );
+                console.log("response", response);
 
-                if (response.statusText !== "OK") {
+                /* if (
+                    response.statusText !== "OK" ||
+                    response.statusText !== "Created"
+                ) {
                     throw new Error(response.data.message);
-                }
+                } */
 
                 setIsLoading(false);
                 console.log("response in axioshook ", response, "url", url);

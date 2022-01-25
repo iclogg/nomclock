@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import Input from "../shared/Input";
 import Button from "../shared/Button";
@@ -39,6 +40,8 @@ const NewPet = () => {
         false
     );
 
+    const history = useHistory();
+
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
@@ -51,9 +54,13 @@ const NewPet = () => {
                     description: formState.inputs.description.value,
                     userId: auth.userId,
                 },
-                { Authorization: `Bearer ${auth.token}` }
+                { authorization: `Bearer ${auth.token}` }
             );
-        } catch (error) {}
+
+            history.push(`/pets/${response.data._id}`);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     useEffect(() => {
