@@ -18,21 +18,28 @@ const useAxios = () => {
 
     const sendRequest = useCallback(
         async (url, method = "get", body = null, headers = {}) => {
-            console.log(1);
+            console.log("method", method);
 
-            if (method === "get") {
-                body = { params: { ...body } };
-            }
             setIsLoading(true);
             const axiosAbortCtrl = new AbortController();
             activeHttpRequests.current.push(axiosAbortCtrl);
 
+            let response;
             try {
-                const response = await axios[method](url, {
-                    ...body,
-                    headers,
-                    signal: axiosAbortCtrl.signal,
-                });
+                if (method === "get") {
+                    body = { params: { ...body } };
+                    response = await axios[method](url, {
+                        ...body,
+                        headers,
+                        signal: axiosAbortCtrl.signal,
+                    });
+                } else if (method === "post") {
+                    response = await axios[method](
+                        url,
+                        { ...body },
+                        { headers }
+                    );
+                }
 
                 activeHttpRequests.current = activeHttpRequests.current.filter(
                     (abortCtrl) => abortCtrl !== axiosAbortCtrl
