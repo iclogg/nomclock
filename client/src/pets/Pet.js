@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
+import Typography from "@mui/material/Typography";
+
 import { useParams } from "react-router-dom";
 
 import Avatar from "../shared/Avatar";
@@ -38,12 +40,12 @@ const Pet = () => {
 
     return (
         <div className="pet">
-            <h1>{pet.name}'s own page</h1>
+            <Typography variant="h1">{pet.name}'s own page</Typography>
             <Avatar name={pet.name} image={pet.image} />
-            <p>{pet.description}</p>
-            <p>
+            <Typography>{pet.description}</Typography>
+            <Typography variant="body1">
                 {pet.name} is allowed {pet.maxMeals} meals each day.
-            </p>
+            </Typography>
         </div>
     );
 };

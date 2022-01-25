@@ -1,5 +1,8 @@
 import React from "react";
-import "./App.css";
+import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 import {
     BrowserRouter as Router,
     Redirect,
@@ -15,8 +18,27 @@ import User from "./users/User";
 import Welcome from "./info/Welcome";
 import Navbar from "./shared/Navbar";
 import Login from "./users/Login";
+import Footer from "./shared/Footer";
+
 import { AuthContext } from "./utils/auth-context";
 import { useAuth } from "./utils/auth-hook";
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            light: "#ffffff",
+            main: "#eceff1",
+            dark: "#babdbe",
+            contrastText: "#000",
+        },
+        secondary: {
+            light: "#ff608f",
+            main: "#e81e62",
+            dark: "#af0039",
+            contrastText: "#000",
+        },
+    },
+});
 
 const App = () => {
     const { token, userId, login, logout } = useAuth();
@@ -57,27 +79,32 @@ const App = () => {
                 <Route path="/user/login" exact>
                     <Login />
                 </Route>
-                <Redirect to="/user/login" />
+                <Redirect to="/" />
             </Switch>
         );
     }
 
     return (
-        <AuthContext.Provider
-            value={{
-                isLoggedIn: !!token,
-                token,
-                userId,
-                login,
-                logout,
-            }}
-        >
-            <Router>
-                <main>{routes}</main>
-                <hr />
-                <Navbar />
-            </Router>
-        </AuthContext.Provider>
+        <React.Fragment>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <AuthContext.Provider
+                    value={{
+                        isLoggedIn: !!token,
+                        token,
+                        userId,
+                        login,
+                        logout,
+                    }}
+                >
+                    <Router>
+                        <Navbar />
+                        <Container component="main">{routes}</Container>
+                        <Footer />
+                    </Router>
+                </AuthContext.Provider>
+            </ThemeProvider>
+        </React.Fragment>
     );
 };
 

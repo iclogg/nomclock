@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import Input from "../shared/Input";
 import Button from "../shared/Button";

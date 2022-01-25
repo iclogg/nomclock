@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "./index.css"; // TODO from CRA. keep?
 import App from "./App";
 import reportWebVitals from "./reportWebVitals"; // TODO from CRA. keep?
 
