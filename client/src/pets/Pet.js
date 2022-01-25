@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
 import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 
 import { useParams } from "react-router-dom";
 
 import Avatar from "../shared/Avatar";
+import Loading from "../shared/Loading";
+import Error from "../shared/Error";
+
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
 
-import "./Pet.css";
-
 const Pet = () => {
     const auth = useContext(AuthContext);
-    const { sendRequest } = useAxios();
+    const { sendRequest, clearError, isLoading, error } = useAxios();
     const { petId } = useParams();
     const [pet, setPet] = useState({});
 
@@ -39,14 +42,21 @@ const Pet = () => {
     }, [sendRequest, auth]);
 
     return (
-        <div className="pet">
-            <Typography variant="h1">{pet.name}'s own page</Typography>
-            <Avatar name={pet.name} image={pet.image} />
-            <Typography>{pet.description}</Typography>
-            <Typography variant="body1">
-                {pet.name} is allowed {pet.maxMeals} meals each day.
-            </Typography>
-        </div>
+        <Container>
+            {isLoading && <Loading />}
+            {error && <Error message={error} onClick={clearError} />}
+
+            {!isLoading && (
+                <Box sx={{ textAlign: "center" }}>
+                    <Typography variant="h1">{pet.name}'s own page</Typography>
+                    <Avatar name={pet.name} image={pet.image} />
+                    <Typography>{pet.description}</Typography>
+                    <Typography variant="body1">
+                        {pet.name} is allowed {pet.maxMeals} meals each day.
+                    </Typography>
+                </Box>
+            )}
+        </Container>
     );
 };
 
