@@ -11,7 +11,7 @@ const axios = baseAxios.create({
 //TODO add error handling
 
 const useAxios = () => {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
 
     const activeHttpRequests = useRef([]);
@@ -60,6 +60,10 @@ const useAxios = () => {
         setError("");
     };
 
+    const clearIsLoading = () => {
+        setIsLoading("");
+    };
+
     useEffect(() => {
         return () => {
             activeHttpRequests.current.forEach((abortCtrl) => {
@@ -68,7 +72,7 @@ const useAxios = () => {
         };
     }, []);
 
-    return { sendRequest, clearError, isLoading, error };
+    return { sendRequest, clearError, clearIsLoading, isLoading, error };
 };
 
 export default useAxios;
