@@ -64,7 +64,6 @@ const App = () => {
                 <Route path="/pets/:petId" exact>
                     <Pet />
                 </Route>
-                <Redirect to="/" />
             </Switch>
         );
     } else {
@@ -79,7 +78,6 @@ const App = () => {
                 <Route path="/user/login" exact>
                     <Login />
                 </Route>
-                <Redirect to="/" />
             </Switch>
         );
     }
