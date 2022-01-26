@@ -1,10 +1,11 @@
 import React, { useEffect, useContext } from "react";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 import { useParams } from "react-router-dom";
 
 import Input from "../shared/Input";
-import { Button as OwnBtn } from "../shared/Button";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
@@ -89,8 +90,8 @@ const UpdatePet = (props) => {
 
     return (
         formState.inputs.name.value && (
-            <div>
-                <h1>Update Pet</h1>
+            <Box sx={{ mt: "10px" }}>
+                <Typography variant="h4">Update Pet</Typography>{" "}
                 <form action="" onSubmit={submitHandler}>
                     <Input
                         id="name"
@@ -124,14 +125,19 @@ const UpdatePet = (props) => {
                         initialValue={formState.inputs.description.value}
                         initialValid={formState.inputs.description.isValid}
                     />
-                    <OwnBtn type="submit" disabled={!formState.isValid}>
-                        ADD PET
-                    </OwnBtn>
+                    <Button
+                        type="submit"
+                        disabled={!formState.isValid}
+                        color="secondary"
+                        variant="contained"
+                    >
+                        SAVE
+                    </Button>
                 </form>
                 <Button onClick={toggleSetIsUpdating} color="secondary">
                     Done
                 </Button>
-            </div>
+            </Box>
         )
     );
 };
