@@ -58,9 +58,7 @@ const App = () => {
                 <Route path="/pets/new" exact>
                     <NewPet />
                 </Route>
-                <Route path="/pets/:petId/update" exact>
-                    <UpdatePet />
-                </Route>
+
                 <Route path="/pets/:petId" exact>
                     <Pet />
                 </Route>

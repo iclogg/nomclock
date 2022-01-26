@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
+
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 import { useParams } from "react-router-dom";
 
 import Avatar from "../shared/Avatar";
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
+import UpdatePet from "../pets/UpdatePet";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
@@ -17,6 +20,7 @@ const Pet = () => {
     const { sendRequest, clearError, isLoading, error } = useAxios();
     const { petId } = useParams();
     const [pet, setPet] = useState({});
+    const [isUpdating, setIsUpdating] = useState(false);
 
     useEffect(() => {
         const getPet = async () => {
@@ -41,12 +45,24 @@ const Pet = () => {
         console.log("use effect pet");
     }, [sendRequest, auth]);
 
+    const toggleSetIsUpdating = () => {
+        setIsUpdating(!isUpdating);
+    };
+
     return (
         <Container>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
 
-            {!isLoading && (
+            {isUpdating && (
+                <UpdatePet
+                    toggleSetIsUpdating={toggleSetIsUpdating}
+                    setPet={setPet}
+                    pet={pet}
+                />
+            )}
+
+            {!isLoading && !isUpdating && (
                 <Box sx={{ textAlign: "center" }}>
                     <Typography variant="h1">{pet.name}'s own page</Typography>
                     <Avatar name={pet.name} image={pet.image} />
@@ -54,6 +70,10 @@ const Pet = () => {
                     <Typography variant="body1">
                         {pet.name} is allowed {pet.maxMeals} meals each day.
                     </Typography>
+                    <Button color="secondary">Delete Pet</Button>
+                    <Button onClick={toggleSetIsUpdating} color="secondary">
+                        Update Pet
+                    </Button>
                 </Box>
             )}
         </Container>

@@ -1,22 +1,19 @@
 import React, { useEffect } from "react";
+import Button from "@mui/material/Button";
+
 import { useParams } from "react-router-dom";
 
 import Input from "../shared/Input";
-import Button from "../shared/Button";
+import { Button as OwnBtn } from "../shared/Button";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
 
 import { useForm } from "../utils/form-hooks";
 
-/* TODO remove dummy pet once backen is up */
-const PET = {
-    id: "pet1",
-    name: "Lucifer",
-    image: "/lucifer.png",
-    description: "Best kitten EVER!!!!",
-    maxMeals: 3,
-};
+const UpdatePet = (props) => {
+    const { toggleSetIsUpdating, setPet, pet } = props;
 
-const UpdatePet = () => {
+    console.log("props", pet);
+
     const petId = useParams().petId;
 
     const [formState, inputHandler, setFormData] = useForm(
@@ -38,27 +35,26 @@ const UpdatePet = () => {
     );
 
     // Here we fetch data from Backend
-    const PETDATA = PET;
 
     useEffect(() => {
         setFormData(
             {
                 name: {
-                    value: PETDATA.name,
+                    value: pet.name,
                     isValid: true,
                 },
                 description: {
-                    value: PETDATA.description,
+                    value: pet.description,
                     isValid: true,
                 },
                 maxMeals: {
-                    value: PETDATA.maxMeals,
+                    value: pet.maxMeals,
                     isValid: true,
                 },
             },
             true
         );
-    }, [setFormData, PETDATA]);
+    }, [setFormData, pet]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -104,10 +100,13 @@ const UpdatePet = () => {
                         initialValue={formState.inputs.description.value}
                         initialValid={formState.inputs.description.isValid}
                     />
-                    <Button type="submit" disabled={!formState.isValid}>
+                    <OwnBtn type="submit" disabled={!formState.isValid}>
                         ADD PET
-                    </Button>
+                    </OwnBtn>
                 </form>
+                <Button onClick={toggleSetIsUpdating} color="secondary">
+                    Done
+                </Button>
             </div>
         )
     );
