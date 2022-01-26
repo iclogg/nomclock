@@ -183,7 +183,8 @@ const updatePet = async (req, res, next) => {
     pet.name = name;
     pet.description = description;
     pet.maxMeals = maxMeals;
-    pet.image = image;
+    //TODO file upload and image save
+    /*  pet.image = image ; */
 
     try {
         await pet.save();

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import Button from "@mui/material/Button";
 
 import { useParams } from "react-router-dom";
@@ -6,13 +6,22 @@ import { useParams } from "react-router-dom";
 import Input from "../shared/Input";
 import { Button as OwnBtn } from "../shared/Button";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
+import { AuthContext } from "../utils/auth-context";
+import useAxios from "../utils/axios-hook";
 
 import { useForm } from "../utils/form-hooks";
 
 const UpdatePet = (props) => {
     const { toggleSetIsUpdating, setPet, pet } = props;
+    const auth = useContext(AuthContext);
 
-    console.log("props", pet);
+    const {
+        sendRequest,
+        clearError,
+        clearIsLoading,
+        isLoading,
+        error,
+    } = useAxios();
 
     const petId = useParams().petId;
 
@@ -34,8 +43,6 @@ const UpdatePet = (props) => {
         false
     );
 
-    // Here we fetch data from Backend
-
     useEffect(() => {
         setFormData(
             {
@@ -56,9 +63,26 @@ const UpdatePet = (props) => {
         );
     }, [setFormData, pet]);
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         console.log(formState.inputs); // send to Backend
+
+        try {
+            const response = await sendRequest(
+                `pets/${petId}`,
+                "patch",
+                {
+                    name: formState.inputs.name.value,
+                    maxMeals: formState.inputs.maxMeals.value,
+                    description: formState.inputs.description.value,
+                },
+                { authorization: `Bearer ${auth.token}` }
+            );
+            setPet(response.data.pet);
+            toggleSetIsUpdating();
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     /* TODO add loading component to render whilst getting data to replace formState.inputs.name.value &&*/

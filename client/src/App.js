@@ -13,7 +13,6 @@ import {
 import Pet from "./pets/Pet";
 import NewPet from "./pets/NewPet";
 import NewUser from "./users/NewUser";
-import UpdatePet from "./pets/UpdatePet";
 import User from "./users/User";
 import Welcome from "./info/Welcome";
 import Navbar from "./shared/Navbar";

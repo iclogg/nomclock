@@ -31,7 +31,7 @@ const useAxios = () => {
                         headers,
                         signal: axiosAbortCtrl.signal,
                     });
-                } else if (method === "post") {
+                } else {
                     response = await axios[method](
                         url,
                         { ...body },
