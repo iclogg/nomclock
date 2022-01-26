@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import Button from "../shared/Button";
+import { Button } from "../shared/Button";
 
 import { AuthContext } from "../utils/auth-context";
 

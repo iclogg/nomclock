@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 
 import Input from "../shared/Input";
-import Button from "../shared/Button";
+import { Button } from "../shared/Button";
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 

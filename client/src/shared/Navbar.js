@@ -29,8 +29,6 @@ fix redirect bug refreshing page/ or logging in and out
 const pages = [
     { auth: false, text: "Home", url: "/" },
     { auth: true, text: "Add Pet", url: "/pets/new" },
-    { auth: true, text: "Update Pet", url: "/pets/:petId/update" },
-    { auth: true, text: "Pet's own Page", url: "/pets/:petId" },
     { auth: true, text: "Your Page", url: "/user" },
     { auth: false, text: "Sign up", url: "/user/new" },
     { auth: false, text: " Login", url: "/user/login" },

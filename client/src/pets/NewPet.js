@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import Input from "../shared/Input";
-import Button from "../shared/Button";
+import { Button } from "../shared/Button";
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 
