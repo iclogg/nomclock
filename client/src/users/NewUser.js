@@ -49,6 +49,7 @@ const NewUser = () => {
             });
 
             auth.login(response.data.userId, response.data.token);
+            window.location.replace("/");
         } catch (error) {}
     };
 

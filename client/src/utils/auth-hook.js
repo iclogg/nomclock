@@ -21,6 +21,7 @@ export const useAuth = () => {
                 expiration: updatedTokenExpirationDate.toISOString(),
             })
         );
+
         console.log("isloggeed in");
     }, []);
 
@@ -30,6 +31,7 @@ export const useAuth = () => {
         setTokenExpirationDate(null);
         localStorage.removeItem("userData");
         console.log("islogged out");
+        window.location.replace("/user/login");
     }, []);
 
     useEffect(() => {

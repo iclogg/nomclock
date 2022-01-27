@@ -8,11 +8,13 @@ import Error from "../shared/Error";
 import { VALIDATOR_REQUIRE } from "../utils/validators";
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
+import { useHistory } from "react-router-dom";
 
 import { useForm } from "../utils/form-hooks";
 
 const Login = () => {
     const auth = useContext(AuthContext);
+    const history = useHistory();
     const {
         sendRequest,
         clearError,
@@ -44,6 +46,7 @@ const Login = () => {
             });
 
             auth.login(response.data.userId, response.data.token);
+            window.location.replace("/");
         } catch (error) {}
     };
 
