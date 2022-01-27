@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -14,8 +14,6 @@ import Link from "@mui/material/Link";
 import { NavLink as RouterLink } from "react-router-dom";
 
 import { AuthContext } from "../utils/auth-context";
-
-import Logout from "../users/Logout";
 
 /* TODO 
 home icon button

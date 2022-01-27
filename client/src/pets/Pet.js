@@ -48,8 +48,6 @@ const Pet = () => {
     useEffect(() => {
         const getPet = async () => {
             try {
-                console.log("petId", petId);
-
                 const response = await sendRequest(
                     `pets/${petId}`,
                     "get",
@@ -65,7 +63,7 @@ const Pet = () => {
 
         getPet();
         console.log("use effect pet");
-    }, [sendRequest, auth]);
+    }, [sendRequest, auth, petId]);
 
     const deletePet = async (e) => {
         console.log("deleted");
@@ -73,7 +71,7 @@ const Pet = () => {
         e.preventDefault();
 
         try {
-            const response = await sendRequest(
+            await sendRequest(
                 `pets/${petId}`,
                 "delete",
                 {},

@@ -16,13 +16,7 @@ const UpdatePet = (props) => {
     const { toggleSetIsUpdating, setPet, pet } = props;
     const auth = useContext(AuthContext);
 
-    const {
-        sendRequest,
-        clearError,
-        clearIsLoading,
-        isLoading,
-        error,
-    } = useAxios();
+    const { sendRequest } = useAxios();
 
     const petId = useParams().petId;
 
