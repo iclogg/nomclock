@@ -71,6 +71,8 @@ const NavBar = (props) => {
                                     {page.text}
                                 </Link>
                             );
+                        } else {
+                            return null;
                         }
                     })}
                 </Box>
