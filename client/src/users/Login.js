@@ -46,7 +46,7 @@ const Login = () => {
             });
 
             auth.login(response.data.userId, response.data.token);
-            window.location.replace("/");
+            history.push("/");
         } catch (error) {}
     };
 

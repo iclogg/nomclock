@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import Input from "../shared/Input";
 import { Button } from "../shared/Button";
@@ -12,6 +13,8 @@ import useAxios from "../utils/axios-hook";
 import { useForm } from "../utils/form-hooks";
 
 const NewUser = () => {
+    const history = useHistory();
+
     const auth = useContext(AuthContext);
     const {
         sendRequest,
@@ -49,7 +52,7 @@ const NewUser = () => {
             });
 
             auth.login(response.data.userId, response.data.token);
-            window.location.replace("/");
+            history.push("/");
         } catch (error) {}
     };
 
