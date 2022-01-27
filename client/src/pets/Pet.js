@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -30,6 +31,7 @@ const ModalStyle = {
 
 const Pet = () => {
     const auth = useContext(AuthContext);
+    const history = useHistory();
 
     //Update
     const { sendRequest, clearError, isLoading, error } = useAxios();
@@ -54,7 +56,6 @@ const Pet = () => {
                     {},
                     { authorization: "Bearer " + auth.token }
                 );
-                console.log(response.data);
 
                 setPet(response.data.pet);
             } catch (err) {
@@ -67,7 +68,23 @@ const Pet = () => {
     }, [sendRequest, auth]);
 
     const deletePet = async (e) => {
+        console.log("deleted");
+
         e.preventDefault();
+
+        try {
+            const response = await sendRequest(
+                `pets/${petId}`,
+                "delete",
+                {},
+                { authorization: `Bearer ${auth.token}` }
+            );
+
+            setPet({});
+            history.push(`/user}`);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const toggleSetIsUpdating = () => {
@@ -91,12 +108,22 @@ const Pet = () => {
                         variant="h6"
                         component="h2"
                     >
-                        Delete {pet.name}
+                        Remove {pet.name}
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                         Are you sure you want to remove your darling from
                         Nomclock?
                     </Typography>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={deletePet}
+                    >
+                        Remove Pet
+                    </Button>
+                    <Button color="secondary" onClick={handleClose}>
+                        No keep Pet in Nomclock
+                    </Button>
                 </Box>
             </Modal>
 
@@ -117,7 +144,7 @@ const Pet = () => {
                         {pet.name} is allowed {pet.maxMeals} meals each day.
                     </Typography>
                     <Button color="secondary" onClick={handleOpen}>
-                        Delete Pet
+                        Remove Pet
                     </Button>
                     <Button onClick={toggleSetIsUpdating} color="secondary">
                         Update Pet
