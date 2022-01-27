@@ -24,14 +24,14 @@ const useAxios = () => {
 
             let response;
             try {
-                if (method === "get") {
-                    body = { params: { ...body } };
+                if (method === "get" || method === "delete") {
                     response = await axios[method](url, {
-                        ...body,
+                        params: { ...body },
                         headers,
                         signal: axiosAbortCtrl.signal,
                     });
                 } else {
+                    /* TODO Add signal to this request */
                     response = await axios[method](
                         url,
                         { ...body },
@@ -42,8 +42,8 @@ const useAxios = () => {
                 activeHttpRequests.current = activeHttpRequests.current.filter(
                     (abortCtrl) => abortCtrl !== axiosAbortCtrl
                 );
-                console.log("response", response);
 
+                /* TODO see if replacement for below is needed */
                 /* if (
                     response.statusText !== "OK" ||
                     response.statusText !== "Created"
