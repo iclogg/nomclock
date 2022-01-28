@@ -126,7 +126,6 @@ const deletePet = async (req, res, next) => {
         );
         return next(error);
     }
-    console.log(pet.owner);
 
     if (pet.owner.id !== req.userData.userId) {
         const error = new HttpError("You are not the owner.", 401);
