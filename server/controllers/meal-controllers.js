@@ -2,13 +2,19 @@ const HttpError = require("../models/http-error");
 const { validationResult } = require("express-validator");
 const Pet = require("../models/pet");
 const User = require("../models/user");
+const Meal = require("../models/meal");
 const mongoose = require("mongoose");
 
 /* TODO!!!!!
 Current is a copy of pet controllers update everything!!! */
 
 /* READ */
-const getPetById = async (req, res, next) => {
+/* Needed:
+meals by pet ID (limited to daily? 5 last? 10 last?)
+meals by pet and day
+*/
+
+const getMealsByPetId = async (req, res, next) => {
     const petId = req.params.petId;
 
     let pet;
@@ -26,7 +32,7 @@ const getPetById = async (req, res, next) => {
     res.json({ pet: pet.toObject({ getters: true }) });
 };
 
-const getPetsByOwner = async (req, res, next) => {
+const getMealsByPetId = async (req, res, next) => {
     const ownerId = req.params.uid;
 
     let pets;
@@ -48,8 +54,10 @@ const getPetsByOwner = async (req, res, next) => {
 };
 
 /* CREATE */
-/* TODO check if express validator check and validation result can be moved into their own middleware file and if there is best practise around that */
-const createPet = async (req, res, next) => {
+/* TODO 
+create a meal
+*/
+const createMeal = async (req, res, next) => {
     const error = validationResult(req);
 
     if (!error.isEmpty()) {
@@ -103,7 +111,9 @@ const createPet = async (req, res, next) => {
 };
 
 /* DELETE */
-const deletePet = async (req, res, next) => {
+/* delete a meal */
+
+const deleteMeal = async (req, res, next) => {
     const petId = req.params.petId;
 
     let pet;
@@ -153,8 +163,8 @@ const deletePet = async (req, res, next) => {
 };
 
 /* UPDATE */
-/* TODO Ad change owner to change owner */
-const updatePet = async (req, res, next) => {
+/* TODO update meal needed? perhaps jsut better to delete*/
+const updateMeal = async (req, res, next) => {
     const error = validationResult(req);
     if (!error.isEmpty()) {
         return next(
@@ -198,8 +208,7 @@ const updatePet = async (req, res, next) => {
 };
 
 /* EXPORTS */
-exports.getPetById = getPetById;
-exports.getPetsByOwner = getPetsByOwner;
-exports.createPet = createPet;
-exports.deletePet = deletePet;
-exports.updatePet = updatePet;
+exports.getMealByPetId = getMealByPetId;
+exports.createMeal = createMeal;
+exports.deleteMeal = deleteMeal;
+exports.updateMeal = updateMeal;
