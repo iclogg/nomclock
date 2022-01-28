@@ -6,7 +6,6 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
-import AvatarGroup from "@mui/material/AvatarGroup";
 
 import { useParams } from "react-router-dom";
 
@@ -42,7 +41,7 @@ const Pet = () => {
     const [isUpdating, setIsUpdating] = useState(false);
 
     //Delete Modal
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -66,8 +65,6 @@ const Pet = () => {
     }, [sendRequest, auth, petId]);
 
     const deletePet = async (e) => {
-        console.log("deleted");
-
         e.preventDefault();
 
         try {

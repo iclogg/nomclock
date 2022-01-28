@@ -8,6 +8,7 @@ import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 
 import PetsList from "../pets/PetsList";
+import Settings from "../users/Settings";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
@@ -89,7 +90,7 @@ const User = () => {
                         {!isLoading && <PetsList items={pets} isLoading />}
                     </TabPanel>
                     <TabPanel value={tabValue} index={1}>
-                        Item Two
+                        <Settings />
                     </TabPanel>
                 </Box>
             </Box>
