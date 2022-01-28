@@ -4,6 +4,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import PetsIcon from "@mui/icons-material/Pets";
+import Grid from "@mui/material/Grid";
 
 import { Link as RRDLink } from "react-router-dom";
 
@@ -30,40 +31,42 @@ const PetList = (props) => {
     }
 
     return (
-        <Stack direction="row" spacing={2}>
+        <Grid container spacing={2} sx={{ width: "40%" }}>
             {props.items.map((pet) => {
                 return (
-                    <Link
-                        to={`/pets/${pet.id}`}
-                        key={pet.id}
-                        component={RRDLink}
-                        sx={{
-                            "&:hover p": {
-                                color: "secondary.main",
-                                textDecoration: "none",
-                            },
-                        }}
-                    >
-                        <Avatar
+                    <Grid item sx={{ width: 75 }}>
+                        <Link
+                            to={`/pets/${pet.id}`}
+                            key={pet.id}
+                            component={RRDLink}
                             sx={{
-                                width: 56,
-                                height: 56,
+                                "&:hover p": {
+                                    color: "secondary.main",
+                                    textDecoration: "none",
+                                },
                             }}
-                            alt={pet.name}
-                            src={pet.image}
-                        />
-                        <Typography
-                            sx={{
-                                color: "primary.contrastText",
-                            }}
-                            variant="body1"
                         >
-                            {pet.name}
-                        </Typography>
-                    </Link>
+                            <Avatar
+                                sx={{
+                                    width: 56,
+                                    height: 56,
+                                }}
+                                alt={pet.name}
+                                src={pet.image}
+                            />
+                            <Typography
+                                sx={{
+                                    color: "primary.contrastText",
+                                }}
+                                variant="body1"
+                            >
+                                {pet.name}
+                            </Typography>
+                        </Link>
+                    </Grid>
                 );
             })}
-        </Stack>
+        </Grid>
     );
 };
 

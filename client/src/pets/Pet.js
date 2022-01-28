@@ -6,6 +6,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
+import AvatarGroup from "@mui/material/AvatarGroup";
 
 import { useParams } from "react-router-dom";
 
@@ -62,7 +63,6 @@ const Pet = () => {
         };
 
         getPet();
-        console.log("use effect pet");
     }, [sendRequest, auth, petId]);
 
     const deletePet = async (e) => {
@@ -79,7 +79,7 @@ const Pet = () => {
             );
 
             setPet({});
-            history.push(`/user}`);
+            history.replace("/user");
         } catch (error) {
             console.log(error);
         }
