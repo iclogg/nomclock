@@ -58,56 +58,28 @@ const getMealsByPetId = async (req, res, next) => {
 create a meal
 */
 const createMeal = async (req, res, next) => {
-    const error = validationResult(req);
+    const { time, comment, feeder } = req.body;
 
-    if (!error.isEmpty()) {
-        return next(
-            new HttpError("Invalid inputs passed, plase check data", 422)
-        );
-    }
+    const petId = req.params.petId;
 
-    const { name, description, maxMeals, image } = req.body;
-
-    const createdPet = new Pet({
-        name,
-        description,
-        maxMeals,
-        image,
-        owner: req.userData.userId,
+    const createdMeal = new Meal({
+        time,
+        comment,
+        pet: req.params.petId,
+        feeder,
     });
 
-    let owner;
+    let pet;
 
     try {
-        owner = await User.findById(req.userData.userId);
+        await createMeal.save();
     } catch (err) {
-        const error = new HttpError("Create pet failed 1", 500);
-
-        return next(err);
-    }
-
-    if (!owner) {
-        const error = new HttpError("Could not find owner.", 404);
-        return next(error);
-    }
-
-    try {
-        const sess = await mongoose.startSession();
-        sess.startTransaction();
-        await createdPet.save({ session: sess });
-
-        owner.pets.push(createdPet); //mongoose behind the scenes established the connection and saves only the id is saved to mpngo
-
-        await owner.save({ session: sess });
-
-        await sess.commitTransaction();
-    } catch (err) {
-        const error = new HttpError("Create pet failed 2", 500);
+        const error = new HttpError("Create meal failed 2", 500);
 
         return next(error);
     }
 
-    res.status(201).json(createdPet);
+    res.status(201).json(createdMeal);
 };
 
 /* DELETE */
