@@ -17,40 +17,24 @@ meals by pet and day
 const getMealsByPetId = async (req, res, next) => {
     const petId = req.params.petId;
 
-    let pet;
+    let meals;
+
     try {
-        pet = await Pet.findById(petId).populate("owner", "-password");
+        meals = await Meal.find({ pet: petId });
     } catch (err) {
-        const error = new HttpError("Could not find that pet!", 500);
+        const error = new HttpError("Could not find any meals!", 500);
         return next(error);
     }
 
-    if (!pet) {
-        return next(new HttpError("Could not find that pet!", 404));
+    if (!meals || meals.length === 0) {
+        return next(
+            new HttpError("Could not find any meals for this darling.", 404)
+        );
     }
 
-    res.json({ pet: pet.toObject({ getters: true }) });
-};
+    meals = meals.map((meal) => meal.toObject({ getters: true }));
 
-const getMealsByPetId = async (req, res, next) => {
-    const ownerId = req.params.uid;
-
-    let pets;
-    let owner;
-    try {
-        owner = await User.findById(ownerId, "-password").populate("pets");
-    } catch (err) {
-        const error = new HttpError("Could not find pets!", 500);
-        return next(error);
-    }
-
-    if (!owner || owner.pets.length === 0) {
-        return next(new HttpError("Could not find pets for this owner.", 404));
-    }
-
-    pets = owner.pets.map((pet) => pet.toObject({ getters: true }));
-
-    res.json({ pets });
+    res.json({ meals });
 };
 
 /* CREATE */
