@@ -3,6 +3,10 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+/* To support time pickers */
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DateAdapter from "@mui/lab/AdapterMoment";
+
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Pet from "./pets/Pet";
@@ -76,24 +80,26 @@ const App = () => {
 
     return (
         <React.Fragment>
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <AuthContext.Provider
-                    value={{
-                        isLoggedIn: !!token,
-                        token,
-                        userId,
-                        login,
-                        logout,
-                    }}
-                >
-                    <Router>
-                        <Navbar />
-                        <Container component="main">{routes}</Container>
-                        <Footer />
-                    </Router>
-                </AuthContext.Provider>
-            </ThemeProvider>
+            <LocalizationProvider dateAdapter={DateAdapter}>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <AuthContext.Provider
+                        value={{
+                            isLoggedIn: !!token,
+                            token,
+                            userId,
+                            login,
+                            logout,
+                        }}
+                    >
+                        <Router>
+                            <Navbar />
+                            <Container component="main">{routes}</Container>
+                            <Footer />
+                        </Router>
+                    </AuthContext.Provider>
+                </ThemeProvider>
+            </LocalizationProvider>
         </React.Fragment>
     );
 };

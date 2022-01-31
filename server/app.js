@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const petRoutes = require("./routes/pet-routes");
 const userRoutes = require("./routes/user-routes");
+const mealRoutes = require("./routes/meal-routes");
 const HttpError = require("./models/http-error");
 
 const app = express();
@@ -31,6 +32,7 @@ app.use(function (req, res, next) {
 // Routes
 app.use("/api/pets", petRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/meals", mealRoutes);
 
 //Catch all middleware
 app.use((req, res, next) => {

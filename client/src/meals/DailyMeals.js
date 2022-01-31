@@ -8,13 +8,14 @@ const DailyMeals = () => {
     return (
         <Grid
             container
-            justifyContent="space-between"
+            justifyContent="center"
             sx={{ p: "10px", m: "10px" }}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
-            <Grid item sx={{ backgroundColor: "secondary.main" }}>
+            <Grid item xs={5} sx={{ backgroundColor: "secondary.main" }}>
                 <Typography>Daily Meals</Typography>
             </Grid>
-            <Grid item>
+            <Grid xs={3} item>
                 <NewMeal />
             </Grid>
         </Grid>

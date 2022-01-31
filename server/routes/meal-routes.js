@@ -4,7 +4,7 @@ const {
     getMealsByPetId,
     deleteMeal,
     updateMeal,
-    updateMeal,
+    createMeal,
 } = require("../controllers/meal-controllers");
 const checkAuth = require("../middleware/check-auth");
 

@@ -42,25 +42,23 @@ const getMealsByPetId = async (req, res, next) => {
 create a meal
 */
 const createMeal = async (req, res, next) => {
-    const { time, comment, feeder } = req.body;
+    console.log("req.body", req.body);
 
-    const petId = req.params.petId;
+    const { time, comment, feeder, pet } = req.body;
 
     const createdMeal = new Meal({
-        time,
+        time: new Date(time),
         comment,
-        pet: req.params.petId,
+        pet,
         feeder,
     });
 
-    let pet;
-
     try {
-        await createMeal.save();
+        await createdMeal.save();
     } catch (err) {
         const error = new HttpError("Create meal failed 2", 500);
 
-        return next(error);
+        return next(err);
     }
 
     res.status(201).json(createdMeal);
