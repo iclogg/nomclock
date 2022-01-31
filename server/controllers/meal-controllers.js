@@ -164,7 +164,7 @@ const updateMeal = async (req, res, next) => {
 };
 
 /* EXPORTS */
-exports.getMealByPetId = getMealByPetId;
+exports.getMealsByPetId = getMealsByPetId;
 exports.createMeal = createMeal;
 exports.deleteMeal = deleteMeal;
 exports.updateMeal = updateMeal;

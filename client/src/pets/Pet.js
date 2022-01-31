@@ -13,6 +13,7 @@ import Avatar from "../shared/Avatar";
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 import UpdatePet from "../pets/UpdatePet";
+import DailyMeals from "../meals/DailyMeals";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
@@ -144,6 +145,7 @@ const Pet = () => {
                     <Button onClick={toggleSetIsUpdating} color="secondary">
                         Update Pet
                     </Button>
+                    <DailyMeals />
                 </Box>
             )}
         </Container>
