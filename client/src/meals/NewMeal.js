@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import FormGroup from "@mui/material/FormGroup";
 import TimePicker from "@mui/lab/TimePicker";
 
-const NewMeal = () => {
+const NewMeal = ({ setMeals, meals }) => {
     const auth = useContext(AuthContext);
     const [time, setTime] = useState(null);
     const [comment, setComment] = useState("");
@@ -39,8 +39,13 @@ const NewMeal = () => {
                 },
                 { authorization: `Bearer ${auth.token}` }
             );
+            let updatedMeals = [...meals, response.data].sort((x, y) => {
+                return new Date(x.time) - new Date(y.time);
+            });
 
-            console.log("response in new meal", response);
+            setMeals(updatedMeals);
+            setTime(null);
+            setComment("");
         } catch (error) {
             console.log(error);
         }

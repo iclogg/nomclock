@@ -29,8 +29,6 @@ const DailyMeals = (props) => {
         maxM.push(i);
     }
 
-    console.log(maxM);
-
     useEffect(() => {
         const getMeal = async () => {
             let preppedMeals;
@@ -48,23 +46,12 @@ const DailyMeals = (props) => {
                 preppedMeals = preppedMeals.filter((meal) => {
                     let mealDate = new Date(meal.time);
                     let today = new Date();
-                    console.log("mealDate", mealDate);
-                    console.log("today", today);
-
-                    console.log(
-                        "compare",
-                        mealDate.setHours(0, 0, 0, 0) ===
-                            today.setHours(0, 0, 0, 0)
-                    );
 
                     return (
                         mealDate.setHours(0, 0, 0, 0) ===
                         today.setHours(0, 0, 0, 0)
                     );
                 });
-
-                console.log("all", response.data.meals);
-                console.log("prepped", preppedMeals);
 
                 setMeals(preppedMeals);
             } catch (err) {
@@ -98,11 +85,11 @@ const DailyMeals = (props) => {
                                     )}
                                 </TimelineSeparator>
                                 <TimelineContent>
-                                    {moment(
-                                        meals[mealTime - 1]
-                                            ? meals[mealTime - 1].time
-                                            : mealTime
-                                    ).format("HH:mm")}
+                                    {meals[mealTime - 1]
+                                        ? moment(
+                                              meals[mealTime - 1].time
+                                          ).format("HH:mm")
+                                        : mealTime}
                                 </TimelineContent>
                             </TimelineItem>
                         );
@@ -133,33 +120,10 @@ const DailyMeals = (props) => {
                 </Timeline>
             </Grid>
             <Grid xs={3} item>
-                <NewMeal />
+                <NewMeal setMeals={setMeals} meals={meals} />
             </Grid>
         </Grid>
     );
 };
 
 export default DailyMeals;
-
-/*    <Timeline>
-                    <TimelineItem>
-                        <TimelineSeparator>
-                            <TimelineDot />
-                            <TimelineConnector />
-                        </TimelineSeparator>
-                        <TimelineContent>Eat</TimelineContent>
-                    </TimelineItem>
-                    <TimelineItem>
-                        <TimelineSeparator>
-                            <TimelineDot />
-                            <TimelineConnector />
-                        </TimelineSeparator>
-                        <TimelineContent>Code</TimelineContent>
-                    </TimelineItem>
-                    <TimelineItem>
-                        <TimelineSeparator>
-                            <TimelineDot />
-                        </TimelineSeparator>
-                        <TimelineContent>Sleep</TimelineContent>
-                    </TimelineItem>
-                </Timeline> */
