@@ -56,7 +56,6 @@ const NewPet = () => {
                 },
                 { authorization: `Bearer ${auth.token}` }
             );
-
             history.push(`/pets/${response.data._id}`);
         } catch (error) {
             console.log(error);

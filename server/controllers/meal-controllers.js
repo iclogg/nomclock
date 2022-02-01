@@ -17,6 +17,8 @@ meals by pet and day
 const getMealsByPetId = async (req, res, next) => {
     const petId = req.params.petId;
 
+    console.log(req.params.petId);
+
     let meals;
 
     try {
@@ -25,6 +27,7 @@ const getMealsByPetId = async (req, res, next) => {
         const error = new HttpError("Could not find any meals!", 500);
         return next(error);
     }
+    console.log(meals);
 
     if (!meals || meals.length === 0) {
         return next(

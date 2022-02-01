@@ -33,10 +33,9 @@ const PetList = (props) => {
         <Grid container spacing={2} sx={{ width: "40%" }}>
             {props.items.map((pet) => {
                 return (
-                    <Grid item sx={{ width: 75 }}>
+                    <Grid item sx={{ width: 75 }} key={pet.id}>
                         <Link
                             to={`/pets/${pet.id}`}
-                            key={pet.id}
                             component={RRDLink}
                             sx={{
                                 "&:hover p": {

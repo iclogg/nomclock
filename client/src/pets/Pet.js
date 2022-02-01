@@ -145,7 +145,7 @@ const Pet = () => {
                     <Button onClick={toggleSetIsUpdating} color="secondary">
                         Update Pet
                     </Button>
-                    <DailyMeals />
+                    <DailyMeals maxMeals={pet.maxMeals} />
                 </Box>
             )}
         </Container>

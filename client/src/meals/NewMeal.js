@@ -15,13 +15,7 @@ const NewMeal = () => {
 
     const { petId } = useParams();
 
-    const {
-        sendRequest,
-        clearError,
-        clearIsLoading,
-        isLoading,
-        error,
-    } = useAxios();
+    const { sendRequest } = useAxios();
 
     const submitHandler = async (e) => {
         e.preventDefault();
