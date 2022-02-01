@@ -55,10 +55,20 @@ const DailyMeals = (props) => {
     const [meals, setMeals] = useState([]);
 
     if (props.maxMeals) {
-        let maxM01 = mealNames.filter((listObj) => {
-            return listObj.arr.length == props.maxMeals;
-        });
-        maxM = maxM01[0];
+        if (props.maxMeals > 6) {
+            let mealTimeArr = [];
+            for (let i = 0; i < props.maxMeals; i++) {
+                mealTimeArr.push(`${i + 1}/${props.maxMeals} meals`);
+            }
+            maxM = {
+                num: "over six",
+                arr: mealTimeArr,
+            };
+        } else {
+            maxM = mealNames.filter((listObj) => {
+                return listObj.arr.length == props.maxMeals;
+            })[0];
+        }
     }
 
     useEffect(() => {
@@ -93,11 +103,6 @@ const DailyMeals = (props) => {
 
         getMeal();
     }, [sendRequest, auth, petId]);
-
-    useEffect(() => {
-        console.log("mels updated", meals);
-        console.log("props", props.maxMeals);
-    }, [meals]);
 
     return (
         <Grid
