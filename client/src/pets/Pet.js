@@ -131,7 +131,7 @@ const Pet = () => {
                 />
             )}
 
-            {!isLoading && !isUpdating && (
+            {pet && !isLoading && !isUpdating && (
                 <Box sx={{ textAlign: "center" }}>
                     <Typography variant="h1">{pet.name}'s own page</Typography>
                     <Avatar name={pet.name} image={pet.image} />
@@ -145,6 +145,7 @@ const Pet = () => {
                     <Button onClick={toggleSetIsUpdating} color="secondary">
                         Update Pet
                     </Button>
+
                     <DailyMeals maxMeals={pet.maxMeals} />
                 </Box>
             )}
