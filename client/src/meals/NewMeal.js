@@ -19,7 +19,7 @@ const NewMeal = ({ mealAddHandler, meals }) => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(comment, time);
+
         let rawTime;
         if (time === null) {
             rawTime = new Date();

@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
+import Tooltip from "@mui/material/Tooltip";
 
 const DeleteMeal = ({ mealId, meals, mealDeletedHandler }) => {
     const { sendRequest } = useAxios();
@@ -32,17 +34,21 @@ const DeleteMeal = ({ mealId, meals, mealDeletedHandler }) => {
     };
 
     return (
-        <DeleteIcon
-            onClick={deleteMeal}
-            sx={{
-                fontSize: 17,
-                verticalAlign: "text-top",
-                "&:hover": {
-                    color: "secondary.dark",
-                    cursor: "pointer",
-                },
-            }}
-        />
+        <Tooltip title="Delete">
+            <IconButton>
+                <DeleteIcon
+                    onClick={deleteMeal}
+                    sx={{
+                        fontSize: 17,
+                        verticalAlign: "text-top",
+                        "&:hover": {
+                            color: "secondary.dark",
+                            cursor: "pointer",
+                        },
+                    }}
+                />
+            </IconButton>
+        </Tooltip>
     );
 };
 
