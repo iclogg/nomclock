@@ -17,8 +17,6 @@ meals by pet and day
 const getMealsByPetId = async (req, res, next) => {
     const petId = req.params.petId;
 
-    console.log(req.params.petId);
-
     let meals;
 
     try {
@@ -27,7 +25,6 @@ const getMealsByPetId = async (req, res, next) => {
         const error = new HttpError("Could not find any meals!", 500);
         return next(error);
     }
-    console.log(meals);
 
     if (!meals || meals.length === 0) {
         return next(
@@ -45,8 +42,6 @@ const getMealsByPetId = async (req, res, next) => {
 create a meal
 */
 const createMeal = async (req, res, next) => {
-    console.log("req.body", req.body);
-
     const { time, comment, feeder, pet } = req.body;
 
     const createdMeal = new Meal({
@@ -71,52 +66,31 @@ const createMeal = async (req, res, next) => {
 /* delete a meal */
 
 const deleteMeal = async (req, res, next) => {
-    const petId = req.params.petId;
+    /* TODO check that person has permission to delete meal */
 
-    let pet;
+    const mealId = req.params.mealId;
+
+    let meal;
 
     try {
-        pet = await Pet.findById(petId).populate("owner", "-password");
+        meal = await Meal.findByIdAndDelete(mealId);
     } catch (err) {
         const error = new HttpError(
-            "Something went wrong. Pet not deleted",
+            "Something went wrong. Meal not deleted",
             500
         );
         return next(error);
     }
 
-    if (!pet) {
+    if (!meal) {
         const error = new HttpError(
-            "Something went wrong. Could not find pet to be deleted",
+            "Something went wrong. Could not find Meal to be deleted",
             404
         );
         return next(error);
     }
 
-    if (pet.owner.id !== req.userData.userId) {
-        const error = new HttpError("You are not the owner.", 401);
-        return next(error);
-    }
-
-    try {
-        const sess = await mongoose.startSession();
-        sess.startTransaction();
-
-        await pet.remove({ session: sess });
-
-        pet.owner.pets.pull(pet);
-        await pet.owner.save({ session: sess });
-
-        await sess.commitTransaction();
-    } catch (err) {
-        const error = new HttpError(
-            "Something went wrong. Pet  not deleted",
-            500
-        );
-        return next(error);
-    }
-
-    res.status(200).json({ message: "Pet deleted" });
+    res.status(200).json({ message: "Meal deleted", deletedMeal: meal._id });
 };
 
 /* UPDATE */

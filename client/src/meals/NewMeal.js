@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import FormGroup from "@mui/material/FormGroup";
 import TimePicker from "@mui/lab/TimePicker";
 
-const NewMeal = ({ setMeals, meals }) => {
+const NewMeal = ({ mealAddHandler, meals }) => {
     const auth = useContext(AuthContext);
     const [time, setTime] = useState(null);
     const [comment, setComment] = useState("");
@@ -43,7 +43,7 @@ const NewMeal = ({ setMeals, meals }) => {
                 return new Date(x.time) - new Date(y.time);
             });
 
-            setMeals(updatedMeals);
+            mealAddHandler(updatedMeals);
             setTime(null);
             setComment("");
         } catch (error) {

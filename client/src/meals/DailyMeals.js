@@ -14,6 +14,7 @@ import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 
 import NewMeal from "./NewMeal";
+import DeleteMeal from "./DeleteMeal";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
@@ -104,6 +105,14 @@ const DailyMeals = (props) => {
         getMeal();
     }, [sendRequest, auth, petId]);
 
+    const mealDeletedHandler = (newMeals) => {
+        setMeals(newMeals);
+    };
+
+    const mealAddHandler = (list) => {
+        setMeals(list);
+    };
+
     return (
         <Grid
             container
@@ -144,6 +153,16 @@ const DailyMeals = (props) => {
                                                   "HH:mm"
                                               )
                                             : mealTime}
+
+                                        {meals[i] && (
+                                            <DeleteMeal
+                                                mealDeletedHandler={
+                                                    mealDeletedHandler
+                                                }
+                                                meals={meals}
+                                                mealId={meals[i]._id}
+                                            />
+                                        )}
                                     </TimelineContent>
                                 </TimelineItem>
                             );
@@ -178,6 +197,14 @@ const DailyMeals = (props) => {
                                                 moment(meal.time).format(
                                                     "HH:mm"
                                                 )}
+
+                                            <DeleteMeal
+                                                mealDeletedHandler={
+                                                    mealDeletedHandler
+                                                }
+                                                meals={meals}
+                                                mealId={meal._id}
+                                            />
                                         </TimelineContent>
                                     </TimelineItem>
                                 );
@@ -186,7 +213,7 @@ const DailyMeals = (props) => {
                 </Timeline>
             </Grid>
             <Grid xs={3} item>
-                <NewMeal setMeals={setMeals} meals={meals} />
+                <NewMeal mealAddHandler={mealAddHandler} meals={meals} />
             </Grid>
         </Grid>
     );
