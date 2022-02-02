@@ -35,12 +35,12 @@ const DeleteMeal = ({ mealId, meals, mealDeletedHandler }) => {
 
     return (
         <Tooltip title="Delete">
-            <IconButton>
+            <IconButton sx={{ verticalAlign: "-2.7px" }}>
                 <DeleteIcon
                     onClick={deleteMeal}
                     sx={{
                         fontSize: 17,
-                        verticalAlign: "text-top",
+
                         "&:hover": {
                             color: "secondary.dark",
                             cursor: "pointer",

@@ -120,7 +120,7 @@ const DailyMeals = (props) => {
             sx={{ p: "10px", m: "10px" }}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
-            <Grid item xs={5} sx={{ backgroundColor: "primary.main" }}>
+            <Grid item xs={8} sx={{ backgroundColor: "primary.main" }}>
                 <Typography
                     variant="h5"
                     sx={{ textTransform: "uppercase", mt: "35px" }}
