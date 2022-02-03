@@ -15,6 +15,7 @@ import TimelineDot from "@mui/lab/TimelineDot";
 
 import NewMeal from "./NewMeal";
 import DeleteMeal from "./DeleteMeal";
+import LatestMeal from "./LatestMeal";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
@@ -214,6 +215,7 @@ const DailyMeals = (props) => {
             </Grid>
             <Grid xs={3} item>
                 <NewMeal mealAddHandler={mealAddHandler} meals={meals} />
+                <LatestMeal petId={petId} />
             </Grid>
         </Grid>
     );

@@ -5,12 +5,15 @@ const {
     deleteMeal,
     updateMeal,
     createMeal,
+    getLatestMealByPetId,
 } = require("../controllers/meal-controllers");
 const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
 router.use(checkAuth);
+
+router.get("/:petId/latest", getLatestMealByPetId);
 
 router.get("/:petId", getMealsByPetId);
 router.delete("/:mealId", deleteMeal);

@@ -17,6 +17,9 @@ meals by pet and day
 const getMealsByPetId = async (req, res, next) => {
     const petId = req.params.petId;
 
+    /* TODO add opional dynamic date range sort to be passed in */
+    /*  let dateRange = new Date(new Date().getTime() - 48 * 60 * 60 * 1000);
+     */
     let meals;
 
     try {
@@ -35,6 +38,30 @@ const getMealsByPetId = async (req, res, next) => {
     meals = meals.map((meal) => meal.toObject({ getters: true }));
 
     res.json({ meals });
+};
+
+const getLatestMealByPetId = async (req, res, next) => {
+    const petId = req.params.petId;
+
+    let meal;
+
+    try {
+        meal = await Meal.findOne({ pet: petId }).sort({ time: "-1" });
+    } catch (err) {
+        const error = new HttpError("Could not find any meals!", 500);
+        return next(error);
+    }
+
+    if (!meal || meal.length === 0) {
+        return next(
+            new HttpError(
+                "Could not find any recent meals for this darling.",
+                404
+            )
+        );
+    }
+
+    res.json({ meal });
 };
 
 /* CREATE */
@@ -140,6 +167,7 @@ const updateMeal = async (req, res, next) => {
 
 /* EXPORTS */
 exports.getMealsByPetId = getMealsByPetId;
+exports.getLatestMealByPetId = getLatestMealByPetId;
 exports.createMeal = createMeal;
 exports.deleteMeal = deleteMeal;
 exports.updateMeal = updateMeal;
