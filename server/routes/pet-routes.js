@@ -8,6 +8,7 @@ const {
     createPet,
     updatePet,
     addFamilyMember,
+    deleteFamilyMember,
 } = require("../controllers/pet-controllers");
 const checkAuth = require("../middleware/check-auth");
 
@@ -17,6 +18,7 @@ router.use(checkAuth);
 
 router.get("/owner/:uid", getPetsByOwner);
 router.post("/:petId/family", addFamilyMember);
+router.delete("/:petId/family", deleteFamilyMember);
 router.get("/:petId", getPetById);
 router.delete("/:petId", deletePet);
 router.patch("/:petId", [check("name").not().isEmpty()], updatePet);

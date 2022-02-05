@@ -59,7 +59,7 @@ const NewFamilyMember = () => {
                     color="secondary"
                     onClick={submitHandler}
                 >
-                    Add Member
+                    Add Family Member
                 </Button>
             </FormGroup>
         </form>

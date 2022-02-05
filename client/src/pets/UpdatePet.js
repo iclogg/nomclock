@@ -2,6 +2,8 @@ import React, { useEffect, useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import FormGroup from "@mui/material/FormGroup";
 
 import { useParams } from "react-router-dom";
 
@@ -16,6 +18,7 @@ const UpdatePet = (props) => {
     const { toggleSetIsUpdating, setPet, pet } = props;
     const auth = useContext(AuthContext);
     const [dataLoaded, setDataLoaded] = useState(false);
+    const [email, setEmail] = useState("");
 
     const { sendRequest } = useAxios();
 
@@ -74,6 +77,8 @@ const UpdatePet = (props) => {
                 },
                 { authorization: `Bearer ${auth.token}` }
             );
+            console.log("response delete family member", response);
+
             setPet(response.data.pet);
             toggleSetIsUpdating();
         } catch (error) {
@@ -82,6 +87,32 @@ const UpdatePet = (props) => {
     };
 
     /* TODO add loading component to render whilst getting data to replace formState.inputs.name.value &&*/
+    const deleteFamilyMemberHandler = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await sendRequest(
+                `pets/${petId}/family`,
+                "delete",
+                {
+                    email,
+                },
+                { authorization: `Bearer ${auth.token}` }
+            );
+
+            console.log("response.data", response.data);
+
+            setEmail("");
+            toggleSetIsUpdating();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const { value } = e.target;
+        setEmail(value);
+    };
 
     return (
         dataLoaded && (
@@ -132,6 +163,27 @@ const UpdatePet = (props) => {
                 <Button onClick={toggleSetIsUpdating} color="secondary">
                     Done
                 </Button>
+                <form>
+                    <FormGroup>
+                        <TextField
+                            id="email"
+                            label="Email"
+                            color="secondary"
+                            variant="outlined"
+                            value={email}
+                            type="email"
+                            onChange={handleInputChange}
+                        />
+
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={deleteFamilyMemberHandler}
+                        >
+                            Remove Family Member
+                        </Button>
+                    </FormGroup>
+                </form>
             </Box>
         )
     );

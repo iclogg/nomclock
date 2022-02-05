@@ -155,6 +155,40 @@ const deletePet = async (req, res, next) => {
     res.status(200).json({ message: "Pet deleted" });
 };
 
+const deleteFamilyMember = async (req, res, next) => {
+    /* TODO check that person has permission to delete meal */
+    console.log("delete familymenber");
+
+    const petId = req.params.petId;
+    const { email } = req.body;
+
+    let pet;
+
+    try {
+        pet = await Pet.updateOne(
+            { _id: { petId } },
+            { $pullAll: { family: [email] } }
+        );
+    } catch (err) {
+        const error = new HttpError(
+            "Something went wrong. Family member not deleted",
+            500
+        );
+        return next(error);
+    }
+
+    console.log("pet", pet);
+
+    if (!pet) {
+        const error = new HttpError(
+            "Something went wrong. Could not find pet",
+            404
+        );
+        return next(error);
+    }
+
+    res.status(200).json({ message: "Family member deleted" });
+};
 /* UPDATE */
 /* TODO Ad change owner to change owner */
 const updatePet = async (req, res, next) => {
@@ -257,3 +291,4 @@ exports.createPet = createPet;
 exports.deletePet = deletePet;
 exports.updatePet = updatePet;
 exports.addFamilyMember = addFamilyMember;
+exports.deleteFamilyMember = deleteFamilyMember;
