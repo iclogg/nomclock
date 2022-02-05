@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -15,6 +15,7 @@ import { useForm } from "../utils/form-hooks";
 const UpdatePet = (props) => {
     const { toggleSetIsUpdating, setPet, pet } = props;
     const auth = useContext(AuthContext);
+    const [dataLoaded, setDataLoaded] = useState(false);
 
     const { sendRequest } = useAxios();
 
@@ -56,11 +57,11 @@ const UpdatePet = (props) => {
             },
             true
         );
+        setDataLoaded(true);
     }, [setFormData, pet]);
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(formState.inputs); // send to Backend
 
         try {
             const response = await sendRequest(
@@ -83,7 +84,7 @@ const UpdatePet = (props) => {
     /* TODO add loading component to render whilst getting data to replace formState.inputs.name.value &&*/
 
     return (
-        formState.inputs.name.value && (
+        dataLoaded && (
             <Box sx={{ mt: "10px" }}>
                 <Typography variant="h4">Update Pet</Typography>{" "}
                 <form action="" onSubmit={submitHandler}>
