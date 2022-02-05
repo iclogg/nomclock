@@ -14,7 +14,9 @@ const getPetById = async (req, res, next) => {
 
     let pet;
     try {
-        pet = await Pet.findById(petId).populate("owner", "-password");
+        pet = await Pet.findById(petId)
+            .populate("owner", "-password")
+            .populate("family", "-password -pets");
     } catch (err) {
         const error = new HttpError("Could not find that pet!", 500);
         return next(error);
@@ -198,9 +200,60 @@ const updatePet = async (req, res, next) => {
     res.status(200).json({ pet: pet.toObject({ getters: true }) });
 };
 
+const addFamilyMember = async (req, res, next) => {
+    const petId = req.params.petId;
+    const { email } = req.body;
+
+    console.log("email", email);
+    console.log("petId", petId);
+
+    let pet;
+    let newMember;
+    try {
+        pet = await Pet.findById(petId);
+    } catch (err) {
+        const error = new HttpError("Something whent wrong", 500);
+        console.log(err);
+
+        return next(error);
+    }
+    console.log("pet", pet);
+
+    try {
+        newMember = await User.findOne({ email }, "-password -pets");
+    } catch (err) {
+        const error = new HttpError("Something went wrong", 500);
+        return next(error);
+    }
+    console.log("member", newMember);
+
+    if (!newMember) {
+        const error = new HttpError(
+            "Sorry could not find any user with that email.",
+            401
+        );
+        return next(error);
+    }
+
+    pet.family.push(newMember);
+
+    try {
+        await pet.save();
+    } catch (err) {
+        const error = new HttpError(
+            "Something went wrong. Pet could not be updated.",
+            500
+        );
+        return next(error);
+    }
+
+    res.status(200).json({ pet: pet.toObject({ getters: true }) });
+};
+
 /* EXPORTS */
 exports.getPetById = getPetById;
 exports.getPetsByOwner = getPetsByOwner;
 exports.createPet = createPet;
 exports.deletePet = deletePet;
 exports.updatePet = updatePet;
+exports.addFamilyMember = addFamilyMember;

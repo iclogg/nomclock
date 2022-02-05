@@ -6,6 +6,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
+import Grid from "@mui/material/Grid";
 
 import { useParams } from "react-router-dom";
 
@@ -14,6 +15,8 @@ import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 import UpdatePet from "../pets/UpdatePet";
 import DailyMeals from "../meals/DailyMeals";
+import PetsFamily from "../pets/PetsFamily";
+import NewFamilyMember from "../pets/NewFamilyMember";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
@@ -145,6 +148,14 @@ const Pet = () => {
                     <Button onClick={toggleSetIsUpdating} color="secondary">
                         Update Pet
                     </Button>
+                    <Grid container sx={{ justifyContent: "center" }}>
+                        <Grid item xs={8}>
+                            <PetsFamily family={pet.family} owner={pet.owner} />
+                        </Grid>
+                        <Grid item xs={3}>
+                            <NewFamilyMember />
+                        </Grid>
+                    </Grid>
 
                     <DailyMeals maxMeals={pet.maxMeals} />
                 </Box>
