@@ -160,6 +160,29 @@ const deleteUser = async (req, res, next) => {
         return next(error);
     }
 
+    let updatedFamilies;
+
+    try {
+        updatedFamilies = await Pet.updateMany(
+            { family: [userId] },
+            { $pullAll: { family: [userId] } }
+        );
+    } catch (err) {
+        const error = new HttpError(
+            "Something went wrong. User not deleted",
+            500
+        );
+        return next(error);
+    }
+
+    if (!user) {
+        const error = new HttpError(
+            "Something went wrong. Could not find user to be deleted",
+            404
+        );
+        return next(error);
+    }
+
     try {
         const sess = await mongoose.startSession();
         sess.startTransaction();
@@ -168,7 +191,6 @@ const deleteUser = async (req, res, next) => {
             { owner: user._id },
             { session: sess }
         );
-        console.log(deletedPetsN);
 
         await user.remove({ session: sess });
 
