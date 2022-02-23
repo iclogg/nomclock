@@ -15,7 +15,7 @@ const getPetById = async (req, res, next) => {
     let pet;
     try {
         pet = await Pet.findById(petId)
-            .populate("owner", "-password")
+            .populate("owner", "-password -pets")
             .populate("family", "-password -pets");
     } catch (err) {
         const error = new HttpError("Could not find that pet!", 500);
@@ -156,28 +156,30 @@ const deletePet = async (req, res, next) => {
 };
 
 const deleteFamilyMember = async (req, res, next) => {
-    /* TODO check that person has permission to delete meal */
-    console.log("delete familymenber");
-
     const petId = req.params.petId;
-    const { email } = req.body;
+    const { memberId } = req.query;
 
     let pet;
 
     try {
-        pet = await Pet.updateOne(
-            { _id: { petId } },
-            { $pullAll: { family: [email] } }
-        );
+        pet = await Pet.findOneAndUpdate(
+            { _id: petId },
+            { $pullAll: { family: [memberId] } },
+            {
+                new: true,
+            }
+        )
+            .populate("owner", "-password -pets")
+            .populate("family", "-password -pets");
     } catch (err) {
         const error = new HttpError(
             "Something went wrong. Family member not deleted",
             500
         );
-        return next(error);
-    }
+        console.log(err);
 
-    console.log("pet", pet);
+        return next(err);
+    }
 
     if (!pet) {
         const error = new HttpError(
@@ -187,7 +189,7 @@ const deleteFamilyMember = async (req, res, next) => {
         return next(error);
     }
 
-    res.status(200).json({ message: "Family member deleted" });
+    res.json({ pet: pet.toObject({ getters: true }) });
 };
 /* UPDATE */
 /* TODO Ad change owner to change owner */

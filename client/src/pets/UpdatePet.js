@@ -4,6 +4,10 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import FormGroup from "@mui/material/FormGroup";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 import { useParams } from "react-router-dom";
 
@@ -18,7 +22,7 @@ const UpdatePet = (props) => {
     const { toggleSetIsUpdating, setPet, pet } = props;
     const auth = useContext(AuthContext);
     const [dataLoaded, setDataLoaded] = useState(false);
-    const [email, setEmail] = useState("");
+    const [memberId, setMemberId] = useState("");
 
     const { sendRequest } = useAxios();
 
@@ -95,14 +99,15 @@ const UpdatePet = (props) => {
                 `pets/${petId}/family`,
                 "delete",
                 {
-                    email,
+                    memberId,
                 },
                 { authorization: `Bearer ${auth.token}` }
             );
 
             console.log("response.data", response.data);
 
-            setEmail("");
+            setMemberId("");
+            setPet(response.data.pet);
             toggleSetIsUpdating();
         } catch (error) {
             console.log(error);
@@ -111,7 +116,7 @@ const UpdatePet = (props) => {
 
     const handleInputChange = (e) => {
         const { value } = e.target;
-        setEmail(value);
+        setMemberId(value);
     };
 
     return (
@@ -164,25 +169,39 @@ const UpdatePet = (props) => {
                     Done
                 </Button>
                 <form>
-                    <FormGroup>
-                        <TextField
-                            id="email"
-                            label="Email"
-                            color="secondary"
-                            variant="outlined"
-                            value={email}
-                            type="email"
-                            onChange={handleInputChange}
-                        />
-
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={deleteFamilyMemberHandler}
-                        >
-                            Remove Family Member
-                        </Button>
-                    </FormGroup>
+                    <Box sx={{ minWidth: 120 }}>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">
+                                Name
+                            </InputLabel>
+                            <Select
+                                id="name"
+                                label="Name"
+                                color="secondary"
+                                variant="outlined"
+                                value={memberId}
+                                type="memberId"
+                                onChange={handleInputChange}
+                            >
+                                {" "}
+                                {pet.family &&
+                                    pet.family.map((member) => {
+                                        return (
+                                            <MenuItem value={member._id}>
+                                                {member.name}
+                                            </MenuItem>
+                                        );
+                                    })}
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={deleteFamilyMemberHandler}
+                    >
+                        Remove Family Member
+                    </Button>
                 </form>
             </Box>
         )
