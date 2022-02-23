@@ -64,7 +64,7 @@ const User = () => {
     }
 
     return (
-        <div>
+        <>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
             <Typography variant="h3" mt="10px">
@@ -94,7 +94,7 @@ const User = () => {
                     </TabPanel>
                 </Box>
             </Box>
-        </div>
+        </>
     );
 };
 

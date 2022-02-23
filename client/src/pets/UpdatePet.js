@@ -12,6 +12,8 @@ import Select from "@mui/material/Select";
 import { useParams } from "react-router-dom";
 
 import Input from "../shared/Input";
+import NewFamilyMember from "../pets/NewFamilyMember";
+
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
@@ -165,9 +167,7 @@ const UpdatePet = (props) => {
                         SAVE
                     </Button>
                 </form>
-                <Button onClick={toggleSetIsUpdating} color="secondary">
-                    Done
-                </Button>
+                <NewFamilyMember />
                 <form>
                     <Box sx={{ minWidth: 120 }}>
                         <FormControl fullWidth>
@@ -183,7 +183,6 @@ const UpdatePet = (props) => {
                                 type="memberId"
                                 onChange={handleInputChange}
                             >
-                                {" "}
                                 {pet.family &&
                                     pet.family.map((member) => {
                                         return (
@@ -203,6 +202,13 @@ const UpdatePet = (props) => {
                         Remove Family Member
                     </Button>
                 </form>
+                <Button
+                    sx={{ mt: 3 }}
+                    onClick={toggleSetIsUpdating}
+                    color="secondary"
+                >
+                    Done
+                </Button>
             </Box>
         )
     );

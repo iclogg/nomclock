@@ -6,9 +6,9 @@ import Grid from "@mui/material/Grid";
 
 const PetsFamily = ({ family, owner }) => {
     return (
-        <Grid container spacing={2} sx={{ width: "40%" }}>
+        <Grid container>
             {owner && (
-                <Grid item sx={{ width: 75 }} key={owner._id}>
+                <Grid item sx={{ mr: 1 }} key={owner._id}>
                     <Avatar
                         sx={{
                             width: 56,
@@ -30,7 +30,7 @@ const PetsFamily = ({ family, owner }) => {
             {family &&
                 family.map((member) => {
                     return (
-                        <Grid item sx={{ width: 75 }} key={member._id}>
+                        <Grid item sx={{ mr: 1 }} key={member._id}>
                             <Avatar
                                 sx={{
                                     width: 56,

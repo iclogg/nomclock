@@ -53,15 +53,14 @@ const NewFamilyMember = () => {
                     type="email"
                     onChange={handleInputChange}
                 />
-
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={submitHandler}
-                >
-                    Add Family Member
-                </Button>
             </FormGroup>
+            <Button
+                variant="contained"
+                color="secondary"
+                onClick={submitHandler}
+            >
+                Add Family Member
+            </Button>
         </form>
     );
 };
