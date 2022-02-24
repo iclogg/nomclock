@@ -185,7 +185,7 @@ const deleteUser = async (req, res, next) => {
 
     try {
         updatedFamilies = await Pet.updateMany(
-            { family: [userId] },
+            { family: userId },
             { $pullAll: { family: [userId] } }
         );
     } catch (err) {
@@ -193,6 +193,8 @@ const deleteUser = async (req, res, next) => {
             "Something went wrong. User not deleted",
             500
         );
+        console.log(err);
+
         return next(error);
     }
 
