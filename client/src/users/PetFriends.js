@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 
-import Typography from "@mui/material/Typography";
 import PetsList from "../pets/PetsList";
+import Loading from "../shared/Loading";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
 
 const PetFriends = () => {
     const auth = useContext(AuthContext);
-    const { sendRequest } = useAxios();
+    const { sendRequest, isLoading } = useAxios();
 
     const [petFriends, setPetFriends] = useState([]);
 
@@ -30,7 +30,12 @@ const PetFriends = () => {
         console.log(petFriends);
     }, [auth, sendRequest]);
 
-    return <PetsList items={petFriends}>Hello</PetsList>;
+    return (
+        <>
+            {isLoading && <Loading />}
+            {!isLoading && <PetsList items={petFriends}>Hello</PetsList>}
+        </>
+    );
 };
 
 export default PetFriends;

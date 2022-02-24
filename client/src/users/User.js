@@ -89,7 +89,7 @@ const User = () => {
                         <Tab label="Account" {...a11yProps(2)} />
                     </Tabs>
                     <TabPanel value={tabValue} index={0}>
-                        {!isLoading && <PetsList items={pets} isLoading />}
+                        {!isLoading && <PetsList items={pets} />}
                     </TabPanel>
                     <TabPanel value={tabValue} index={1}>
                         <PetFriends />
