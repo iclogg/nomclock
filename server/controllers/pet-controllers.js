@@ -240,9 +240,6 @@ const addFamilyMember = async (req, res, next) => {
     const petId = req.params.petId;
     const { email } = req.body;
 
-    console.log("email", email);
-    console.log("petId", petId);
-
     let pet;
     let newMember;
     try {
@@ -253,7 +250,6 @@ const addFamilyMember = async (req, res, next) => {
 
         return next(error);
     }
-    console.log("pet", pet);
 
     try {
         newMember = await User.findOne({ email }, "-password -pets");
@@ -261,7 +257,6 @@ const addFamilyMember = async (req, res, next) => {
         const error = new HttpError("Something went wrong", 500);
         return next(error);
     }
-    console.log("member", newMember);
 
     if (!newMember) {
         const error = new HttpError(
