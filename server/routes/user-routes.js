@@ -3,6 +3,7 @@ const { check } = require("express-validator");
 
 const {
     login,
+    getUserFamilies,
     createUser,
     deleteUser,
     updateUserDetails,
@@ -16,6 +17,8 @@ router.post(
     [check("name").not().isEmpty(), check("email").normalizeEmail().isEmail()],
     createUser
 );
+
+router.get("/:userId/families", getUserFamilies);
 
 router.post("/login", login);
 

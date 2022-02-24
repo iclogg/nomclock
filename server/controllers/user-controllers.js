@@ -64,6 +64,27 @@ const login = async (req, res, next) => {
     res.json({ userId: exsitingUser.id, token });
 };
 
+const getUserFamilies = async (req, res, next) => {
+    userId = req.params.userId;
+    let pets;
+
+    try {
+        pets = await Pet.find({ family: [userId] });
+    } catch (err) {
+        const error = new HttpError(
+            "Something went wrong. User not deleted",
+            500
+        );
+        return next(error);
+    }
+
+    console.log("pets", pets);
+
+    pets = pets.map((pet) => pet.toObject({ getters: true }));
+
+    res.json({ pets });
+};
+
 /* CREATE */
 const createUser = async (req, res, next) => {
     const err = validationResult(req);
@@ -239,6 +260,7 @@ const updateUserDetails = async (req, res, next) => {
 };
 
 exports.login = login;
+exports.getUserFamilies = getUserFamilies;
 exports.createUser = createUser;
 exports.deleteUser = deleteUser;
 exports.updateUserDetails = updateUserDetails;

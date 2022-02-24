@@ -9,6 +9,7 @@ import Error from "../shared/Error";
 
 import PetsList from "../pets/PetsList";
 import Settings from "../users/Settings";
+import PetFriends from "../users/PetFriends";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
@@ -84,12 +85,16 @@ const User = () => {
                         indicatorColor="secondary"
                     >
                         <Tab label="Pets" {...a11yProps(0)} />
-                        <Tab label="Account" {...a11yProps(1)} />
+                        <Tab label="Pet Friends" {...a11yProps(1)} />
+                        <Tab label="Account" {...a11yProps(2)} />
                     </Tabs>
                     <TabPanel value={tabValue} index={0}>
                         {!isLoading && <PetsList items={pets} isLoading />}
                     </TabPanel>
                     <TabPanel value={tabValue} index={1}>
+                        <PetFriends />
+                    </TabPanel>
+                    <TabPanel value={tabValue} index={2}>
                         <Settings />
                     </TabPanel>
                 </Box>
