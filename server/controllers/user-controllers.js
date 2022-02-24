@@ -69,7 +69,7 @@ const getUserFamilies = async (req, res, next) => {
     let pets;
 
     try {
-        pets = await Pet.find({ family: [userId] });
+        pets = await Pet.find({ family: userId });
     } catch (err) {
         const error = new HttpError(
             "Something went wrong. User not deleted",
