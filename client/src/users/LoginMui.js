@@ -4,7 +4,6 @@ import { Button } from "../shared/Button";
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 
-import { VALIDATOR_REQUIRE } from "../utils/validators";
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 import { useHistory } from "react-router-dom";
@@ -48,20 +47,14 @@ const Login = () => {
                 <FormGroup>
                     <Input
                         id="email"
-                        element="input"
                         type="email"
                         label="Email"
-                        validators={[VALIDATOR_REQUIRE()]}
-                        errorText="Please your email"
                         onInput={inputHandler}
                     />
                     <Input
                         id="password"
-                        element="input"
                         label="Password"
-                        validators=""
                         type="password"
-                        errorText="Enter your password"
                         onInput={inputHandler}
                     />
                 </FormGroup>
