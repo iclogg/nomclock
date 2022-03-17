@@ -11,7 +11,6 @@ const Pet = require("../models/pet");
 
 /* READ */
 // TODO consider password library passport (local mongoose).
-// TODO Create logout route
 const login = async (req, res, next) => {
     const { password, email } = req.body;
 

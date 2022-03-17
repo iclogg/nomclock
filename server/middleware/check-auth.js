@@ -4,8 +4,6 @@ const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
     //TODO see if I can remove this due to similar in app.js
-    console.log("check auth");
-
     if (req.method === "OPTIONS") {
         return next();
     }
