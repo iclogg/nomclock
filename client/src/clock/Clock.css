@@ -38,7 +38,7 @@
     position: absolute;
     width: 5px;
     height: 100%;
-    background: #1df52f;
+    background: #e81e62;
     z-index: 0;
     left: 49%;
 }
@@ -219,7 +219,7 @@
     width: 50%;
     right: 50%;
     height: 6px;
-    background: #61afff;
+    background: black;
     position: absolute;
     top: 50%;
     border-radius: 6px;
@@ -244,7 +244,7 @@
 }
 
 .hand.second-hand {
-    background: #ee791a;
+    background: #e81e62;
     width: 45%;
     height: 2px;
 }
