@@ -16,6 +16,7 @@ import Error from "../shared/Error";
 import UpdatePet from "../pets/UpdatePet";
 import DailyMeals from "../meals/DailyMeals";
 import PetsFamily from "../pets/PetsFamily";
+import Clock from "../clock/Clock";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
@@ -93,6 +94,10 @@ const Pet = () => {
         <Container>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
+
+            <Box>
+                <Clock />
+            </Box>
 
             <Modal
                 open={open}
