@@ -12,10 +12,12 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import TimelineDot from "@mui/lab/TimelineDot";
+import Box from "@mui/material/Box";
 
 import NewMeal from "./NewMeal";
 import DeleteMeal from "./DeleteMeal";
 import LatestMeal from "./LatestMeal";
+import Clock from "../clock/Clock";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
@@ -121,6 +123,10 @@ const DailyMeals = (props) => {
             sx={{ p: "10px", m: "10px" }}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
+            <Box>
+                <Clock meals={meals} maxMeal={props.maxMeals} />
+            </Box>
+
             <Grid item xs={8} sx={{ backgroundColor: "primary.main" }}>
                 <Typography
                     variant="h5"

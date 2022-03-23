@@ -233,14 +233,20 @@
     z-index: 3;
 }
 
-.hand.hour-hand.time {
-    transform: rotate(340deg);
+/* Rotates hour hand */
+/* .hand.hour-hand.time {
+    transform: rotate(300deg);
 }
-
+ */
 .hand.min-hand {
     height: 3px;
     z-index: 10;
     width: 40%;
+}
+
+/* Rotates min hand */
+.hand.min-hand.time {
+    transform: rotate(360deg);
 }
 
 .hand.second-hand {
@@ -249,4 +255,7 @@
     height: 2px;
 }
 
-/* /Numbers */
+/* Rotates second hand */
+.hand.second-hand.time {
+    transform: rotate(100deg);
+}
