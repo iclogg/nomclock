@@ -52,7 +52,6 @@ const useAxios = () => {
                 } */
 
                 setIsLoading(false);
-                console.log("response in axioshook ", response, "url", url);
 
                 return response;
             } catch (error) {
