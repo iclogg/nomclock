@@ -46,8 +46,7 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
     console.log("in app error handler");
 
-    // TODO headerSent is deprecated.
-    if (res.headerSent) {
+    if (res.headersSent) {
         return next(error);
     }
 
