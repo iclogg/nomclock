@@ -11,21 +11,41 @@ const Clock = ({ maxMeal, meals }) => {
     useEffect(() => {
         const intervalID = setInterval(() => {
             setTime(new Date());
-        }, [1000 * 60]);
+        }, [1000]);
 
-        return clearInterval(intervalID);
+        return () => {
+            clearInterval(intervalID);
+        };
     }, []);
 
-    //and dynamically style the hour pointer. See example below.
+    //and dynamically style the hour pointer.
+    const trackingStyle = {
+        hour: {
+            background: "blue",
+            transform: `rotate(${
+                ((parseInt(moment(time).format("HH") - 6 > 0)
+                    ? parseInt(moment(time).format("HH")) - 6
+                    : parseInt(moment(time).format("HH")) + 18) /
+                    24) *
+                360
+            }deg)`,
+
+            /*  transform: "rotate(90deg)", */
+        },
+    };
+
+    // Calcuylations:
+    /* 12 / 24  = 50%
+        360 * 50% = 180
+    */
+
+    /* 360 / (12 + 6)  = 75%
+        360 * 75% = 270
+    */
 
     // Translate amount of eaten meals to a % of 360 and visually represent it in clock.
 
     // Somehow indicate how many meals are left in a day
-
-    const trackingStyle = {
-        background: "blue",
-        transform: "rotate(300deg)",
-    };
 
     return (
         <div className="clockContainer">
@@ -33,7 +53,13 @@ const Clock = ({ maxMeal, meals }) => {
                 <div className="outer-clock-face">
                     <div className="marking marking-vertical quaterday">
                         <div className="pm">
-                            {time && moment(time).format("HH")}
+                            {/*  {time && moment(time).format("HH")} */}
+                            {time && moment(time).format("ss")}
+
+                            {/*   {time &&
+                                (360 /
+                                    parseInt(moment(time).format("second"))) *
+                                    360} */}
                         </div>
                         <div className="am">12</div>
                     </div>
@@ -60,7 +86,7 @@ const Clock = ({ maxMeal, meals }) => {
 
                     <div className="inner-clock-face">
                         <div
-                            style={trackingStyle}
+                            style={trackingStyle.hour}
                             className="hand hour-hand time"
                         ></div>
                         <div className="hand min-hand time"></div>
