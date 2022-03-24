@@ -55,6 +55,8 @@ const Clock = ({ maxMeal, meals }) => {
     }, [maxMeal, meals]);
 
     // and visually represent it in clock.
+    // dotted line for each meal
+    // filled space for eaten meals
     // hour conversion to smoother set up
 
     // Somehow indicate how many meals are left in a day
@@ -97,7 +99,9 @@ const Clock = ({ maxMeal, meals }) => {
                             style={trackingStyle.meals}
                             className="hand min-hand time"
                         ></div>
-                        <div className="hand second-hand time"></div>
+                        <div className=" hand second-hand time"></div>
+                        {/* <div className="hand second-hand time"></div>
+                         */}{" "}
                     </div>
                     <div className="marking marking-horizontal quaterday">
                         <div className="pm">18</div>
