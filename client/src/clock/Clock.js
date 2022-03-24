@@ -1,16 +1,25 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import moment from "moment";
 
 import "./Clock.css";
 
 const Clock = ({ maxMeal, meals }) => {
-    console.log(meals);
-    console.log(maxMeal);
-    /*     console.log(moment(meals[0].time).format("HH"));
-     */
+    // Set up state value for keeping track of what time it is a
+
+    const [time, setTime] = useState(new Date());
+
+    useEffect(() => {
+        const intervalID = setInterval(() => {
+            setTime(new Date());
+        }, [1000 * 60]);
+
+        return clearInterval(intervalID);
+    }, []);
+
+    //and dynamically style the hour pointer. See example below.
 
     // Translate amount of eaten meals to a % of 360 and visually represent it in clock.
-    // Set up state value for keeping track of what time it is and dynamically style the hour pointer. See example below
+
     // Somehow indicate how many meals are left in a day
 
     const trackingStyle = {
@@ -23,7 +32,9 @@ const Clock = ({ maxMeal, meals }) => {
             <div className="clock">
                 <div className="outer-clock-face">
                     <div className="marking marking-vertical quaterday">
-                        <div className="pm">24</div>
+                        <div className="pm">
+                            {time && moment(time).format("HH")}
+                        </div>
                         <div className="am">12</div>
                     </div>
                     <div className="marking marking-one">
@@ -86,36 +97,3 @@ const Clock = ({ maxMeal, meals }) => {
 };
 
 export default Clock;
-
-// Example of clock ticker to refactor in
-
-/* 
-import React, { Component } from 'react';
-import Clock from 'react-clock';
-
-class MyApp extends Component {
-  state = {
-    date: new Date(),
-  }
-
-  componentDidMount() {
-    setInterval(
-      () => this.setState({ date: new Date() }),
-      1000
-    );
-  }
-
-  render() {
-    return (
-      <div>
-        <p>Current time:</p>
-        <Clock
-          value={this.state.date}
-        />
-      </div>
-    );
-  }
-}
-
-
-*/
