@@ -31,7 +31,6 @@ const Clock = ({ maxMeal, meals }) => {
             }deg)`,
         },
         meals: {
-            background: "green",
             transform: `rotate(${
                 (meals.length / maxMeal) * 360 - 90 > 0
                     ? (meals.length / maxMeal) * 360 - 90
@@ -41,7 +40,7 @@ const Clock = ({ maxMeal, meals }) => {
     };
 
     // Translate amount of eaten meals to a % of 360
-    useEffect(() => {
+    /*   useEffect(() => {
         console.log("meals.length", meals.length);
         console.log("meals", meals);
         console.log("maxMeal", maxMeal);
@@ -53,7 +52,7 @@ const Clock = ({ maxMeal, meals }) => {
                 : (meals.length / maxMeal) * 360 + 270
         );
     }, [maxMeal, meals]);
-
+ */
     // and visually represent it in clock.
     // dotted line for each meal
     // filled space for eaten meals

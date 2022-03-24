@@ -201,14 +201,14 @@
 
     /* Coloring parts of circle: */
     background: conic-gradient(
-        #eceff1 0deg,
-        #eceff1 180deg,
+        from 180deg,
+        #e81e62 0deg,
         #e81e62 180deg,
-        #e81e62 360deg
+        #eceff1 180deg,
+        #eceff1 360deg
     );
     /*  transform: scaleY(-1); */
-    transform: rotateX(180deg);
-    border: 15px solid white;
+    border: 30px solid white;
 }
 
 .inner-clock-face::before {
@@ -241,6 +241,7 @@
 .hand.hour-hand {
     width: 30%;
     z-index: 3;
+    transform: rotateX(180deg);
 }
 
 /* Rotates hour hand */
@@ -251,7 +252,7 @@
 .hand.min-hand {
     height: 3px;
     z-index: 10;
-    width: 40%;
+    width: 60%;
 }
 
 /* Rotates min hand */
