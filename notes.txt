@@ -1,0 +1,14 @@
+
+Security:
+
+Dependabot alert 2022-03-24
+Inefficient Regular Expression Complexity in nth-check #9
+
+https://stackoverflow.com/questions/46881617/checking-the-specific-minutes-and-seconds-in-moment-js
+"As Dan Abramov explains in this issue, it is (very likely) a false alarm and can be safely dismissed.
+
+More specifically, if you are using CRA and nth-check is referenced only from it, it is not an issue, because CRA is a build tool and the vulnerable code will never get into the resulting application bundle and thus will never be called by client code.
+
+You can verify this by moving "react-scripts" into "devDependencies" in package.json and running npm audit --production."
+
+dissmissed as risk tolerable in this project
