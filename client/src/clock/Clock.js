@@ -29,21 +29,33 @@ const Clock = ({ maxMeal, meals }) => {
                     24) *
                 360
             }deg)`,
-
-            /*  transform: "rotate(90deg)", */
+        },
+        meals: {
+            background: "green",
+            transform: `rotate(${
+                (meals.length / maxMeal) * 360 - 90 > 0
+                    ? (meals.length / maxMeal) * 360 - 90
+                    : (meals.length / maxMeal) * 360 + 270
+            }deg)`,
         },
     };
 
-    // Calcuylations:
-    /* 12 / 24  = 50%
-        360 * 50% = 180
-    */
+    // Translate amount of eaten meals to a % of 360
+    useEffect(() => {
+        console.log("meals.length", meals.length);
+        console.log("meals", meals);
+        console.log("maxMeal", maxMeal);
+        console.log("%360", (meals.length / maxMeal) * 360);
+        console.log(
+            "%360 + 90deg",
+            (meals.length / maxMeal) * 360 - 90 > 0
+                ? (meals.length / maxMeal) * 360 - 90
+                : (meals.length / maxMeal) * 360 + 270
+        );
+    }, [maxMeal, meals]);
 
-    /* 360 / (12 + 6)  = 75%
-        360 * 75% = 270
-    */
-
-    // Translate amount of eaten meals to a % of 360 and visually represent it in clock.
+    // and visually represent it in clock.
+    // hour conversion to smoother set up
 
     // Somehow indicate how many meals are left in a day
 
@@ -52,15 +64,7 @@ const Clock = ({ maxMeal, meals }) => {
             <div className="clock">
                 <div className="outer-clock-face">
                     <div className="marking marking-vertical quaterday">
-                        <div className="pm">
-                            {/*  {time && moment(time).format("HH")} */}
-                            {time && moment(time).format("ss")}
-
-                            {/*   {time &&
-                                (360 /
-                                    parseInt(moment(time).format("second"))) *
-                                    360} */}
-                        </div>
+                        <div className="pm">24</div>
                         <div className="am">12</div>
                     </div>
                     <div className="marking marking-one">
@@ -89,7 +93,10 @@ const Clock = ({ maxMeal, meals }) => {
                             style={trackingStyle.hour}
                             className="hand hour-hand time"
                         ></div>
-                        <div className="hand min-hand time"></div>
+                        <div
+                            style={trackingStyle.meals}
+                            className="hand min-hand time"
+                        ></div>
                         <div className="hand second-hand time"></div>
                     </div>
                     <div className="marking marking-horizontal quaterday">
