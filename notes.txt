@@ -11,4 +11,4 @@ More specifically, if you are using CRA and nth-check is referenced only from it
 
 You can verify this by moving "react-scripts" into "devDependencies" in package.json and running npm audit --production."
 
-dissmissed as risk tolerable in this project
+dissmissed as risk tolerable in this project. I also checked that I have the latest version of react scripts. I had udated to the latest react scripts earlier this week.
