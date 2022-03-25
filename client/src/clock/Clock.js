@@ -18,6 +18,34 @@ const Clock = ({ maxMeal, meals }) => {
         };
     }, []);
 
+    const getMealsLeftIndicator = (noMeals) => {
+        if (noMeals) {
+            return `
+                #eceff1 0deg,
+                white 1deg,
+                white 2deg,
+                #eceff1 3deg,
+                
+            `;
+        }
+
+        let mealsLeft = maxMeal - meals.length;
+        let totDegLeft = (mealsLeft / maxMeal) * 360;
+        let nLines = meals.length ? mealsLeft - 1 : mealsLeft;
+        let degEach = totDegLeft / mealsLeft;
+        let returnStr = "";
+
+        for (let i = 1; i <= nLines; i++) {
+            returnStr += `
+                #eceff1 ${(meals.length / maxMeal) * 360 + degEach * i}deg,
+                white ${(meals.length / maxMeal) * 360 + degEach * i + 1}deg,
+                white ${(meals.length / maxMeal) * 360 + degEach * i + 2}deg,
+                #eceff1 ${(meals.length / maxMeal) * 360 + degEach * i + 3}deg,
+                `;
+        }
+        return returnStr;
+    };
+
     //and dynamically style the hour pointer.
     const trackingStyle = {
         hour: {
@@ -67,15 +95,35 @@ const Clock = ({ maxMeal, meals }) => {
         disk: {
             background: `conic-gradient(
                 from 180deg,
-                #e81e62 0deg,
+                ${meals.length ? "#e81e62 0deg," : getMealsLeftIndicator(true)}
                 #e81e62 ${(meals.length / maxMeal) * 360}deg,
                 #eceff1 ${(meals.length / maxMeal) * 360 + 1}deg,
+                ${getMealsLeftIndicator()}
                 #eceff1 360deg              
                 )`,
         },
     };
 
-    // add half an hour check to check meal function
+    /* #eceff1 ${(meals.length / maxMeal) * 360 + 60}deg,
+                white ${(meals.length / maxMeal) * 360 + 61}deg,
+                white ${(meals.length / maxMeal) * 360 + 62}deg,
+                #eceff1 ${(meals.length / maxMeal) * 360 + 63}deg,
+ */
+
+    // logic for left meals makers
+
+    // get amount of meals left
+    // maxMeals - meals.length
+
+    // get range of deg that they represent
+    // ( maxMeals - meals.length )/ maxMeal) * 360;
+
+    // how many lins needed?
+    // ad one line less than total meals left as last does not need it
+    // maxMeal - meals.length - 1;
+
+    // how many deg for each?
+    // ( maxMeals - meals.length )/ maxMeal) * 360 / maxMeals - meals.length
 
     // Somehow indicate how many meals are left in a day
     // dotted line for each meal?
