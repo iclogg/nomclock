@@ -69,34 +69,60 @@ const Clock = ({ maxMeal, meals }) => {
                 from 180deg,
                 #e81e62 0deg,
                 #e81e62 ${(meals.length / maxMeal) * 360}deg,
-                #eceff1 ${(meals.length / maxMeal) * 360}deg,
-                #eceff1 360deg
-               
+                #eceff1 ${(meals.length / maxMeal) * 360 + 1}deg,
+                #eceff1 360deg              
                 )`,
         },
     };
 
-    // hour conversion to smoother set up
-    // use minutes instead.
-    // Your moment
-
-    // Your moment at midnight
-
     // add half an hour check to check meal function
-
-    // Difference in minutes
-    var diffMinutes = moment().diff(moment().clone().startOf("day"), "minutes");
-    console.log(diffMinutes);
 
     // Somehow indicate how many meals are left in a day
     // dotted line for each meal?
 
-    const checkMeal = (hour) =>
-        meals.find((meal) => moment(meal.time).format("HH") == hour) ? (
+    const checkMeal = (hour) => {
+        let mealHour = meals.find((meal) => {
+            let h = moment(meal.time).format("HH");
+            let mins = moment(meal.time).format("mm");
+
+            if (mins > 30) {
+                h++;
+            }
+
+            return h == hour;
+        });
+
+        return mealHour ? (
             <LunchDiningIcon style={{ fontSize: "small", color: "#e81e62" }} />
         ) : (
             hour
         );
+    };
+
+    /*  const checkMeal = (hour) =>
+        meals.find((meal) => moment(meal.time).format("HH") == hour) ? (
+            <LunchDiningIcon style={{ fontSize: "small", color: "#e81e62" }} />
+        ) : (
+            hour
+        ); */
+
+    /*  return meals.find((meal) => {
+            let h = moment(meal.time).format("HH");
+            let mins = moment(meal.time).format("mm");
+
+            if (mins > 30) {
+                h++;
+            }
+
+            return h == hour ? (
+                <LunchDiningIcon
+                    style={{ fontSize: "small", color: "#e81e62" }}
+                />
+            ) : (
+                hour
+            );
+        });
+    }; */
 
     return (
         <div className="clockContainer">
