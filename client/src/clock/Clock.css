@@ -12,7 +12,7 @@
     height: 20rem;
     position: relative;
     padding: 2rem;
-    border: 5px solid grey;
+    border: 5px solid #babdbe;
     border-radius: 50%;
     margin: 50px auto;
 }
@@ -38,7 +38,7 @@
     position: absolute;
     width: 5px;
     height: 100%;
-    background: #e81e62;
+    background: #bdbdcb;
     z-index: 0;
     left: 49%;
 }
@@ -198,17 +198,16 @@
     -moz-border-radius: 100%;
     border-radius: 100%;
     z-index: 1;
+    border: 30px solid white;
 
     /* Coloring parts of circle: */
-    background: conic-gradient(
+    /* background: conic-gradient(
         from 180deg,
         #e81e62 0deg,
         #e81e62 180deg,
         #eceff1 180deg,
         #eceff1 360deg
-    );
-    /*  transform: scaleY(-1); */
-    border: 30px solid white;
+    ); */
 }
 
 .inner-clock-face::before {
@@ -221,7 +220,8 @@
     border-radius: 18px;
     margin-left: -9px;
     margin-top: -6px;
-    background: grey;
+    background: white;
+    border: #babdbe solid 3px;
     z-index: 11;
 }
 
@@ -229,7 +229,7 @@
     width: 50%;
     right: 50%;
     height: 6px;
-    background: black;
+    background: #babdbe;
     position: absolute;
     top: 50%;
     border-radius: 6px;
