@@ -124,7 +124,12 @@ const DailyMeals = (props) => {
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
             <Box>
-                <Clock meals={meals} maxMeal={props.maxMeals} />
+                <Clock
+                    meals={meals}
+                    maxMeal={props.maxMeals}
+                    mealDeletedHandler={mealDeletedHandler}
+                    mealAddHandler={mealAddHandler}
+                />
             </Box>
 
             <Grid item xs={8} sx={{ backgroundColor: "primary.main" }}>

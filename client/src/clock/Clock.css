@@ -199,15 +199,6 @@
     border-radius: 100%;
     z-index: 1;
     border: 30px solid white;
-
-    /* Coloring parts of circle: */
-    /* background: conic-gradient(
-        from 180deg,
-        #e81e62 0deg,
-        #e81e62 180deg,
-        #eceff1 180deg,
-        #eceff1 360deg
-    ); */
 }
 
 .inner-clock-face::before {
@@ -267,4 +258,9 @@
     height: 2px;
     width: 45%;
     transform: rotate(100deg);
+}
+
+/* Preventing events to be triggered on path instead of SVG element */
+.clockburger.MuiSvgIcon-root * {
+    pointer-events: none;
 }

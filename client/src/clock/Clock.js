@@ -3,8 +3,11 @@ import moment from "moment";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import "./Clock.css";
 
-const Clock = ({ maxMeal, meals }) => {
+import useMeals from "../utils/meal-hooks";
+
+const Clock = ({ maxMeal, meals, mealAddHandler, mealDeletedHandler }) => {
     // Set up state value for keeping track of what time it is a
+    const { deleteMeal, addMeal } = useMeals();
 
     const [time, setTime] = useState(new Date());
 
@@ -18,12 +21,12 @@ const Clock = ({ maxMeal, meals }) => {
         };
     }, []);
 
+    // calculate css for meals left indicators on disk
     const getMealsLeftIndicator = (noMeals) => {
         if (noMeals) {
             return `
                 #eceff1 0deg,
-                white 1deg,
-                white 2deg,
+                white 1deg 2deg,
                 #eceff1 3deg,
                 
             `;
@@ -104,30 +107,6 @@ const Clock = ({ maxMeal, meals }) => {
         },
     };
 
-    /* #eceff1 ${(meals.length / maxMeal) * 360 + 60}deg,
-                white ${(meals.length / maxMeal) * 360 + 61}deg,
-                white ${(meals.length / maxMeal) * 360 + 62}deg,
-                #eceff1 ${(meals.length / maxMeal) * 360 + 63}deg,
- */
-
-    // logic for left meals makers
-
-    // get amount of meals left
-    // maxMeals - meals.length
-
-    // get range of deg that they represent
-    // ( maxMeals - meals.length )/ maxMeal) * 360;
-
-    // how many lins needed?
-    // ad one line less than total meals left as last does not need it
-    // maxMeal - meals.length - 1;
-
-    // how many deg for each?
-    // ( maxMeals - meals.length )/ maxMeal) * 360 / maxMeals - meals.length
-
-    // Somehow indicate how many meals are left in a day
-    // dotted line for each meal?
-
     const checkMeal = (hour) => {
         let mealHour = meals.find((meal) => {
             let h = moment(meal.time).format("HH");
@@ -141,64 +120,75 @@ const Clock = ({ maxMeal, meals }) => {
         });
 
         return mealHour ? (
-            <LunchDiningIcon style={{ fontSize: "small", color: "#e81e62" }} />
+            <LunchDiningIcon
+                className="clockburger"
+                id={mealHour._id}
+                style={{ fontSize: "small", color: "#e81e62" }}
+            />
         ) : (
             hour
         );
     };
 
-    /*  const checkMeal = (hour) =>
-        meals.find((meal) => moment(meal.time).format("HH") == hour) ? (
-            <LunchDiningIcon style={{ fontSize: "small", color: "#e81e62" }} />
-        ) : (
-            hour
-        ); */
-
-    /*  return meals.find((meal) => {
-            let h = moment(meal.time).format("HH");
-            let mins = moment(meal.time).format("mm");
-
-            if (mins > 30) {
-                h++;
-            }
-
-            return h == hour ? (
-                <LunchDiningIcon
-                    style={{ fontSize: "small", color: "#e81e62" }}
-                />
-            ) : (
-                hour
-            );
-        });
-    }; */
+    const clickHandler = (e) => {
+        if (e.target.innerText) {
+            addMeal(mealAddHandler, e.target.innerText, "", meals);
+        } else if (e.target.id) {
+            deleteMeal(e.target.id, meals, mealDeletedHandler);
+        }
+    };
 
     return (
         <div className="clockContainer">
             <div className="clock">
                 <div className="outer-clock-face">
                     <div className="marking marking-vertical quaterday">
-                        <div className="pm">{checkMeal(24)}</div>
-                        <div className="am">{checkMeal(12)}</div>
+                        <div onClick={clickHandler} className="pm">
+                            {checkMeal(24)}
+                        </div>
+                        <div onClick={clickHandler} className="am">
+                            {checkMeal(12)}
+                        </div>
                     </div>
                     <div className="marking marking-one">
-                        <div className="pm">{checkMeal(13)}</div>
-                        <div className="am">{checkMeal(1)}</div>
+                        <div onClick={clickHandler} className="pm">
+                            {checkMeal(13)}
+                        </div>
+                        <div onClick={clickHandler} className="am">
+                            {checkMeal(1)}
+                        </div>
                     </div>
                     <div className="marking marking-two">
-                        <div className="pm">{checkMeal(14)}</div>
-                        <div className="am">{checkMeal(2)}</div>
+                        <div onClick={clickHandler} className="pm">
+                            {checkMeal(14)}
+                        </div>
+                        <div onClick={clickHandler} className="am">
+                            {checkMeal(2)}
+                        </div>
                     </div>
                     <div className="marking marking-three">
-                        <div className="pm">{checkMeal(15)}</div>
-                        <div className="am">{checkMeal(3)}</div>
+                        <div onClick={clickHandler} className="pm">
+                            {checkMeal(15)}
+                        </div>
+                        <div onClick={clickHandler} className="am">
+                            {checkMeal(3)}
+                        </div>
                     </div>
                     <div className="marking marking-four">
-                        <div className="pm">{checkMeal(16)}</div>
-                        <div className="am">{checkMeal(4)}</div>
+                        <div onClick={clickHandler} className="pm">
+                            {checkMeal(16)}
+                        </div>
+                        <div onClick={clickHandler} className="am">
+                            {checkMeal(4)}
+                        </div>
                     </div>
                     <div className="marking marking-five">
-                        <div className="pm">{checkMeal(17)}</div>
-                        <div className="am">{checkMeal(5)}</div>
+                        <div onClick={clickHandler} className="pm">
+                            {checkMeal(17)}
+                        </div>
+                        <div onClick={clickHandler} className="am">
+                            {checkMeal(5)}
+                        </div>
                     </div>
 
                     <div
@@ -216,28 +206,52 @@ const Clock = ({ maxMeal, meals }) => {
                         {/* <div className=" hand second-hand time"></div> */}
                     </div>
                     <div className="marking marking-horizontal quaterday">
-                        <div className="pm">{checkMeal(18)}</div>
-                        <div className="am">{checkMeal(6)}</div>
+                        <div onClick={clickHandler} className="pm">
+                            {checkMeal(18)}
+                        </div>
+                        <div onClick={clickHandler} className="am">
+                            {checkMeal(6)}
+                        </div>
                     </div>
                     <div className="marking marking-six">
-                        <div className="pm">{checkMeal(19)}</div>
-                        <div className="am">{checkMeal(7)}</div>
+                        <div onClick={clickHandler} className="pm">
+                            {checkMeal(19)}
+                        </div>
+                        <div onClick={clickHandler} className="am">
+                            {checkMeal(7)}
+                        </div>
                     </div>
                     <div className="marking marking-seven">
-                        <div className="pm">{checkMeal(20)}</div>
-                        <div className="am">{checkMeal(8)}</div>
+                        <div onClick={clickHandler} className="pm">
+                            {checkMeal(20)}
+                        </div>
+                        <div onClick={clickHandler} className="am">
+                            {checkMeal(8)}
+                        </div>
                     </div>
                     <div className="marking marking-eight">
-                        <div className="pm">{checkMeal(21)}</div>
-                        <div className="am">{checkMeal(9)}</div>
+                        <div onClick={clickHandler} className="pm">
+                            {checkMeal(21)}
+                        </div>
+                        <div onClick={clickHandler} className="am">
+                            {checkMeal(9)}
+                        </div>
                     </div>
                     <div className="marking marking-nine">
-                        <div className="pm">{checkMeal(22)}</div>
-                        <div className="am">{checkMeal(10)}</div>
+                        <div onClick={clickHandler} className="pm">
+                            {checkMeal(22)}
+                        </div>
+                        <div onClick={clickHandler} className="am">
+                            {checkMeal(10)}
+                        </div>
                     </div>
                     <div className="marking marking-ten">
-                        <div className="pm">{checkMeal(23)}</div>
-                        <div className="am">{checkMeal(11)}</div>
+                        <div onClick={clickHandler} className="pm">
+                            {checkMeal(23)}
+                        </div>
+                        <div onClick={clickHandler} className="am">
+                            {checkMeal(11)}
+                        </div>
                     </div>
                 </div>
             </div>

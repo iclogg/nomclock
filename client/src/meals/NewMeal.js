@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
+
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormGroup from "@mui/material/FormGroup";
@@ -19,6 +20,7 @@ const NewMeal = ({ mealAddHandler, meals }) => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
+        console.log("New Meal Submithandler Time", time);
 
         let rawTime;
         if (time === null) {
