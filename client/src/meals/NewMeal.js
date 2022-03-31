@@ -1,88 +1,54 @@
-import React, { useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 
-import { AuthContext } from "../utils/auth-context";
-import useAxios from "../utils/axios-hook";
+import useMeals from "../utils/meal-hooks";
 
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import FormGroup from "@mui/material/FormGroup";
+import { useForm, Form } from "../shared/Form";
+
+import { TextField, Button, FormGroup } from "@mui/material";
+
 import TimePicker from "@mui/lab/TimePicker";
 
 const NewMeal = ({ mealAddHandler, meals }) => {
-    const auth = useContext(AuthContext);
-    const [time, setTime] = useState(null);
-    const [comment, setComment] = useState("");
+    const { addMeal } = useMeals();
 
-    const { petId } = useParams();
-
-    const { sendRequest } = useAxios();
+    const { values, setValues, handleInputChange } = useForm({
+        time: null,
+        comment: "",
+    });
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log("New Meal Submithandler Time", time);
-
-        let rawTime;
-        if (time === null) {
-            rawTime = new Date();
-        } else {
-            rawTime = time.toDate();
-        }
-
         try {
-            const response = await sendRequest(
-                "meals",
-                "post",
-                {
-                    time: rawTime,
-                    comment,
-                    feeder: auth.userId,
-                    pet: petId,
-                },
-                { authorization: `Bearer ${auth.token}` }
-            );
-            let updatedMeals = [...meals, response.data].sort((x, y) => {
-                return new Date(x.time) - new Date(y.time);
-            });
-
-            mealAddHandler(updatedMeals);
-            setTime(null);
-            setComment("");
+            await addMeal(mealAddHandler, values.time, values.comment, meals);
+            setValues({ time: null, comment: "" });
         } catch (error) {
             console.log(error);
         }
     };
 
-    const handleInputChange = (e) => {
-        const { value } = e.target;
-        setComment(value);
-    };
-
     return (
-        <form>
+        <form onSubmit={submitHandler}>
             <FormGroup>
                 <TextField
                     id="comment"
                     label="Comment"
                     color="secondary"
                     variant="outlined"
-                    value={comment}
+                    name="comment"
+                    value={values.comment}
                     onChange={handleInputChange}
                 />
                 <TimePicker
                     ampm={false}
                     label="Meal Time"
-                    value={time}
+                    value={values.time}
+                    name="time"
                     onChange={(newValue) => {
-                        setTime(newValue);
+                        setValues({ ...values, time: newValue });
                     }}
                     renderInput={(params) => <TextField {...params} />}
                 />
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={submitHandler}
-                >
+                <Button variant="contained" color="secondary" type="submit">
                     Add Meal
                 </Button>
             </FormGroup>
