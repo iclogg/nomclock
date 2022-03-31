@@ -116,6 +116,9 @@ const Clock = ({ maxMeal, meals, mealAddHandler, mealDeletedHandler }) => {
 
             if (mins > 30) {
                 h++;
+                if (h == "24") {
+                    h = "00";
+                }
             }
 
             return h == hour;
