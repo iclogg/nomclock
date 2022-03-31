@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import moment from "moment";
 
 import { useParams } from "react-router-dom";
 
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Timeline from "@mui/lab/Timeline";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
-import TimelineDot from "@mui/lab/TimelineDot";
-import Box from "@mui/material/Box";
+import { Grid, Box, Typography } from "@mui/material";
+
+import {
+    Timeline,
+    TimelineItem,
+    TimelineSeparator,
+    TimelineConnector,
+    TimelineContent,
+    TimelineOppositeContent,
+    TimelineDot,
+} from "@mui/lab";
 
 import NewMeal from "./NewMeal";
 import DeleteMeal from "./DeleteMeal";
@@ -21,42 +22,15 @@ import Clock from "../clock/Clock";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
-
-const mealNames = [
-    { num: "one", arr: ["MealTime!"] },
-    { num: "two", arr: ["Breakfast", "Dinner"] },
-    { num: "three", arr: ["Breakfast", "Lunch", "Dinner"] },
-    { num: "four", arr: ["Breakfast", "Second Breakfast", "Lunch", "Dinner"] },
-    {
-        num: "five",
-        arr: [
-            "Breakfast",
-            "Second Breakfast",
-            "Lunch",
-            "Afternoon Tea",
-            "Dinner",
-        ],
-    },
-    {
-        num: "six",
-        arr: [
-            "Breakfast",
-            "Second Breakfast",
-            "Lunch",
-            "Afternoon Tea",
-            "Dinner",
-            "Late Night Munchies",
-        ],
-    },
-];
+import mealNames from "../utils/meal-names";
 
 const DailyMeals = (props) => {
     const auth = useContext(AuthContext);
     const { sendRequest } = useAxios();
     const { petId } = useParams();
-    let maxM = {};
-
     const [meals, setMeals] = useState([]);
+
+    let maxM = {};
 
     if (props.maxMeals) {
         if (props.maxMeals > 6) {

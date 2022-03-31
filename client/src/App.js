@@ -1,6 +1,5 @@
 import React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Container from "@mui/material/Container";
+import { CssBaseline, Container } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 /* To support time pickers */

@@ -1,12 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
-import Grid from "@mui/material/Grid";
+import { Typography, Container, Box, Button, Modal, Grid } from "@mui/material";
 
 import { useParams } from "react-router-dom";
 
