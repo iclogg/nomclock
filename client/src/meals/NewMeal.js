@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 import useMeals from "../utils/meal-hooks";
 
 import { useForm, Form } from "../shared/Form";
@@ -27,7 +25,7 @@ const NewMeal = ({ mealAddHandler, meals }) => {
     };
 
     return (
-        <form onSubmit={submitHandler}>
+        <Form onSubmit={submitHandler}>
             <FormGroup>
                 <TextField
                     id="comment"
@@ -52,7 +50,7 @@ const NewMeal = ({ mealAddHandler, meals }) => {
                     Add Meal
                 </Button>
             </FormGroup>
-        </form>
+        </Form>
     );
 };
 
