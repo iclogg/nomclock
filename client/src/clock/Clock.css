@@ -264,3 +264,7 @@
 .clockburger.MuiSvgIcon-root * {
     pointer-events: none;
 }
+
+.marking > * {
+    cursor: pointer;
+}

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
+import Tooltip from "@mui/material/Tooltip";
+
 import "./Clock.css";
 
 import useMeals from "../utils/meal-hooks";
@@ -120,13 +122,15 @@ const Clock = ({ maxMeal, meals, mealAddHandler, mealDeletedHandler }) => {
         });
 
         return mealHour ? (
-            <LunchDiningIcon
-                className="clockburger"
-                id={mealHour._id}
-                style={{ fontSize: "small", color: "#e81e62" }}
-            />
+            <Tooltip title="Delete">
+                <LunchDiningIcon
+                    className="clockburger"
+                    id={mealHour._id}
+                    style={{ fontSize: "small", color: "#e81e62" }}
+                />
+            </Tooltip>
         ) : (
-            hour
+            hour || "24"
         );
     };
 
@@ -144,7 +148,7 @@ const Clock = ({ maxMeal, meals, mealAddHandler, mealDeletedHandler }) => {
                 <div className="outer-clock-face">
                     <div className="marking marking-vertical quaterday">
                         <div onClick={clickHandler} className="pm">
-                            {checkMeal(24)}
+                            {checkMeal(0)}
                         </div>
                         <div onClick={clickHandler} className="am">
                             {checkMeal(12)}
@@ -260,17 +264,3 @@ const Clock = ({ maxMeal, meals, mealAddHandler, mealDeletedHandler }) => {
 };
 
 export default Clock;
-
-/*   useEffect(() => {
-        console.log("meals.length", meals.length);
-        console.log("meals", meals);
-        console.log("maxMeal", maxMeal);
-        console.log("%360", (meals.length / maxMeal) * 360);
-        console.log(
-            "%360 + 90deg",
-            (meals.length / maxMeal) * 360 - 90 > 0
-                ? (meals.length / maxMeal) * 360 - 90
-                : (meals.length / maxMeal) * 360 + 270
-        );
-    }, [maxMeal, meals]);
- */
