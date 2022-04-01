@@ -1,16 +1,17 @@
 import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import Input from "../shared/Input";
-import { Button } from "../shared/Button";
+import { Button, Typography, Box } from "@mui/material";
+
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 
-import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
+import TextInput from "../shared/form/TextInput";
+
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 
-import { useForm } from "../utils/form-hooks";
+import { useForm, Form } from "../shared/form/Form";
 
 const NewPet = () => {
     const auth = useContext(AuthContext);
@@ -22,23 +23,11 @@ const NewPet = () => {
         error,
     } = useAxios();
 
-    const [formState, inputHandler] = useForm(
-        {
-            name: {
-                value: "",
-                isValid: false,
-            },
-            description: {
-                value: "",
-                isValid: false,
-            },
-            maxMeals: {
-                value: 2,
-                isValid: false,
-            },
-        },
-        false
-    );
+    const { values, handleInputChange } = useForm({
+        name: "",
+        description: "",
+        maxMeals: 0,
+    });
 
     const history = useHistory();
 
@@ -49,9 +38,9 @@ const NewPet = () => {
                 "pets",
                 "post",
                 {
-                    name: formState.inputs.name.value,
-                    maxMeals: formState.inputs.maxMeals.value,
-                    description: formState.inputs.description.value,
+                    name: values.name,
+                    maxMeals: values.maxMeals,
+                    description: values.description,
                     userId: auth.userId,
                 },
                 { authorization: `Bearer ${auth.token}` }
@@ -67,42 +56,41 @@ const NewPet = () => {
     }, [clearIsLoading]);
 
     return (
-        <div>
+        <Box sx={{ mt: "10px" }}>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
-            <h2>Add your darling pet!</h2>
-            <form action="" onSubmit={submitHandler}>
-                <Input
-                    id="name"
-                    element="input"
-                    type="text"
+            <Typography variant="h4">Register Your Darling</Typography>{" "}
+            <Form action="" onSubmit={submitHandler}>
+                <TextInput
                     label="Name"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please enter a valid title."
-                    onInput={inputHandler}
+                    name="name"
+                    /*                         errorText="Please enter a valid title."
+                     */
+                    value={values.name}
+                    onChange={handleInputChange}
                 />
-                <Input
-                    id="maxMeals"
-                    element="input"
+                <TextInput
                     type="number"
                     label="Max meals per day?"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please choose how many meals a day your darling should have."
-                    onInput={inputHandler}
+                    name="maxMeals"
+                    /* errorText="Please choose how many meals a day your darling should have." */
+                    onChange={handleInputChange}
+                    value={values.maxMeals}
                 />
-                <Input
-                    id="description"
-                    element="textarea"
+
+                <TextInput
                     label="Description"
-                    validators={[VALIDATOR_MINLENGTH(5)]}
-                    errorText="Please enter a description (at least 5 characters)"
-                    onInput={inputHandler}
+                    name="description"
+                    /*                         errorText="Please enter a description (at least 5 characters)"
+                     */
+                    value={values.description}
+                    onChange={handleInputChange}
                 />
-                <Button type="submit" disabled={!formState.isValid}>
-                    ADD PET
+                <Button type="submit" color="secondary" variant="contained">
+                    SAVE
                 </Button>
-            </form>
-        </div>
+            </Form>
+        </Box>
     );
 };
 

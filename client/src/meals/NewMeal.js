@@ -1,10 +1,9 @@
-import useMeals from "../utils/meal-hooks";
-
-import { useForm, Form } from "../shared/form/Form";
-
 import { TextField, Button, FormGroup } from "@mui/material";
-
 import TimePicker from "@mui/lab/TimePicker";
+
+import useMeals from "../utils/meal-hooks";
+import { useForm, Form } from "../shared/form/Form";
+import TextInput from "../shared/form/TextInput";
 
 const NewMeal = ({ mealsUpdateHandler, meals }) => {
     const { addMeal } = useMeals();
@@ -32,8 +31,7 @@ const NewMeal = ({ mealsUpdateHandler, meals }) => {
     return (
         <Form onSubmit={submitHandler}>
             <FormGroup>
-                <TextField
-                    id="comment"
+                <TextInput
                     label="Comment"
                     color="secondary"
                     variant="outlined"
@@ -49,7 +47,9 @@ const NewMeal = ({ mealsUpdateHandler, meals }) => {
                     onChange={(newValue) => {
                         setValues({ ...values, time: newValue });
                     }}
-                    renderInput={(params) => <TextField {...params} />}
+                    renderInput={(params) => (
+                        <TextField {...params} sx={{ margin: "5px" }} />
+                    )}
                 />
                 <Button variant="contained" color="secondary" type="submit">
                     Add Meal
