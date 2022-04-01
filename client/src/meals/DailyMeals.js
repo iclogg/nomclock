@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import moment from "moment";
 
 import { useParams } from "react-router-dom";
@@ -20,14 +20,10 @@ import DeleteMeal from "./DeleteMeal";
 import LatestMeal from "./LatestMeal";
 import Clock from "../clock/Clock";
 
-import useAxios from "../utils/axios-hook";
 import useMeals from "../utils/meal-hooks";
-import { AuthContext } from "../utils/auth-context";
 import mealNames from "../utils/meal-names";
 
 const DailyMeals = (props) => {
-    const auth = useContext(AuthContext);
-    const { sendRequest } = useAxios();
     const { getMeals } = useMeals();
     const { petId } = useParams();
     const [meals, setMeals] = useState([]);
@@ -57,7 +53,7 @@ const DailyMeals = (props) => {
 
     useEffect(() => {
         getMeals(mealsUpdateHandler);
-    }, [sendRequest, auth, petId]);
+    }, []);
 
     return (
         <Grid
@@ -71,7 +67,6 @@ const DailyMeals = (props) => {
                     meals={meals}
                     maxMeal={props.maxMeals}
                     mealsUpdateHandler={mealsUpdateHandler}
-                    /*  mealAddHandler={mealAddHandler} */
                 />
             </Box>
 
