@@ -12,6 +12,12 @@ export const useForm = (initialValues) => {
 };
 
 export const Form = (props) => {
+    const formStyle = { margin: "20px" };
+
     const { children, ...other } = props;
-    return <form {...other}>{children}</form>;
+    return (
+        <form style={formStyle} {...other}>
+            {children}
+        </form>
+    );
 };
