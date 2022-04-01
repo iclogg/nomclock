@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import {
@@ -172,48 +172,3 @@ const UpdatePet = (props) => {
 };
 
 export default UpdatePet;
-
-/* 
- <form action="" onSubmit={submitHandler}>
-                    <Input
-                        id="name"
-                        element="input"
-                        type="text"
-                        label="Name"
-                        validators={[VALIDATOR_REQUIRE()]}
-                        errorText="Please enter a valid title."
-                        onInput={inputHandler}
-                        initialValue={formState.inputs.name.value}
-                        initialValid={formState.inputs.name.isValid}
-                    />
-                    <Input
-                        id="maxMeals"
-                        element="input"
-                        type="number"
-                        label="Max meals per day?"
-                        validators={[VALIDATOR_REQUIRE()]}
-                        errorText="Please choose how many meals a day your darling should have."
-                        onInput={inputHandler}
-                        initialValue={formState.inputs.maxMeals.value}
-                        initialValid={formState.inputs.maxMeals.isValid}
-                    />
-                    <Input
-                        id="description"
-                        element="textarea"
-                        label="Description"
-                        validators={[VALIDATOR_MINLENGTH(5)]}
-                        errorText="Please enter a description (at least 5 characters)"
-                        onInput={inputHandler}
-                        initialValue={formState.inputs.description.value}
-                        initialValid={formState.inputs.description.isValid}
-                    />
-                    <Button
-                        type="submit"
-                        disabled={!formState.isValid}
-                        color="secondary"
-                        variant="contained"
-                    >
-                        SAVE
-                    </Button>
-                </form>
-*/

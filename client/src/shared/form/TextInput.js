@@ -33,6 +33,7 @@ export const TextInput = ({ label, name, value, onChange, type }) => {
             name={name}
             value={value}
             onChange={onChange}
+            type={type}
         ></TextField>
     );
 };

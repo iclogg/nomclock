@@ -1,15 +1,20 @@
-import React, { useState, useContext } from "react";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
+
+import { Button, FormGroup } from "@mui/material";
 
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import FormGroup from "@mui/material/FormGroup";
+import { useForm, Form } from "../shared/form/Form";
+
+import TextInput from "../shared/form/TextInput";
 
 const NewFamilyMember = () => {
     const auth = useContext(AuthContext);
-    const [email, setEmail] = useState("");
+
+    const { values, setValues, handleInputChange } = useForm({
+        email: "",
+    });
 
     const { petId } = useParams();
 
@@ -23,45 +28,36 @@ const NewFamilyMember = () => {
                 `pets/${petId}/family`,
                 "post",
                 {
-                    email,
+                    email: values.email,
                 },
                 { authorization: `Bearer ${auth.token}` }
             );
 
-            console.log("response.data", response.data);
-
-            setEmail("");
+            setValues({
+                email: "",
+            });
         } catch (error) {
             console.log(error);
         }
     };
 
-    const handleInputChange = (e) => {
-        const { value } = e.target;
-        setEmail(value);
-    };
-
     return (
-        <form>
+        <Form action="" onSubmit={submitHandler}>
             <FormGroup>
-                <TextField
-                    id="email"
+                <TextInput
+                    name="email"
                     label="Email"
                     color="secondary"
                     variant="outlined"
-                    value={email}
-                    type="email"
+                    value={values.email}
                     onChange={handleInputChange}
+                    type="email"
                 />
             </FormGroup>
-            <Button
-                variant="contained"
-                color="secondary"
-                onClick={submitHandler}
-            >
+            <Button type="submit" variant="contained" color="secondary">
                 Add Family Member
             </Button>
-        </form>
+        </Form>
     );
 };
 
