@@ -1,24 +1,22 @@
 import React, { useEffect, useContext, useState } from "react";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import FormGroup from "@mui/material/FormGroup";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-
 import { useParams } from "react-router-dom";
 
-import Input from "../shared/Input";
+import {
+    Button,
+    Typography,
+    Box,
+    InputLabel,
+    MenuItem,
+    FormControl,
+    Select,
+} from "@mui/material";
+
+import TextInput from "../shared/form/TextInput";
 import NewFamilyMember from "../pets/NewFamilyMember";
 
-import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
-
-import { useForm } from "../utils/form-hooks";
+import { useForm, Form } from "../shared/form/Form";
 
 const UpdatePet = (props) => {
     const { toggleSetIsUpdating, setPet, pet } = props;
@@ -26,48 +24,19 @@ const UpdatePet = (props) => {
     const [dataLoaded, setDataLoaded] = useState(false);
     const [memberId, setMemberId] = useState("");
 
+    const { values, handleInputChange } = useForm({
+        name: pet.name,
+        description: pet.description,
+        maxMeals: pet.maxMeals,
+    });
+
     const { sendRequest } = useAxios();
 
     const petId = useParams().petId;
 
-    const [formState, inputHandler, setFormData] = useForm(
-        {
-            name: {
-                value: "",
-                isValid: false,
-            },
-            description: {
-                value: "",
-                isValid: false,
-            },
-            maxMeals: {
-                value: 1,
-                isValid: false,
-            },
-        },
-        false
-    );
-
     useEffect(() => {
-        setFormData(
-            {
-                name: {
-                    value: pet.name,
-                    isValid: true,
-                },
-                description: {
-                    value: pet.description,
-                    isValid: true,
-                },
-                maxMeals: {
-                    value: pet.maxMeals,
-                    isValid: true,
-                },
-            },
-            true
-        );
         setDataLoaded(true);
-    }, [setFormData, pet]);
+    }, []);
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -77,13 +46,12 @@ const UpdatePet = (props) => {
                 `pets/${petId}`,
                 "patch",
                 {
-                    name: formState.inputs.name.value,
-                    maxMeals: formState.inputs.maxMeals.value,
-                    description: formState.inputs.description.value,
+                    name: values.name,
+                    maxMeals: values.maxMeals,
+                    description: values.description,
                 },
                 { authorization: `Bearer ${auth.token}` }
             );
-            console.log("response delete family member", response);
 
             setPet(response.data.pet);
             toggleSetIsUpdating();
@@ -106,8 +74,6 @@ const UpdatePet = (props) => {
                 { authorization: `Bearer ${auth.token}` }
             );
 
-            console.log("response.data", response.data);
-
             setMemberId("");
             setPet(response.data.pet);
             toggleSetIsUpdating();
@@ -116,7 +82,7 @@ const UpdatePet = (props) => {
         }
     };
 
-    const handleInputChange = (e) => {
+    const handleInputChange2 = (e) => {
         const { value } = e.target;
         setMemberId(value);
     };
@@ -125,7 +91,90 @@ const UpdatePet = (props) => {
         dataLoaded && (
             <Box sx={{ mt: "10px" }}>
                 <Typography variant="h4">Update Pet</Typography>{" "}
-                <form action="" onSubmit={submitHandler}>
+                <Form action="" onSubmit={submitHandler}>
+                    <TextInput
+                        label="Name"
+                        name="name"
+                        /*                         errorText="Please enter a valid title."
+                         */
+                        value={values.name}
+                        onChange={handleInputChange}
+                    />
+                    <TextInput
+                        type="number"
+                        label="Max meals per day?"
+                        name="maxMeals"
+                        /* errorText="Please choose how many meals a day your darling should have." */
+                        onChange={handleInputChange}
+                        value={values.maxMeals}
+                    />
+
+                    <TextInput
+                        label="Description"
+                        name="description"
+                        /*                         errorText="Please enter a description (at least 5 characters)"
+                         */
+                        value={values.description}
+                        onChange={handleInputChange}
+                    />
+                    <Button type="submit" color="secondary" variant="contained">
+                        SAVE
+                    </Button>
+                </Form>
+                <NewFamilyMember />
+                <form>
+                    <Box sx={{ minWidth: 120 }}>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">
+                                Name
+                            </InputLabel>
+                            <Select
+                                id="name"
+                                label="Name"
+                                color="secondary"
+                                variant="outlined"
+                                value={memberId}
+                                type="memberId"
+                                onChange={handleInputChange2}
+                            >
+                                {pet.family &&
+                                    pet.family.map((member) => {
+                                        return (
+                                            <MenuItem
+                                                key={member._id}
+                                                value={member._id}
+                                            >
+                                                {member.name}
+                                            </MenuItem>
+                                        );
+                                    })}
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={deleteFamilyMemberHandler}
+                    >
+                        Remove Family Member
+                    </Button>
+                </form>
+                <Button
+                    sx={{ mt: 3 }}
+                    onClick={toggleSetIsUpdating}
+                    color="secondary"
+                >
+                    Done
+                </Button>
+            </Box>
+        )
+    );
+};
+
+export default UpdatePet;
+
+/* 
+ <form action="" onSubmit={submitHandler}>
                     <Input
                         id="name"
                         element="input"
@@ -167,51 +216,4 @@ const UpdatePet = (props) => {
                         SAVE
                     </Button>
                 </form>
-                <NewFamilyMember />
-                <form>
-                    <Box sx={{ minWidth: 120 }}>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">
-                                Name
-                            </InputLabel>
-                            <Select
-                                id="name"
-                                label="Name"
-                                color="secondary"
-                                variant="outlined"
-                                value={memberId}
-                                type="memberId"
-                                onChange={handleInputChange}
-                            >
-                                {pet.family &&
-                                    pet.family.map((member) => {
-                                        return (
-                                            <MenuItem value={member._id}>
-                                                {member.name}
-                                            </MenuItem>
-                                        );
-                                    })}
-                            </Select>
-                        </FormControl>
-                    </Box>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={deleteFamilyMemberHandler}
-                    >
-                        Remove Family Member
-                    </Button>
-                </form>
-                <Button
-                    sx={{ mt: 3 }}
-                    onClick={toggleSetIsUpdating}
-                    color="secondary"
-                >
-                    Done
-                </Button>
-            </Box>
-        )
-    );
-};
-
-export default UpdatePet;
+*/
