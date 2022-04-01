@@ -69,6 +69,13 @@ const DailyMeals = (props) => {
                     mealsUpdateHandler={mealsUpdateHandler}
                 />
             </Box>
+            <Grid xs={3} item>
+                <NewMeal
+                    mealsUpdateHandler={mealsUpdateHandler}
+                    meals={meals}
+                />
+                <LatestMeal petId={petId} />
+            </Grid>
 
             <Grid item xs={8} sx={{ backgroundColor: "primary.main" }}>
                 <Typography
@@ -161,13 +168,6 @@ const DailyMeals = (props) => {
                             }
                         })}
                 </Timeline>
-            </Grid>
-            <Grid xs={3} item>
-                <NewMeal
-                    mealsUpdateHandler={mealsUpdateHandler}
-                    meals={meals}
-                />
-                <LatestMeal petId={petId} />
             </Grid>
         </Grid>
     );

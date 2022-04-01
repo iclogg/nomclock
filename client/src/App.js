@@ -93,7 +93,15 @@ const App = () => {
                     >
                         <Router>
                             <Navbar />
-                            <Container component="main">{routes}</Container>
+                            <Container
+                                sx={{
+                                    minHeight: "calc(100vh - 164px)",
+                                    pt: "20px",
+                                }}
+                                component="main"
+                            >
+                                {routes}
+                            </Container>
                             <Footer />
                         </Router>
                     </AuthContext.Provider>

@@ -2,6 +2,7 @@ import React from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import zIndex from "@mui/material/styles/zIndex";
 
 const Footer = () => {
     return (
@@ -10,7 +11,6 @@ const Footer = () => {
                 sx={{
                     backgroundColor: "primary.dark",
                     height: "100px",
-                    position: "fixed",
                     left: 0,
                     bottom: 0,
                     width: "100%",
