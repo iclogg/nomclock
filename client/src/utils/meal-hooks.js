@@ -9,7 +9,35 @@ const useMeals = () => {
     const { sendRequest } = useAxios();
     const { petId } = useParams();
 
-    const addMeal = async (mealAddHandler, time, comment, meals) => {
+    const getMeals = async (mealsUpdateHandler) => {
+        let preppedMeals;
+        try {
+            const response = await sendRequest(
+                `meals/${petId}`,
+                "get",
+                {},
+                { authorization: "Bearer " + auth.token }
+            );
+            preppedMeals = [...response.data.meals].sort((x, y) => {
+                return new Date(x.time) - new Date(y.time);
+            });
+
+            preppedMeals = preppedMeals.filter((meal) => {
+                let mealDate = new Date(meal.time);
+                let today = new Date();
+
+                return (
+                    mealDate.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0)
+                );
+            });
+
+            mealsUpdateHandler(preppedMeals);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const addMeal = async (mealsUpdateHandler, time, comment, meals) => {
         let rawTime;
 
         if (time === null) {
@@ -40,13 +68,13 @@ const useMeals = () => {
                 return new Date(x.time) - new Date(y.time);
             });
 
-            mealAddHandler(updatedMeals);
+            mealsUpdateHandler(updatedMeals);
         } catch (error) {
             console.log(error);
         }
     };
 
-    const deleteMeal = async (mealId, meals, mealDeletedHandler) => {
+    const deleteMeal = async (mealId, meals, mealsUpdateHandler) => {
         try {
             const response = await sendRequest(
                 `meals/${mealId}`,
@@ -60,14 +88,14 @@ const useMeals = () => {
                     return meal._id !== response.data.deletedMeal;
                 });
 
-                mealDeletedHandler(updatedMeals);
+                mealsUpdateHandler(updatedMeals);
             }
         } catch (error) {
             console.log(error);
         }
     };
 
-    return { deleteMeal, addMeal };
+    return { deleteMeal, addMeal, getMeals };
 };
 
 export default useMeals;

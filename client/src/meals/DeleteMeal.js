@@ -5,12 +5,12 @@ import useMeals from "../utils/meal-hooks";
 
 import Tooltip from "@mui/material/Tooltip";
 
-const DeleteMeal = ({ mealId, meals, mealDeletedHandler }) => {
+const DeleteMeal = ({ mealId, meals, mealsUpdateHandler }) => {
     const { deleteMeal } = useMeals();
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        deleteMeal(mealId, meals, mealDeletedHandler);
+        deleteMeal(mealId, meals, mealsUpdateHandler);
     };
 
     return (

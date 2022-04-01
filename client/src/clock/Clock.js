@@ -7,7 +7,7 @@ import "./Clock.css";
 
 import useMeals from "../utils/meal-hooks";
 
-const Clock = ({ maxMeal, meals, mealAddHandler, mealDeletedHandler }) => {
+const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
     // Set up state value for keeping track of what time it is a
     const { deleteMeal, addMeal } = useMeals();
 
@@ -139,9 +139,9 @@ const Clock = ({ maxMeal, meals, mealAddHandler, mealDeletedHandler }) => {
 
     const clickHandler = (e) => {
         if (e.target.innerText) {
-            addMeal(mealAddHandler, e.target.innerText, "", meals);
+            addMeal(mealsUpdateHandler, e.target.innerText, "", meals);
         } else if (e.target.id) {
-            deleteMeal(e.target.id, meals, mealDeletedHandler);
+            deleteMeal(e.target.id, meals, mealsUpdateHandler);
         }
     };
 

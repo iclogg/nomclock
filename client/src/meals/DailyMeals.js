@@ -21,12 +21,14 @@ import LatestMeal from "./LatestMeal";
 import Clock from "../clock/Clock";
 
 import useAxios from "../utils/axios-hook";
+import useMeals from "../utils/meal-hooks";
 import { AuthContext } from "../utils/auth-context";
 import mealNames from "../utils/meal-names";
 
 const DailyMeals = (props) => {
     const auth = useContext(AuthContext);
     const { sendRequest } = useAxios();
+    const { getMeals } = useMeals();
     const { petId } = useParams();
     const [meals, setMeals] = useState([]);
 
@@ -49,46 +51,13 @@ const DailyMeals = (props) => {
         }
     }
 
-    useEffect(() => {
-        const getMeal = async () => {
-            let preppedMeals;
-            try {
-                const response = await sendRequest(
-                    `meals/${petId}`,
-                    "get",
-                    {},
-                    { authorization: "Bearer " + auth.token }
-                );
-                preppedMeals = [...response.data.meals].sort((x, y) => {
-                    return new Date(x.time) - new Date(y.time);
-                });
-
-                preppedMeals = preppedMeals.filter((meal) => {
-                    let mealDate = new Date(meal.time);
-                    let today = new Date();
-
-                    return (
-                        mealDate.setHours(0, 0, 0, 0) ===
-                        today.setHours(0, 0, 0, 0)
-                    );
-                });
-
-                setMeals(preppedMeals);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
-        getMeal();
-    }, [sendRequest, auth, petId]);
-
-    const mealDeletedHandler = (newMeals) => {
-        setMeals(newMeals);
-    };
-
-    const mealAddHandler = (list) => {
+    const mealsUpdateHandler = (list) => {
         setMeals(list);
     };
+
+    useEffect(() => {
+        getMeals(mealsUpdateHandler);
+    }, [sendRequest, auth, petId]);
 
     return (
         <Grid
@@ -101,8 +70,8 @@ const DailyMeals = (props) => {
                 <Clock
                     meals={meals}
                     maxMeal={props.maxMeals}
-                    mealDeletedHandler={mealDeletedHandler}
-                    mealAddHandler={mealAddHandler}
+                    mealsUpdateHandler={mealsUpdateHandler}
+                    /*  mealAddHandler={mealAddHandler} */
                 />
             </Box>
 
@@ -142,8 +111,8 @@ const DailyMeals = (props) => {
 
                                         {meals[i] && (
                                             <DeleteMeal
-                                                mealDeletedHandler={
-                                                    mealDeletedHandler
+                                                mealsUpdateHandler={
+                                                    mealsUpdateHandler
                                                 }
                                                 meals={meals}
                                                 mealId={meals[i]._id}
@@ -185,8 +154,8 @@ const DailyMeals = (props) => {
                                                 )}
 
                                             <DeleteMeal
-                                                mealDeletedHandler={
-                                                    mealDeletedHandler
+                                                mealsUpdateHandler={
+                                                    mealsUpdateHandler
                                                 }
                                                 meals={meals}
                                                 mealId={meal._id}
@@ -199,7 +168,10 @@ const DailyMeals = (props) => {
                 </Timeline>
             </Grid>
             <Grid xs={3} item>
-                <NewMeal mealAddHandler={mealAddHandler} meals={meals} />
+                <NewMeal
+                    mealsUpdateHandler={mealsUpdateHandler}
+                    meals={meals}
+                />
                 <LatestMeal petId={petId} />
             </Grid>
         </Grid>
