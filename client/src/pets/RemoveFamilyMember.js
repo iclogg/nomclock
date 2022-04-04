@@ -14,8 +14,6 @@ import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 import { useForm, Form } from "../shared/form/Form";
 
-import TextInput from "../shared/form/TextInput";
-
 export const RemoveFamilyMember = ({ pet, setPet }) => {
     const auth = useContext(AuthContext);
     const { values, setValues, handleInputChange } = useForm({
