@@ -11,7 +11,7 @@ import { useForm, Form } from "../shared/form/Form";
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 
-const LoginMui = () => {
+const Login = () => {
     const auth = useContext(AuthContext);
     const history = useHistory();
     const {
@@ -22,7 +22,7 @@ const LoginMui = () => {
         error,
     } = useAxios();
 
-    const { values, handleInputChange } = useForm({
+    const { values, handleInputChange, inputErrors, setInputErrors } = useForm({
         email: "",
         password: "",
     });
@@ -72,4 +72,4 @@ const LoginMui = () => {
     );
 };
 
-export default LoginMui;
+export default Login;

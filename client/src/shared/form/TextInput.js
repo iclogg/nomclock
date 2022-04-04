@@ -1,6 +1,13 @@
 import TextField from "@mui/material/TextField";
 
-export const TextInput = ({ label, name, value, onChange, type }) => {
+export const TextInput = ({
+    label,
+    name,
+    value,
+    onChange,
+    type,
+    error = null,
+}) => {
     /*    const typeObj = type === "number" ? `type="number" InputLabelProps={{shrink: true,}}` : ""}; */
 
     const inputStyle = {
@@ -21,6 +28,7 @@ export const TextInput = ({ label, name, value, onChange, type }) => {
                 InputLabelProps={{
                     shrink: true,
                 }}
+                error={error}
             ></TextField>
         );
     }
@@ -34,6 +42,7 @@ export const TextInput = ({ label, name, value, onChange, type }) => {
             value={value}
             onChange={onChange}
             type={type}
+            error={error}
         ></TextField>
     );
 };

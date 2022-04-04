@@ -1,14 +1,23 @@
 import { useState } from "react";
 
-export const useForm = (initialValues) => {
+export const useForm = (initialValues, validateOnChange = false, validate) => {
     const [values, setValues] = useState(initialValues);
+    const [inputErrors, setInputErrors] = useState({});
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setValues({ ...values, [name]: value });
+
+        if (validateOnChange) validate({ [name]: value });
     };
 
-    return { values, setValues, handleInputChange };
+    return {
+        values,
+        setValues,
+        inputErrors,
+        setInputErrors,
+        handleInputChange,
+    };
 };
 
 export const Form = (props) => {
@@ -16,7 +25,10 @@ export const Form = (props) => {
 
     const { children, ...other } = props;
     return (
-        <form style={formStyle} {...other}>
+        <form
+            style={formStyle}
+            {...other} /* TODO: uncomment this when not needed for testing autoComplete="off" */
+        >
             {children}
         </form>
     );
