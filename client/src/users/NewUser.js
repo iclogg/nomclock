@@ -1,16 +1,16 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import Input from "../shared/Input";
-import { Button } from "../shared/Button";
+import { Typography, Box, Button } from "@mui/material";
+
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
+import TextInput from "../shared/form/TextInput";
 
-import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
+import { useForm, Form } from "../shared/form/Form";
+
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
-
-import { useForm } from "../utils/form-hooks";
 
 const NewUser = () => {
     const history = useHistory();
@@ -24,31 +24,19 @@ const NewUser = () => {
         error,
     } = useAxios();
 
-    const [formState, inputHandler] = useForm(
-        {
-            name: {
-                value: "",
-                isValid: false,
-            },
-            email: {
-                value: "",
-                isValid: false,
-            },
-            password: {
-                value: "",
-                isValid: false,
-            },
-        },
-        false
-    );
+    const { values, handleInputChange } = useForm({
+        name: "",
+        email: "",
+        password: "",
+    });
 
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
             const response = await sendRequest("users", "post", {
-                email: formState.inputs.email.value,
-                name: formState.inputs.name.value,
-                password: formState.inputs.password.value,
+                email: values.email,
+                name: values.name,
+                password: values.password,
             });
 
             auth.login(response.data.userId, response.data.token);
@@ -61,43 +49,40 @@ const NewUser = () => {
     }, [clearIsLoading]);
 
     return (
-        <div>
+        <Box sx={{ mt: "10px" }}>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
-            <h2>Enter your details to sign up!</h2>
-            <form action="" onSubmit={submitHandler}>
-                <Input
-                    id="name"
-                    element="input"
+            <Typography variant="h4">Enter your details to sign up!</Typography>
+            <Form action="" onSubmit={submitHandler}>
+                <TextInput
+                    name="name"
                     type="text"
                     label="Name"
-                    validators={[VALIDATOR_REQUIRE()]}
+                    value={values.name}
                     errorText="Please enter a valid name."
-                    onInput={inputHandler}
+                    onChange={handleInputChange}
                 />
-                <Input
-                    id="email"
-                    element="input"
+                <TextInput
+                    name="email"
                     type="email"
                     label="Email"
-                    validators={[VALIDATOR_REQUIRE()]}
+                    value={values.email}
                     errorText="Please enter valid email"
-                    onInput={inputHandler}
+                    onChange={handleInputChange}
                 />
-                <Input
-                    id="password"
-                    element="input"
+                <TextInput
+                    name="password"
                     label="Password"
+                    value={values.password}
                     type="password"
-                    validators={[VALIDATOR_MINLENGTH(6)]}
                     errorText="Please enter a password (at least 6 characters)"
-                    onInput={inputHandler}
+                    onChange={handleInputChange}
                 />
-                <Button type="submit" disabled={!formState.isValid}>
+                <Button type="submit" color="secondary" variant="contained">
                     SIGN UP
                 </Button>
-            </form>
-        </div>
+            </Form>
+        </Box>
     );
 };
 

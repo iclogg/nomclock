@@ -1,14 +1,16 @@
 import React, { useEffect, useContext } from "react";
 
+import Input from "../shared/Input";
 import { Button } from "../shared/Button";
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 
+import { VALIDATOR_REQUIRE } from "../utils/validators";
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 import { useHistory } from "react-router-dom";
 
-import FormGroup from "@mui/material/FormGroup";
+import { useForm } from "../utils/form-hooks";
 
 const Login = () => {
     const auth = useContext(AuthContext);
@@ -20,6 +22,20 @@ const Login = () => {
         isLoading,
         error,
     } = useAxios();
+
+    const [formState, inputHandler] = useForm(
+        {
+            email: {
+                value: "",
+                isValid: false,
+            },
+            password: {
+                value: "",
+                isValid: false,
+            },
+        },
+        false
+    );
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -44,20 +60,24 @@ const Login = () => {
             {error && <Error message={error} onClick={clearError} />}
             <h2>Enter your details to log in!</h2>
             <form action="" onSubmit={submitHandler}>
-                <FormGroup>
-                    <Input
-                        id="email"
-                        type="email"
-                        label="Email"
-                        onInput={inputHandler}
-                    />
-                    <Input
-                        id="password"
-                        label="Password"
-                        type="password"
-                        onInput={inputHandler}
-                    />
-                </FormGroup>
+                <Input
+                    id="email"
+                    element="input"
+                    type="email"
+                    label="Email"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please your email"
+                    onInput={inputHandler}
+                />
+                <Input
+                    id="password"
+                    element="input"
+                    label="Password"
+                    validators=""
+                    type="password"
+                    errorText="Enter your password"
+                    onInput={inputHandler}
+                />
                 <Button type="submit" disabled={!formState.isValid}>
                     LOG IN
                 </Button>

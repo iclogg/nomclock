@@ -1,18 +1,17 @@
-import React, { useEffect, useContext } from "react";
-
-import Input from "../shared/Input";
-import { Button } from "../shared/Button";
-import Loading from "../shared/Loading";
-import Error from "../shared/Error";
-
-import { VALIDATOR_REQUIRE } from "../utils/validators";
-import { AuthContext } from "../utils/auth-context";
-import useAxios from "../utils/axios-hook";
+import { useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import { useForm } from "../utils/form-hooks";
+import { Typography, Box, Button } from "@mui/material";
 
-const Login = () => {
+import Loading from "../shared/Loading";
+import Error from "../shared/Error";
+import TextInput from "../shared/form/TextInput";
+
+import { useForm, Form } from "../shared/form/Form";
+import { AuthContext } from "../utils/auth-context";
+import useAxios from "../utils/axios-hook";
+
+const LoginMui = () => {
     const auth = useContext(AuthContext);
     const history = useHistory();
     const {
@@ -23,26 +22,17 @@ const Login = () => {
         error,
     } = useAxios();
 
-    const [formState, inputHandler] = useForm(
-        {
-            email: {
-                value: "",
-                isValid: false,
-            },
-            password: {
-                value: "",
-                isValid: false,
-            },
-        },
-        false
-    );
+    const { values, handleInputChange } = useForm({
+        email: "",
+        password: "",
+    });
 
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
             const response = await sendRequest("users/login", "post", {
-                email: formState.inputs.email.value,
-                password: formState.inputs.password.value,
+                email: values.email,
+                password: values.password,
             });
 
             auth.login(response.data.userId, response.data.token);
@@ -55,35 +45,31 @@ const Login = () => {
     }, [clearIsLoading]);
 
     return (
-        <div>
+        <Box sx={{ mt: "10px" }}>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
-            <h2>Enter your details to log in!</h2>
-            <form action="" onSubmit={submitHandler}>
-                <Input
-                    id="email"
-                    element="input"
+            <Typography variant="h4">Enter your details to log in!</Typography>
+            <Form action="" onSubmit={submitHandler}>
+                <TextInput
+                    name="email"
                     type="email"
                     label="Email"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please your email"
-                    onInput={inputHandler}
+                    value={values.email}
+                    onChange={handleInputChange}
                 />
-                <Input
-                    id="password"
-                    element="input"
+                <TextInput
+                    name="password"
                     label="Password"
-                    validators=""
                     type="password"
-                    errorText="Enter your password"
-                    onInput={inputHandler}
+                    value={values.password}
+                    onChange={handleInputChange}
                 />
-                <Button type="submit" disabled={!formState.isValid}>
+                <Button type="submit" color="secondary" variant="contained">
                     LOG IN
                 </Button>
-            </form>
-        </div>
+            </Form>
+        </Box>
     );
 };
 
-export default Login;
+export default LoginMui;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Typography, Box } from "@mui/material";
@@ -9,7 +9,7 @@ import Error from "../shared/Error";
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 
-import { useForm, Form } from "../shared/form/Form";
+import { useForm } from "../shared/form/Form";
 import PetDetailsForm from "../pets/PetDetailsForm";
 
 const NewPet = () => {
