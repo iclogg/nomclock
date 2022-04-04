@@ -13,6 +13,7 @@ import {
 
 import TextInput from "../shared/form/TextInput";
 import NewFamilyMember from "../pets/NewFamilyMember";
+import RemoveFamilyMember from "../pets/RemoveFamilyMember";
 
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
@@ -121,44 +122,13 @@ const UpdatePet = (props) => {
                         SAVE
                     </Button>
                 </Form>
-                <NewFamilyMember />
-                <form>
-                    <Box sx={{ minWidth: 120 }}>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">
-                                Name
-                            </InputLabel>
-                            <Select
-                                id="name"
-                                label="Name"
-                                color="secondary"
-                                variant="outlined"
-                                value={memberId}
-                                type="memberId"
-                                onChange={handleInputChange2}
-                            >
-                                {pet.family &&
-                                    pet.family.map((member) => {
-                                        return (
-                                            <MenuItem
-                                                key={member._id}
-                                                value={member._id}
-                                            >
-                                                {member.name}
-                                            </MenuItem>
-                                        );
-                                    })}
-                            </Select>
-                        </FormControl>
-                    </Box>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={deleteFamilyMemberHandler}
-                    >
-                        Remove Family Member
-                    </Button>
-                </form>
+                <NewFamilyMember
+                    setPet={setPet}
+                    toggleSetIsUpdating={toggleSetIsUpdating}
+                />
+                {!!pet.family.length && (
+                    <RemoveFamilyMember setPet={setPet} pet={pet} />
+                )}
                 <Button
                     sx={{ mt: 3 }}
                     onClick={toggleSetIsUpdating}
