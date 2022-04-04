@@ -243,7 +243,9 @@ const addFamilyMember = async (req, res, next) => {
     let pet;
     let newMember;
     try {
-        pet = await Pet.findById(petId);
+        pet = await Pet.findById(petId)
+            .populate("owner", "-password -pets")
+            .populate("family", "-password -pets");
     } catch (err) {
         const error = new HttpError("Something whent wrong", 500);
         console.log(err);
@@ -261,6 +263,18 @@ const addFamilyMember = async (req, res, next) => {
     if (!newMember) {
         const error = new HttpError(
             "Sorry could not find any user with that email.",
+            401
+        );
+        return next(error);
+    }
+
+    const alreadyFamily = pet.family.filter((member) => {
+        return member.email === newMember.email;
+    });
+
+    if (alreadyFamily.length !== 0) {
+        const error = new HttpError(
+            "Seams this user is already part of the family.",
             401
         );
         return next(error);
