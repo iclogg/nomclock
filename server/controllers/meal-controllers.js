@@ -35,10 +35,6 @@ const getMealsByPetId = async (req, res, next) => {
             message: "Could not find any meals for this darling",
             noMeal: true,
         });
-
-        /* return next(
-            new HttpError("Could not find any meals for this darling.", 404)
-        ); */
     } else {
         meals = meals.map((meal) => meal.toObject({ getters: true }));
 
@@ -63,12 +59,6 @@ const getLatestMealByPetId = async (req, res, next) => {
             message: "Could not find any recent meals for this darling.",
             noMeal: true,
         });
-        /* return next(
-            new HttpError(
-                "Could not find any recent meals for this darling.",
-                404
-            )
-        ); */
     } else {
         res.json({ meal });
     }

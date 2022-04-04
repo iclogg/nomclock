@@ -42,12 +42,16 @@ const getPetsByOwner = async (req, res, next) => {
     }
 
     if (!owner || owner.pets.length === 0) {
-        return next(new HttpError("Could not find pets for this owner.", 404));
+        res.json({
+            message:
+                "Looks like you have not registered any of your pet friends yet.",
+            noPet: true,
+        });
+    } else {
+        pets = owner.pets.map((pet) => pet.toObject({ getters: true }));
+
+        res.json({ pets });
     }
-
-    pets = owner.pets.map((pet) => pet.toObject({ getters: true }));
-
-    res.json({ pets });
 };
 
 /* CREATE */
