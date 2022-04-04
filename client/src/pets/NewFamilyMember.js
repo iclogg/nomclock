@@ -1,7 +1,7 @@
+import { Button, FormGroup } from "@mui/material";
+
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
-
-import { Button, FormGroup } from "@mui/material";
 
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
@@ -9,7 +9,7 @@ import { useForm, Form } from "../shared/form/Form";
 
 import TextInput from "../shared/form/TextInput";
 
-const NewFamilyMember = () => {
+const NewFamilyMember = ({ setPet, toggleSetIsUpdating }) => {
     const auth = useContext(AuthContext);
 
     const { values, setValues, handleInputChange } = useForm({
@@ -36,6 +36,7 @@ const NewFamilyMember = () => {
             setValues({
                 email: "",
             });
+            setPet(response.data.pet);
         } catch (error) {
             console.log(error);
         }
