@@ -1,29 +1,21 @@
 import { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import {
-    Button,
-    Typography,
-    Box,
-    InputLabel,
-    MenuItem,
-    FormControl,
-    Select,
-} from "@mui/material";
+import { Button, Typography, Box } from "@mui/material";
 
 import TextInput from "../shared/form/TextInput";
 import NewFamilyMember from "../pets/NewFamilyMember";
 import RemoveFamilyMember from "../pets/RemoveFamilyMember";
+import PetDetailsForm from "../pets/PetDetailsForm";
 
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
-import { useForm, Form } from "../shared/form/Form";
+import { useForm } from "../shared/form/Form";
 
 const UpdatePet = (props) => {
     const { toggleSetIsUpdating, setPet, pet } = props;
     const auth = useContext(AuthContext);
     const [dataLoaded, setDataLoaded] = useState(false);
-    const [memberId, setMemberId] = useState("");
 
     const { values, handleInputChange } = useForm({
         name: pet.name,
@@ -55,73 +47,20 @@ const UpdatePet = (props) => {
             );
 
             setPet(response.data.pet);
-            toggleSetIsUpdating();
         } catch (error) {
             console.log(error);
         }
-    };
-
-    /* TODO add loading component to render whilst getting data to replace formState.inputs.name.value &&*/
-    const deleteFamilyMemberHandler = async (e) => {
-        e.preventDefault();
-
-        try {
-            const response = await sendRequest(
-                `pets/${petId}/family`,
-                "delete",
-                {
-                    memberId,
-                },
-                { authorization: `Bearer ${auth.token}` }
-            );
-
-            setMemberId("");
-            setPet(response.data.pet);
-            toggleSetIsUpdating();
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const handleInputChange2 = (e) => {
-        const { value } = e.target;
-        setMemberId(value);
     };
 
     return (
         dataLoaded && (
             <Box sx={{ mt: "10px" }}>
                 <Typography variant="h4">Update Pet</Typography>{" "}
-                <Form action="" onSubmit={submitHandler}>
-                    <TextInput
-                        label="Name"
-                        name="name"
-                        /*                         errorText="Please enter a valid title."
-                         */
-                        value={values.name}
-                        onChange={handleInputChange}
-                    />
-                    <TextInput
-                        type="number"
-                        label="Max meals per day?"
-                        name="maxMeals"
-                        /* errorText="Please choose how many meals a day your darling should have." */
-                        onChange={handleInputChange}
-                        value={values.maxMeals}
-                    />
-
-                    <TextInput
-                        label="Description"
-                        name="description"
-                        /*                         errorText="Please enter a description (at least 5 characters)"
-                         */
-                        value={values.description}
-                        onChange={handleInputChange}
-                    />
-                    <Button type="submit" color="secondary" variant="contained">
-                        SAVE
-                    </Button>
-                </Form>
+                <PetDetailsForm
+                    submitHandler={submitHandler}
+                    values={values}
+                    handleInputChange={handleInputChange}
+                />
                 <NewFamilyMember
                     setPet={setPet}
                     toggleSetIsUpdating={toggleSetIsUpdating}
