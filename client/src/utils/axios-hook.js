@@ -56,11 +56,10 @@ const useAxios = () => {
                 return response;
             } catch (error) {
                 console.error("in axios-hook.js", error);
-                if (!error.message === "canceled") {
-                    setIsLoading(false);
-                    setError(error.message);
-                    throw error;
-                }
+
+                setIsLoading(false);
+                setError(error.message);
+                throw error;
             }
         },
         []
