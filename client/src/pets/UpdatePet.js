@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 
 import { Button, Typography, Box } from "@mui/material";
 
-import TextInput from "../shared/form/TextInput";
 import NewFamilyMember from "../pets/NewFamilyMember";
 import RemoveFamilyMember from "../pets/RemoveFamilyMember";
 import PetDetailsForm from "../pets/PetDetailsForm";
@@ -13,7 +12,7 @@ import useAxios from "../utils/axios-hook";
 import { useForm } from "../shared/form/Form";
 
 const UpdatePet = (props) => {
-    const { toggleSetIsUpdating, setPet, pet } = props;
+    const { toggleSetIsUpdating, petUpdateHandler, pet } = props;
     const auth = useContext(AuthContext);
     const [dataLoaded, setDataLoaded] = useState(false);
 
@@ -46,7 +45,7 @@ const UpdatePet = (props) => {
                 { authorization: `Bearer ${auth.token}` }
             );
 
-            setPet(response.data.pet);
+            petUpdateHandler(response.data.pet);
         } catch (error) {
             console.log(error);
         }
@@ -62,11 +61,14 @@ const UpdatePet = (props) => {
                     handleInputChange={handleInputChange}
                 />
                 <NewFamilyMember
-                    setPet={setPet}
+                    petUpdateHandler={petUpdateHandler}
                     toggleSetIsUpdating={toggleSetIsUpdating}
                 />
                 {!!pet.family.length && (
-                    <RemoveFamilyMember setPet={setPet} pet={pet} />
+                    <RemoveFamilyMember
+                        petUpdateHandler={petUpdateHandler}
+                        pet={pet}
+                    />
                 )}
                 <Button
                     sx={{ mt: 3 }}

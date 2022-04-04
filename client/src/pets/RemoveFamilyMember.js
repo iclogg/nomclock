@@ -14,7 +14,7 @@ import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 import { useForm, Form } from "../shared/form/Form";
 
-export const RemoveFamilyMember = ({ pet, setPet }) => {
+export const RemoveFamilyMember = ({ pet, petUpdateHandler }) => {
     const auth = useContext(AuthContext);
     const { values, setValues, handleInputChange } = useForm({
         memberId: "",
@@ -26,8 +26,6 @@ export const RemoveFamilyMember = ({ pet, setPet }) => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log("submithandler remove f memeber");
-        console.log("vavalues", values);
 
         try {
             const response = await sendRequest(
@@ -42,7 +40,7 @@ export const RemoveFamilyMember = ({ pet, setPet }) => {
             setValues({
                 memberId: "",
             });
-            setPet(response.data.pet);
+            petUpdateHandler(response.data.pet);
         } catch (error) {
             console.log(error);
         }

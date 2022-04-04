@@ -43,7 +43,7 @@ const useAxios = () => {
                     (abortCtrl) => abortCtrl !== axiosAbortCtrl
                 );
 
-                /* TODO see if replacement for below is needed */
+                /* TODO see if replacement for below isgit diff  needed */
                 /* if (
                     response.statusText !== "OK" ||
                     response.statusText !== "Created"
@@ -56,9 +56,11 @@ const useAxios = () => {
                 return response;
             } catch (error) {
                 console.error("in axios-hook.js", error);
-                setError(error.message);
-                setIsLoading(false);
-                throw error;
+                if (!error.message === "canceled") {
+                    setIsLoading(false);
+                    setError(error.message);
+                    throw error;
+                }
             }
         },
         []

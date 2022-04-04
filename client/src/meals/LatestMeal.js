@@ -24,8 +24,9 @@ const LatestMeal = ({ petId }) => {
                 {},
                 { authorization: "Bearer " + auth.token }
             );
-
-            setMeal(response.data.meal);
+            if (!response.data.noMeal) {
+                setMeal(response.data.meal);
+            }
         } catch (err) {
             setMeal({});
             console.log(err);

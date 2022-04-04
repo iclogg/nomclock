@@ -27,7 +27,6 @@ const PetFriends = () => {
         };
 
         getPetFriends();
-        console.log(petFriends);
     }, [auth, sendRequest]);
 
     return (

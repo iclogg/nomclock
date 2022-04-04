@@ -18,20 +18,24 @@ const useMeals = () => {
                 {},
                 { authorization: "Bearer " + auth.token }
             );
-            preppedMeals = [...response.data.meals].sort((x, y) => {
-                return new Date(x.time) - new Date(y.time);
-            });
 
-            preppedMeals = preppedMeals.filter((meal) => {
-                let mealDate = new Date(meal.time);
-                let today = new Date();
+            if (!response.data.noMeal) {
+                preppedMeals = [...response.data.meals].sort((x, y) => {
+                    return new Date(x.time) - new Date(y.time);
+                });
 
-                return (
-                    mealDate.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0)
-                );
-            });
+                preppedMeals = preppedMeals.filter((meal) => {
+                    let mealDate = new Date(meal.time);
+                    let today = new Date();
 
-            mealsUpdateHandler(preppedMeals);
+                    return (
+                        mealDate.setHours(0, 0, 0, 0) ===
+                        today.setHours(0, 0, 0, 0)
+                    );
+                });
+
+                mealsUpdateHandler(preppedMeals);
+            }
         } catch (err) {
             console.log(err);
         }

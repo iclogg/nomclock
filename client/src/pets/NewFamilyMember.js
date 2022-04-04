@@ -9,7 +9,7 @@ import { useForm, Form } from "../shared/form/Form";
 
 import TextInput from "../shared/form/TextInput";
 
-const NewFamilyMember = ({ setPet, toggleSetIsUpdating }) => {
+const NewFamilyMember = ({ petUpdateHandler }) => {
     const auth = useContext(AuthContext);
 
     const { values, setValues, handleInputChange } = useForm({
@@ -36,7 +36,7 @@ const NewFamilyMember = ({ setPet, toggleSetIsUpdating }) => {
             setValues({
                 email: "",
             });
-            setPet(response.data.pet);
+            petUpdateHandler(response.data.pet);
         } catch (error) {
             console.log(error);
         }

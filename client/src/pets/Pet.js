@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Typography, Container, Box, Button, Modal, Grid } from "@mui/material";
@@ -43,6 +43,10 @@ const Pet = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const petUpdateHandler = (obj) => {
+        setPet(obj);
+    };
+
     useEffect(() => {
         const getPet = async () => {
             try {
@@ -52,8 +56,7 @@ const Pet = () => {
                     {},
                     { authorization: "Bearer " + auth.token }
                 );
-
-                setPet(response.data.pet);
+                petUpdateHandler(response.data.pet);
             } catch (err) {
                 console.log(err);
             }
@@ -64,6 +67,8 @@ const Pet = () => {
 
     const deletePet = async (e) => {
         e.preventDefault();
+        // ToDo investigate if there is a better way to aviod unnessesary api calls because Daily meals rerendering on isLoading being set and unset by the delete api call below.
+        setPet({});
 
         try {
             await sendRequest(
@@ -73,7 +78,6 @@ const Pet = () => {
                 { authorization: `Bearer ${auth.token}` }
             );
 
-            setPet({});
             history.replace("/user");
         } catch (error) {
             console.log(error);
@@ -120,15 +124,15 @@ const Pet = () => {
                 </Box>
             </Modal>
 
-            {isUpdating && (
+            {pet && isUpdating && (
                 <UpdatePet
                     toggleSetIsUpdating={toggleSetIsUpdating}
-                    setPet={setPet}
+                    petUpdateHandler={petUpdateHandler}
                     pet={pet}
                 />
             )}
 
-            {pet && !isLoading && !isUpdating && (
+            {pet.name && !isLoading && !isUpdating && (
                 <Box sx={{ textAlign: "center" }}>
                     <Typography variant="h1">{pet.name}'s own page</Typography>
                     <Avatar name={pet.name} image={pet.image} />
@@ -164,7 +168,6 @@ const Pet = () => {
                             <PetsFamily family={pet.family} owner={pet.owner} />
                         </Grid>
                     </Grid>
-
                     <DailyMeals maxMeals={pet.maxMeals} />
                 </Box>
             )}

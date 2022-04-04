@@ -30,14 +30,20 @@ const getMealsByPetId = async (req, res, next) => {
     }
 
     if (!meals || meals.length === 0) {
-        return next(
+        res.status(200);
+        res.json({
+            message: "Could not find any meals for this darling",
+            noMeal: true,
+        });
+
+        /* return next(
             new HttpError("Could not find any meals for this darling.", 404)
-        );
+        ); */
+    } else {
+        meals = meals.map((meal) => meal.toObject({ getters: true }));
+
+        res.json({ meals });
     }
-
-    meals = meals.map((meal) => meal.toObject({ getters: true }));
-
-    res.json({ meals });
 };
 
 const getLatestMealByPetId = async (req, res, next) => {
@@ -53,15 +59,19 @@ const getLatestMealByPetId = async (req, res, next) => {
     }
 
     if (!meal || meal.length === 0) {
-        return next(
+        res.json({
+            message: "Could not find any recent meals for this darling.",
+            noMeal: true,
+        });
+        /* return next(
             new HttpError(
                 "Could not find any recent meals for this darling.",
                 404
             )
-        );
+        ); */
+    } else {
+        res.json({ meal });
     }
-
-    res.json({ meal });
 };
 
 /* CREATE */
