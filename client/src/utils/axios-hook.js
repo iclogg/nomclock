@@ -56,9 +56,8 @@ const useAxios = () => {
                 return response;
             } catch (error) {
                 console.error("in axios-hook.js", error);
-
                 setIsLoading(false);
-                setError(error.message);
+                setError(error.response.data.message);
                 throw error;
             }
         },

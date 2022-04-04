@@ -89,7 +89,7 @@ const createUser = async (req, res, next) => {
     const err = validationResult(req);
     if (!err.isEmpty()) {
         const error = new HttpError(
-            "Invalid inputs passed, please check data",
+            "Incomplete information entered. Please check to make sure you filled everything in correctly",
             422
         );
         return next(error);

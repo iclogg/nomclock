@@ -14,6 +14,7 @@ const Overlay = (props) => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                zIndex: "1000",
             }}
         >
             {props.children}

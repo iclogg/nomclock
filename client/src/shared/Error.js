@@ -1,13 +1,23 @@
 import React from "react";
 
 import Overlay from "./Overlay";
-import { Button } from "./Button";
+import { Button, Typography, Box } from "@mui/material";
 
 const Error = (props) => {
     return (
         <Overlay className="overlay">
-            <h1>{props.message}</h1>
-            <Button onClick={props.onClick}>X</Button>
+            <Box sx={{ p: "20px", backgroundColor: "primary.main" }}>
+                <Typography sx={{ maxWidth: "70vw", m: "15px" }} variant="h4">
+                    {props.message}
+                </Typography>
+                <Button
+                    color="secondary"
+                    variant="contained"
+                    onClick={props.onClick}
+                >
+                    Close
+                </Button>
+            </Box>
         </Overlay>
     );
 };
