@@ -25,9 +25,11 @@ const NewUser = () => {
     } = useAxios();
 
     const { values, handleInputChange } = useForm({
-        name: "",
-        email: "",
-        password: "",
+        initialValues: {
+            name: "",
+            email: "",
+            password: "",
+        },
     });
 
     const submitHandler = async (e) => {

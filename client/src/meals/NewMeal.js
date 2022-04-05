@@ -9,8 +9,10 @@ const NewMeal = ({ mealsUpdateHandler, meals }) => {
     const { addMeal } = useMeals();
 
     const { values, setValues, handleInputChange } = useForm({
-        time: null,
-        comment: "",
+        initialValues: {
+            time: null,
+            comment: "",
+        },
     });
 
     const submitHandler = async (e) => {

@@ -8,6 +8,8 @@ import Error from "../shared/Error";
 import TextInput from "../shared/form/TextInput";
 
 import { useForm, Form } from "../shared/form/Form";
+
+import inputValidator from "../shared/form/validators";
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 
@@ -22,22 +24,50 @@ const Login = () => {
         error,
     } = useAxios();
 
+    const validate = (fieldValues = values) => {
+        let temp = { ...inputErrors };
+
+        for (const key in fieldValues) {
+            if (key in fieldValues) {
+                temp[key] = inputValidator(key, values[key]);
+            }
+        }
+
+        setInputErrors({ ...temp });
+
+        return Object.values(temp).every((x) => x == "");
+    };
+
     const { values, handleInputChange, inputErrors, setInputErrors } = useForm({
+        initialValues: {
+            email: "",
+            password: "",
+        },
+        validateOnChange: true,
+        validate,
+    });
+
+    const initialFValues = {
         email: "",
         password: "",
-    });
+    };
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        try {
-            const response = await sendRequest("users/login", "post", {
-                email: values.email,
-                password: values.password,
-            });
 
-            auth.login(response.data.userId, response.data.token);
-            history.push("/");
-        } catch (error) {}
+        if (validate()) {
+            try {
+                const response = await sendRequest("users/login", "post", {
+                    email: values.email,
+                    password: values.password,
+                });
+
+                auth.login(response.data.userId, response.data.token);
+                history.push("/");
+            } catch (error) {}
+        } else {
+            console.log("not valid inputs");
+        }
     };
 
     useEffect(() => {
@@ -52,10 +82,10 @@ const Login = () => {
             <Form action="" onSubmit={submitHandler}>
                 <TextInput
                     name="email"
-                    type="email"
                     label="Email"
                     value={values.email}
                     onChange={handleInputChange}
+                    error={inputErrors.email}
                 />
                 <TextInput
                     name="password"
@@ -63,6 +93,7 @@ const Login = () => {
                     type="password"
                     value={values.password}
                     onChange={handleInputChange}
+                    error={inputErrors.password}
                 />
                 <Button type="submit" color="secondary" variant="contained">
                     LOG IN

@@ -17,7 +17,9 @@ import { useForm, Form } from "../shared/form/Form";
 export const RemoveFamilyMember = ({ pet, petUpdateHandler }) => {
     const auth = useContext(AuthContext);
     const { values, setValues, handleInputChange } = useForm({
-        memberId: "",
+        initialValues: {
+            memberId: "",
+        },
     });
 
     const { petId } = useParams();

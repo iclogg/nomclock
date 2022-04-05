@@ -13,7 +13,9 @@ const NewFamilyMember = ({ petUpdateHandler }) => {
     const auth = useContext(AuthContext);
 
     const { values, setValues, handleInputChange } = useForm({
-        email: "",
+        initialValues: {
+            email: "",
+        },
     });
 
     const { petId } = useParams();

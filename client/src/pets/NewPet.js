@@ -23,9 +23,11 @@ const NewPet = () => {
     } = useAxios();
 
     const { values, handleInputChange } = useForm({
-        name: "",
-        description: "",
-        maxMeals: 0,
+        initialValues: {
+            name: "",
+            description: "",
+            maxMeals: 0,
+        },
     });
 
     const history = useHistory();

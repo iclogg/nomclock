@@ -17,9 +17,11 @@ const UpdatePet = (props) => {
     const [dataLoaded, setDataLoaded] = useState(false);
 
     const { values, handleInputChange } = useForm({
-        name: pet.name,
-        description: pet.description,
-        maxMeals: pet.maxMeals,
+        initialValues: {
+            name: pet.name,
+            description: pet.description,
+            maxMeals: pet.maxMeals,
+        },
     });
 
     const { sendRequest } = useAxios();

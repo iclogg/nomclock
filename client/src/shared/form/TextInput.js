@@ -28,7 +28,8 @@ export const TextInput = ({
                 InputLabelProps={{
                     shrink: true,
                 }}
-                error={error}
+                error={!!error}
+                helperText={error}
             ></TextField>
         );
     }
@@ -42,7 +43,8 @@ export const TextInput = ({
             value={value}
             onChange={onChange}
             type={type}
-            error={error}
+            error={!!error}
+            helperText={error}
         ></TextField>
     );
 };
