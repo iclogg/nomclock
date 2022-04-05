@@ -16,12 +16,19 @@ const UpdatePet = (props) => {
     const auth = useContext(AuthContext);
     const [dataLoaded, setDataLoaded] = useState(false);
 
-    const { values, handleInputChange } = useForm({
+    const {
+        values,
+        handleInputChange,
+        inputErrors,
+        setInputErrors,
+        validate,
+    } = useForm({
         initialValues: {
             name: pet.name,
             description: pet.description,
             maxMeals: pet.maxMeals,
         },
+        validateOnChange: true,
     });
 
     const { sendRequest } = useAxios();
@@ -34,22 +41,25 @@ const UpdatePet = (props) => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
+        if (validate()) {
+            try {
+                const response = await sendRequest(
+                    `pets/${petId}`,
+                    "patch",
+                    {
+                        name: values.name,
+                        maxMeals: values.maxMeals,
+                        description: values.description,
+                    },
+                    { authorization: `Bearer ${auth.token}` }
+                );
 
-        try {
-            const response = await sendRequest(
-                `pets/${petId}`,
-                "patch",
-                {
-                    name: values.name,
-                    maxMeals: values.maxMeals,
-                    description: values.description,
-                },
-                { authorization: `Bearer ${auth.token}` }
-            );
-
-            petUpdateHandler(response.data.pet);
-        } catch (error) {
-            console.log(error);
+                petUpdateHandler(response.data.pet);
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            console.log("not valid inputs");
         }
     };
 
@@ -61,6 +71,7 @@ const UpdatePet = (props) => {
                     submitHandler={submitHandler}
                     values={values}
                     handleInputChange={handleInputChange}
+                    inputErrors={inputErrors}
                 />
                 <NewFamilyMember
                     petUpdateHandler={petUpdateHandler}

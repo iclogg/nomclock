@@ -12,7 +12,14 @@ import TextInput from "../shared/form/TextInput";
 const NewFamilyMember = ({ petUpdateHandler }) => {
     const auth = useContext(AuthContext);
 
-    const { values, setValues, handleInputChange } = useForm({
+    const {
+        values,
+        setValues,
+        handleInputChange,
+        inputErrors,
+        setInputErrors,
+        validate,
+    } = useForm({
         initialValues: {
             email: "",
         },
@@ -24,23 +31,26 @@ const NewFamilyMember = ({ petUpdateHandler }) => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
+        if (validate()) {
+            try {
+                const response = await sendRequest(
+                    `pets/${petId}/family`,
+                    "post",
+                    {
+                        email: values.email,
+                    },
+                    { authorization: `Bearer ${auth.token}` }
+                );
 
-        try {
-            const response = await sendRequest(
-                `pets/${petId}/family`,
-                "post",
-                {
-                    email: values.email,
-                },
-                { authorization: `Bearer ${auth.token}` }
-            );
-
-            setValues({
-                email: "",
-            });
-            petUpdateHandler(response.data.pet);
-        } catch (error) {
-            console.log(error);
+                setValues({
+                    email: "",
+                });
+                petUpdateHandler(response.data.pet);
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            console.log("not valid inputs");
         }
     };
 
@@ -49,12 +59,12 @@ const NewFamilyMember = ({ petUpdateHandler }) => {
             <FormGroup>
                 <TextInput
                     name="email"
+                    type="email"
                     label="Email"
-                    color="secondary"
-                    variant="outlined"
                     value={values.email}
                     onChange={handleInputChange}
                     type="email"
+                    error={inputErrors.email}
                 />
             </FormGroup>
             <Button type="submit" variant="contained" color="secondary">
