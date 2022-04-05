@@ -24,27 +24,33 @@ const Login = () => {
         error,
     } = useAxios();
 
-    const validate = (fieldValues = values) => {
+    /*    const validate = (fieldValues = values) => {
         let temp = { ...inputErrors };
 
         for (const key in fieldValues) {
             if (key in fieldValues) {
-                temp[key] = inputValidator(key, values[key]);
+                temp[key] = inputValidator(key, fieldValues[key]);
             }
         }
 
         setInputErrors({ ...temp });
 
         return Object.values(temp).every((x) => x == "");
-    };
+    }; */
 
-    const { values, handleInputChange, inputErrors, setInputErrors } = useForm({
+    const {
+        values,
+        handleInputChange,
+        inputErrors,
+        setInputErrors,
+        validate,
+    } = useForm({
         initialValues: {
             email: "",
             password: "",
         },
         validateOnChange: true,
-        validate,
+        /*   validate, */
     });
 
     const initialFValues = {

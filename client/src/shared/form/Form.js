@@ -1,12 +1,28 @@
 import { useState } from "react";
 
+import inputValidator from "./validators";
+
 export const useForm = ({
     initialValues,
     validateOnChange = false,
-    validate,
+    /*  validate, */
 }) => {
     const [values, setValues] = useState(initialValues);
     const [inputErrors, setInputErrors] = useState({});
+
+    const validate = (fieldValues = values) => {
+        let temp = { ...inputErrors };
+
+        for (const key in fieldValues) {
+            if (key in fieldValues) {
+                temp[key] = inputValidator(key, fieldValues[key]);
+            }
+        }
+
+        setInputErrors({ ...temp });
+
+        return Object.values(temp).every((x) => x == "");
+    };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -24,6 +40,7 @@ export const useForm = ({
         inputErrors,
         setInputErrors,
         handleInputChange,
+        validate,
     };
 };
 
