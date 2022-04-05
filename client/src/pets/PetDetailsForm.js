@@ -3,7 +3,12 @@ import { Button } from "@mui/material";
 import { Form } from "../shared/form/Form";
 import TextInput from "../shared/form/TextInput";
 
-const PetDetailsForm = ({ submitHandler, values, handleInputChange }) => {
+const PetDetailsForm = ({
+    submitHandler,
+    values,
+    handleInputChange,
+    inputErrors,
+}) => {
     return (
         <Form action="" onSubmit={submitHandler}>
             <TextInput
@@ -13,6 +18,7 @@ const PetDetailsForm = ({ submitHandler, values, handleInputChange }) => {
                  */
                 value={values.name}
                 onChange={handleInputChange}
+                error={inputErrors.name}
             />
             <TextInput
                 type="number"
@@ -21,6 +27,8 @@ const PetDetailsForm = ({ submitHandler, values, handleInputChange }) => {
                 /* errorText="Please choose how many meals a day your darling should have." */
                 onChange={handleInputChange}
                 value={values.maxMeals}
+                error={inputErrors.maxMeals}
+                inputProps={{ min: 1 }}
             />
 
             <TextInput
@@ -30,6 +38,7 @@ const PetDetailsForm = ({ submitHandler, values, handleInputChange }) => {
                  */
                 value={values.description}
                 onChange={handleInputChange}
+                error={inputErrors.description}
             />
             <Button type="submit" color="secondary" variant="contained">
                 SAVE

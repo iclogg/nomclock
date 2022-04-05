@@ -24,26 +24,37 @@ const NewUser = () => {
         error,
     } = useAxios();
 
-    const { values, handleInputChange } = useForm({
+    const {
+        values,
+        handleInputChange,
+        inputErrors,
+        setInputErrors,
+        validate,
+    } = useForm({
         initialValues: {
             name: "",
             email: "",
             password: "",
         },
+        validateOnChange: true,
     });
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        try {
-            const response = await sendRequest("users", "post", {
-                email: values.email,
-                name: values.name,
-                password: values.password,
-            });
+        if (validate()) {
+            try {
+                const response = await sendRequest("users", "post", {
+                    email: values.email,
+                    name: values.name,
+                    password: values.password,
+                });
 
-            auth.login(response.data.userId, response.data.token);
-            history.push("/");
-        } catch (error) {}
+                auth.login(response.data.userId, response.data.token);
+                history.push("/");
+            } catch (error) {}
+        } else {
+            console.log("not valid inputs");
+        }
     };
 
     useEffect(() => {
@@ -61,24 +72,24 @@ const NewUser = () => {
                     type="text"
                     label="Name"
                     value={values.name}
-                    errorText="Please enter a valid name."
                     onChange={handleInputChange}
+                    error={inputErrors.name}
                 />
                 <TextInput
                     name="email"
                     type="email"
                     label="Email"
                     value={values.email}
-                    errorText="Please enter valid email"
                     onChange={handleInputChange}
+                    error={inputErrors.email}
                 />
                 <TextInput
                     name="password"
                     label="Password"
                     value={values.password}
                     type="password"
-                    errorText="Please enter a password (at least 6 characters)"
                     onChange={handleInputChange}
+                    error={inputErrors.password}
                 />
                 <Button type="submit" color="secondary" variant="contained">
                     SIGN UP

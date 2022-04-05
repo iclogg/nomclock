@@ -22,33 +22,44 @@ const NewPet = () => {
         error,
     } = useAxios();
 
-    const { values, handleInputChange } = useForm({
+    const {
+        values,
+        handleInputChange,
+        inputErrors,
+        setInputErrors,
+        validate,
+    } = useForm({
         initialValues: {
             name: "",
             description: "",
-            maxMeals: 0,
+            maxMeals: 3,
         },
+        validateOnChange: true,
     });
 
     const history = useHistory();
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        try {
-            const response = await sendRequest(
-                "pets",
-                "post",
-                {
-                    name: values.name,
-                    maxMeals: values.maxMeals,
-                    description: values.description,
-                    userId: auth.userId,
-                },
-                { authorization: `Bearer ${auth.token}` }
-            );
-            history.push(`/pets/${response.data._id}`);
-        } catch (error) {
-            console.log(error);
+        if (validate()) {
+            try {
+                const response = await sendRequest(
+                    "pets",
+                    "post",
+                    {
+                        name: values.name,
+                        maxMeals: values.maxMeals,
+                        description: values.description,
+                        userId: auth.userId,
+                    },
+                    { authorization: `Bearer ${auth.token}` }
+                );
+                history.push(`/pets/${response.data._id}`);
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            console.log("not valid inputs");
         }
     };
 
@@ -65,6 +76,7 @@ const NewPet = () => {
                 submitHandler={submitHandler}
                 values={values}
                 handleInputChange={handleInputChange}
+                inputErrors={inputErrors}
             />
         </Box>
     );

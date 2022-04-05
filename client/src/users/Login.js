@@ -14,6 +14,7 @@ import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 
 const Login = () => {
+    const blah = "blah";
     const auth = useContext(AuthContext);
     const history = useHistory();
     const {
@@ -23,20 +24,6 @@ const Login = () => {
         isLoading,
         error,
     } = useAxios();
-
-    /*    const validate = (fieldValues = values) => {
-        let temp = { ...inputErrors };
-
-        for (const key in fieldValues) {
-            if (key in fieldValues) {
-                temp[key] = inputValidator(key, fieldValues[key]);
-            }
-        }
-
-        setInputErrors({ ...temp });
-
-        return Object.values(temp).every((x) => x == "");
-    }; */
 
     const {
         values,
@@ -50,13 +37,7 @@ const Login = () => {
             password: "",
         },
         validateOnChange: true,
-        /*   validate, */
     });
-
-    const initialFValues = {
-        email: "",
-        password: "",
-    };
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -99,7 +80,6 @@ const Login = () => {
                     type="password"
                     value={values.password}
                     onChange={handleInputChange}
-                    error={inputErrors.password}
                 />
                 <Button type="submit" color="secondary" variant="contained">
                     LOG IN

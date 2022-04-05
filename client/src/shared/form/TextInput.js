@@ -7,6 +7,7 @@ export const TextInput = ({
     onChange,
     type,
     error = null,
+    ...other
 }) => {
     /*    const typeObj = type === "number" ? `type="number" InputLabelProps={{shrink: true,}}` : ""}; */
 
@@ -30,6 +31,7 @@ export const TextInput = ({
                 }}
                 error={!!error}
                 helperText={error}
+                {...other}
             ></TextField>
         );
     }
@@ -45,6 +47,7 @@ export const TextInput = ({
             type={type}
             error={!!error}
             helperText={error}
+            {...other}
         ></TextField>
     );
 };

@@ -2,11 +2,7 @@ import { useState } from "react";
 
 import inputValidator from "./validators";
 
-export const useForm = ({
-    initialValues,
-    validateOnChange = false,
-    /*  validate, */
-}) => {
+export const useForm = ({ initialValues, validateOnChange = false }) => {
     const [values, setValues] = useState(initialValues);
     const [inputErrors, setInputErrors] = useState({});
 
