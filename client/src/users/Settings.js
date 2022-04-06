@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
 
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -25,7 +24,6 @@ const Settings = () => {
     const auth = useContext(AuthContext);
 
     const { sendRequest } = useAxios();
-    const history = useHistory();
 
     //Delete Modal
     const [open, setOpen] = useState(false);
@@ -45,7 +43,6 @@ const Settings = () => {
             if (response.data.message === "User deleted") {
                 console.log("logout");
 
-                history.push("/login");
                 auth.logout();
             }
         } catch (error) {

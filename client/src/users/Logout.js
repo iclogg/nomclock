@@ -6,7 +6,6 @@ import { AuthContext } from "../utils/auth-context";
 
 const Logout = () => {
     const auth = useContext(AuthContext);
-    window.location.replace("/login");
     return <Button onClick={auth.logout}>Logout</Button>;
 };
 

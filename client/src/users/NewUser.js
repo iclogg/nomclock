@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 
 import { Typography, Box, Button } from "@mui/material";
 
@@ -13,8 +12,6 @@ import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 
 const NewUser = () => {
-    const history = useHistory();
-
     const auth = useContext(AuthContext);
     const {
         sendRequest,
@@ -50,7 +47,6 @@ const NewUser = () => {
                 });
 
                 auth.login(response.data.userId, response.data.token);
-                history.push("/");
             } catch (error) {}
         } else {
             console.log("not valid inputs");

@@ -21,16 +21,18 @@ const User = () => {
 
     useEffect(() => {
         const getPets = async () => {
-            try {
-                const response = await sendRequest(
-                    `pets/owner/${auth.userId}`,
-                    "get",
-                    {},
-                    { authorization: "Bearer " + auth.token }
-                );
+            if (auth.userId) {
+                try {
+                    const response = await sendRequest(
+                        `pets/owner/${auth.userId}`,
+                        "get",
+                        {},
+                        { authorization: "Bearer " + auth.token }
+                    );
 
-                setPets([...response.data.pets]);
-            } catch (err) {}
+                    setPets([...response.data.pets]);
+                } catch (err) {}
+            }
         };
 
         getPets();

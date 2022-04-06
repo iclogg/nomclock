@@ -6,7 +6,12 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DateAdapter from "@mui/lab/AdapterMoment";
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+} from "react-router-dom";
 
 import Pet from "./pets/Pet";
 import NewPet from "./pets/NewPet";
@@ -51,14 +56,13 @@ const App = () => {
                 <Route path="/user" exact>
                     <User />
                 </Route>
-
                 <Route path="/pets/new" exact>
                     <NewPet />
                 </Route>
-
                 <Route path="/pets/:petId" exact>
                     <Pet />
                 </Route>
+                <Redirect to="/user" />
             </Switch>
         );
     } else {
@@ -73,6 +77,7 @@ const App = () => {
                 <Route path="/user/login" exact>
                     <Login />
                 </Route>
+                <Redirect to="/user/login" />
             </Switch>
         );
     }

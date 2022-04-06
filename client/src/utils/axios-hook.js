@@ -21,6 +21,7 @@ const useAxios = () => {
             setIsLoading(true);
             const axiosAbortCtrl = new AbortController();
             activeHttpRequests.current.push(axiosAbortCtrl);
+            console.log("url:", url, "method:", method, "body:", body);
 
             let response;
             try {
