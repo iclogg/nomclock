@@ -45,13 +45,16 @@ const useMeals = () => {
         let rawTime;
 
         if (time === null) {
+            //for no time given
             rawTime = new Date();
         } else if (typeof time === "string") {
+            //for meal added in clock
             rawTime = new Date();
             rawTime.setMinutes(0);
             rawTime.setSeconds(0);
             rawTime.setHours(time);
         } else {
+            //for time given
             rawTime = time.toDate();
         }
 

@@ -19,6 +19,10 @@ const inputValidator = (str, value) => {
     if ("maxMeals" === str) {
         return value > 0 ? "" : "Please enter a max amount of meals";
     }
+
+    if ("memberId" === str) {
+        return value.length > 0 ? "" : "Who is no longer part of the family?";
+    }
 };
 
 export default inputValidator;

@@ -23,6 +23,7 @@ const NewFamilyMember = ({ petUpdateHandler }) => {
         initialValues: {
             email: "",
         },
+        validateOnChange: true,
     });
 
     const { petId } = useParams();

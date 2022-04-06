@@ -8,6 +8,7 @@ import {
     FormControl,
     Select,
     InputLabel,
+    FormHelperText,
 } from "@mui/material";
 
 import { AuthContext } from "../utils/auth-context";
@@ -16,10 +17,18 @@ import { useForm, Form } from "../shared/form/Form";
 
 export const RemoveFamilyMember = ({ pet, petUpdateHandler }) => {
     const auth = useContext(AuthContext);
-    const { values, setValues, handleInputChange } = useForm({
+    const {
+        values,
+        setValues,
+        handleInputChange,
+        inputErrors,
+        setInputErrors,
+        validate,
+    } = useForm({
         initialValues: {
             memberId: "",
         },
+        validateOnChange: true,
     });
 
     const { petId } = useParams();
@@ -29,34 +38,38 @@ export const RemoveFamilyMember = ({ pet, petUpdateHandler }) => {
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await sendRequest(
-                `pets/${petId}/family`,
-                "delete",
-                {
-                    memberId: values.memberId,
-                },
-                { authorization: `Bearer ${auth.token}` }
-            );
+        if (validate()) {
+            try {
+                const response = await sendRequest(
+                    `pets/${petId}/family`,
+                    "delete",
+                    {
+                        memberId: values.memberId,
+                    },
+                    { authorization: `Bearer ${auth.token}` }
+                );
 
-            setValues({
-                memberId: "",
-            });
-            petUpdateHandler(response.data.pet);
-        } catch (error) {
-            console.log(error);
+                setValues({
+                    memberId: "",
+                });
+                petUpdateHandler(response.data.pet);
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            console.log("not valid inputs");
+            console.log("inputErrors.memberId", inputErrors.memberId);
         }
     };
 
     return (
         <Form action="" onSubmit={submitHandler}>
             <Box sx={{ minWidth: "110px" }}>
-                <FormControl fullWidth>
+                <FormControl fullWidth error={!!inputErrors.memberId}>
                     <InputLabel id="demo-simple-select-label">Name</InputLabel>
                     <Select
                         id="name"
                         label="Name"
-                        color="secondary"
                         variant="outlined"
                         name="memberId"
                         value={values.memberId}
@@ -74,7 +87,10 @@ export const RemoveFamilyMember = ({ pet, petUpdateHandler }) => {
                                     </MenuItem>
                                 );
                             })}
-                    </Select>
+                    </Select>{" "}
+                    {inputErrors.memberId && (
+                        <FormHelperText>{inputErrors.memberId}</FormHelperText>
+                    )}
                 </FormControl>
             </Box>
             <Button type="submit" variant="contained" color="secondary">
