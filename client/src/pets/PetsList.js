@@ -11,20 +11,25 @@ const PetList = (props) => {
     if (props.items.length === 0) {
         return (
             <Typography variant="h5">
-                No Lovely little friend added yet. Click{" "}
-                <Link
-                    component={RRDLink}
-                    to={`/pets/new`}
-                    sx={{
-                        color: "secondary.main",
-                        textDecoration: "none",
-                    }}
-                    color="secondary"
-                >
-                    <PetsIcon fontSize="small" /> here{" "}
-                    <PetsIcon fontSize="small" />{" "}
-                </Link>
-                to register your darling.
+                No lovely little friend added yet.{" "}
+                {props.ownPets && (
+                    <>
+                        <span>Click </span>
+                        <Link
+                            component={RRDLink}
+                            to={`/pets/new`}
+                            sx={{
+                                color: "secondary.main",
+                                textDecoration: "none",
+                            }}
+                            color="secondary"
+                        >
+                            <PetsIcon fontSize="small" /> here{" "}
+                            <PetsIcon fontSize="small" />{" "}
+                        </Link>
+                        <span> to register your darling.</span>
+                    </>
+                )}
             </Typography>
         );
     }
