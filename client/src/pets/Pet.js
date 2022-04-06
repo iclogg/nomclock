@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import Avatar from "../shared/Avatar";
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
+import PageNotFound from "../shared/PageNotFound";
 import UpdatePet from "../pets/UpdatePet";
 import DailyMeals from "../meals/DailyMeals";
 import PetsFamily from "../pets/PetsFamily";
@@ -92,6 +93,7 @@ const Pet = () => {
         <Container>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
+            {!pet._id && !isLoading && <PageNotFound />}
 
             <Modal
                 open={open}

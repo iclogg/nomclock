@@ -28,7 +28,7 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
         if (noMeals) {
             return `
                 #eceff1 0deg,
-                white 1deg 2deg,
+                #ff608f 1deg 2deg,
                 #eceff1 3deg,
                 
             `;
@@ -43,8 +43,8 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
         for (let i = 1; i <= nLines; i++) {
             returnStr += `
                 #eceff1 ${(meals.length / maxMeal) * 360 + degEach * i}deg,
-                white ${(meals.length / maxMeal) * 360 + degEach * i + 1}deg,
-                white ${(meals.length / maxMeal) * 360 + degEach * i + 2}deg,
+                #ff608f ${(meals.length / maxMeal) * 360 + degEach * i + 1}deg,
+                #ff608f ${(meals.length / maxMeal) * 360 + degEach * i + 2}deg,
                 #eceff1 ${(meals.length / maxMeal) * 360 + degEach * i + 3}deg,
                 `;
         }

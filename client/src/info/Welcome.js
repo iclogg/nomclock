@@ -1,7 +1,9 @@
 import React from "react";
 
+import PageNotFound from "../shared/PageNotFound";
+
 const Welcome = () => {
-    return <h1>Welcome</h1>;
+    return <PageNotFound />;
 };
 
 export default Welcome;

@@ -78,7 +78,12 @@ const User = () => {
                     width: "100%",
                 }}
             >
-                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <Box
+                    sx={{
+                        borderColor: "divider",
+                        minHeight: "50vh",
+                    }}
+                >
                     <Tabs
                         value={tabValue}
                         onChange={handleChange}

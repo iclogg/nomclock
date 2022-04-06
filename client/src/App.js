@@ -29,7 +29,7 @@ const theme = createTheme({
     palette: {
         primary: {
             light: "#ffffff",
-            main: "#eceff1",
+            main: "#e6f0ef" /* "#eceff1", */,
             dark: "#babdbe",
             contrastText: "#000",
         },
@@ -50,9 +50,9 @@ const App = () => {
     if (token) {
         routes = (
             <Switch>
-                <Route path="/" exact>
+                {/*   <Route path="/" exact>
                     <Welcome />
-                </Route>
+                </Route> */}
                 <Route path="/user" exact>
                     <User />
                 </Route>
@@ -62,15 +62,16 @@ const App = () => {
                 <Route path="/pets/:petId" exact>
                     <Pet />
                 </Route>
+
                 <Redirect to="/user" />
             </Switch>
         );
     } else {
         routes = (
             <Switch>
-                <Route path="/" exact>
+                {/*  <Route path="/" exact>
                     <Welcome />
-                </Route>
+                </Route> */}
                 <Route path="/user/new" exact>
                     <NewUser />
                 </Route>
