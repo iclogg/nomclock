@@ -3,8 +3,8 @@ const express = require("express");
 const {
     getMealsByPetId,
     deleteMeal,
-    updateMeal,
-    createMeal,
+    /*     updateMeal,
+     */ createMeal,
     getLatestMealByPetId,
 } = require("../controllers/meal-controllers");
 const checkAuth = require("../middleware/check-auth");
@@ -16,10 +16,8 @@ router.use(checkAuth);
 router.get("/:petId/latest", getLatestMealByPetId);
 
 router.get("/:petId", getMealsByPetId);
-router.delete("/:mealId", deleteMeal);
-router.patch("/:mealId", updateMeal); /* needed? */
-
-router.post("/", createMeal);
+router.delete("/:mealId", deleteMeal); /* needed? */
+/* router.patch("/:mealId", updateMeal); */ router.post("/", createMeal);
 
 module.exports = router;
 

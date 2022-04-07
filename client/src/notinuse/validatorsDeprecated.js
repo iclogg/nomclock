@@ -1,5 +1,3 @@
-/* TODO check for a library to use for  Input validation. Also update in Input.js*/
-
 const VALIDATOR_TYPE_REQUIRE = "REQUIRE";
 const VALIDATOR_TYPE_MINLENGTH = "MINLENGTH";
 const VALIDATOR_TYPE_MAXLENGTH = "MAXLENGTH";

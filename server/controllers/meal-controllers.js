@@ -5,12 +5,9 @@ const User = require("../models/user");
 const Meal = require("../models/meal");
 const mongoose = require("mongoose");
 
-/* TODO!!!!!
-Current is a copy of pet controllers update everything!!! */
-
 /* READ */
-/* Needed:
-meals by pet ID (limited to daily? 5 last? 10 last?)
+/* TODO:
+meals by pet ID limitation. limited to daily? 5 last? 10 last?
 meals by pet and day
 */
 
@@ -65,9 +62,6 @@ const getLatestMealByPetId = async (req, res, next) => {
 };
 
 /* CREATE */
-/* TODO 
-create a meal
-*/
 const createMeal = async (req, res, next) => {
     const { time, comment, feeder, pet } = req.body;
 
@@ -90,7 +84,6 @@ const createMeal = async (req, res, next) => {
 };
 
 /* DELETE */
-/* delete a meal */
 
 const deleteMeal = async (req, res, next) => {
     /* TODO check that person has permission to delete meal */
@@ -129,40 +122,6 @@ const updateMeal = async (req, res, next) => {
             new HttpError("Invalid inputs passed, plase check data", 422)
         );
     }
-
-    const petId = req.params.petId;
-    const { name, description, maxMeals, image } = req.body;
-
-    let pet;
-    try {
-        pet = await Pet.findById(petId);
-    } catch (err) {
-        const error = new HttpError("Something whent wrong", 500);
-        return next(error);
-    }
-
-    if (pet.owner.toString() !== req.userData.userId) {
-        const error = new HttpError("You are not the owner.", 401);
-        return next(error);
-    }
-
-    pet.name = name;
-    pet.description = description;
-    pet.maxMeals = maxMeals;
-    //TODO file upload and image save
-    /*  pet.image = image ; */
-
-    try {
-        await pet.save();
-    } catch (err) {
-        const error = new HttpError(
-            "Something went wrong. Pet could not be updated.",
-            500
-        );
-        return next(error);
-    }
-
-    res.status(200).json({ pet: pet.toObject({ getters: true }) });
 };
 
 /* EXPORTS */
@@ -170,4 +129,4 @@ exports.getMealsByPetId = getMealsByPetId;
 exports.getLatestMealByPetId = getLatestMealByPetId;
 exports.createMeal = createMeal;
 exports.deleteMeal = deleteMeal;
-exports.updateMeal = updateMeal;
+/* exports.updateMeal = updateMeal; */

@@ -1,4 +1,5 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 import { Form } from "../shared/form/Form";
 import TextInput from "../shared/form/TextInput";
@@ -14,8 +15,6 @@ const PetDetailsForm = ({
             <TextInput
                 label="The Darlings name goes here."
                 name="name"
-                /*errorText="Please enter a valid title."
-                 */
                 value={values.name}
                 onChange={handleInputChange}
                 error={inputErrors.name}
@@ -25,7 +24,6 @@ const PetDetailsForm = ({
                 type="number"
                 label="How many meals per day?"
                 name="maxMeals"
-                /* errorText="Please choose how many meals a day your darling should have." */
                 onChange={handleInputChange}
                 value={values.maxMeals}
                 error={inputErrors.maxMeals}
@@ -34,8 +32,6 @@ const PetDetailsForm = ({
             <TextInput
                 label="Tell us about the Darling."
                 name="description"
-                /*errorText="Please enter a description (at least 5 characters)"
-                 */
                 value={values.description}
                 onChange={handleInputChange}
                 error={inputErrors.description}
@@ -44,6 +40,9 @@ const PetDetailsForm = ({
             <Button type="submit" color="secondary" variant="contained">
                 SAVE
             </Button>
+            <Typography>
+                <CheckCircleOutlineIcon /> Updates saved!
+            </Typography>
         </Form>
     );
 };

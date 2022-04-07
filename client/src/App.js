@@ -17,7 +17,6 @@ import Pet from "./pets/Pet";
 import NewPet from "./pets/NewPet";
 import NewUser from "./users/NewUser";
 import User from "./users/User";
-import Welcome from "./info/Welcome";
 import Navbar from "./shared/Navbar";
 import Login from "./users/Login";
 import Footer from "./shared/Footer";
@@ -50,9 +49,6 @@ const App = () => {
     if (token) {
         routes = (
             <Switch>
-                {/*   <Route path="/" exact>
-                    <Welcome />
-                </Route> */}
                 <Route path="/user" exact>
                     <User />
                 </Route>
@@ -69,9 +65,6 @@ const App = () => {
     } else {
         routes = (
             <Switch>
-                {/*  <Route path="/" exact>
-                    <Welcome />
-                </Route> */}
                 <Route path="/user/new" exact>
                     <NewUser />
                 </Route>

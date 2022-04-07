@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     }
 
     try {
-        const token = req.headers.authorization.split(" ")[1]; // if no header split can fail and throw an error
+        const token = req.headers.authorization.split(" ")[1]; // if no header split can fail and throw an error. Authorization: 'Bearer TOKEN'
         if (!token) {
             throw new Error("Authentication failed");
         }

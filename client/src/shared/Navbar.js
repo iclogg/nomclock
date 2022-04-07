@@ -26,7 +26,6 @@ fix redirect bug refreshing page/ or logging in and out
 
 const pages = [
     { auth: true, text: "Home", url: "/user" },
-    /*  { auth: false, text: "Home", url: "/" }, */
     { auth: true, text: "Add Pet", url: "/pets/new" },
 
     { auth: false, text: "Sign up", url: "/user/new" },
@@ -44,10 +43,7 @@ const NavBar = (props) => {
                 </Typography>
                 <Box sx={{ flexGrow: 1 }}>
                     {pages.map((page) => {
-                        if (
-                            auth.isLoggedIn === page.auth ||
-                            page.text === "Home"
-                        ) {
+                        if (auth.isLoggedIn === page.auth) {
                             return (
                                 <Link
                                     exact
