@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const mongoSanitize = require("express-mongo-sanitize");
 
 const petRoutes = require("./routes/pet-routes");
 const userRoutes = require("./routes/user-routes");
@@ -10,6 +11,9 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+
+//Sanatize
+app.use(mongoSanitize());
 
 //CORS FIX
 //TODO read up on this CORS Error Axios Request fix. Check for alternatives and what is secure
