@@ -14,15 +14,8 @@ import { useForm } from "../shared/form/Form";
 const UpdatePet = (props) => {
     const { toggleSetIsUpdating, petUpdateHandler, pet } = props;
     const auth = useContext(AuthContext);
-    const [dataLoaded, setDataLoaded] = useState(false);
 
-    const {
-        values,
-        handleInputChange,
-        inputErrors,
-        setInputErrors,
-        validate,
-    } = useForm({
+    const { values, handleInputChange, inputErrors, validate } = useForm({
         initialValues: {
             name: pet.name,
             description: pet.description,
@@ -31,13 +24,9 @@ const UpdatePet = (props) => {
         validateOnChange: true,
     });
 
-    const { sendRequest } = useAxios();
+    const { sendRequest, isLoading } = useAxios();
 
     const petId = useParams().petId;
-
-    useEffect(() => {
-        setDataLoaded(true);
-    }, []);
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -64,34 +53,32 @@ const UpdatePet = (props) => {
     };
 
     return (
-        dataLoaded && (
-            <Box sx={{ mt: "10px" }}>
-                <Typography variant="h4">Update Pet</Typography>{" "}
-                <PetDetailsForm
-                    submitHandler={submitHandler}
-                    values={values}
-                    handleInputChange={handleInputChange}
-                    inputErrors={inputErrors}
-                />
-                <NewFamilyMember
+        <Box sx={{ mt: "10px" }}>
+            <Typography variant="h4">Update Pet</Typography>{" "}
+            <PetDetailsForm
+                submitHandler={submitHandler}
+                values={values}
+                handleInputChange={handleInputChange}
+                inputErrors={inputErrors}
+            />
+            <NewFamilyMember
+                petUpdateHandler={petUpdateHandler}
+                toggleSetIsUpdating={toggleSetIsUpdating}
+            />
+            {!!pet.family.length && (
+                <RemoveFamilyMember
                     petUpdateHandler={petUpdateHandler}
-                    toggleSetIsUpdating={toggleSetIsUpdating}
+                    pet={pet}
                 />
-                {!!pet.family.length && (
-                    <RemoveFamilyMember
-                        petUpdateHandler={petUpdateHandler}
-                        pet={pet}
-                    />
-                )}
-                <Button
-                    sx={{ mt: 3 }}
-                    onClick={toggleSetIsUpdating}
-                    color="secondary"
-                >
-                    Done
-                </Button>
-            </Box>
-        )
+            )}
+            <Button
+                sx={{ mt: 3 }}
+                onClick={toggleSetIsUpdating}
+                color="secondary"
+            >
+                Done
+            </Button>
+        </Box>
     );
 };
 
