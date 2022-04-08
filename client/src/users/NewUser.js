@@ -25,7 +25,7 @@ const NewUser = () => {
         values,
         handleInputChange,
         inputErrors,
-        setInputErrors,
+        /*   setInputErrors, */
         validate,
     } = useForm({
         initialValues: {

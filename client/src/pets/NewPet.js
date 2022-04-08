@@ -22,13 +22,7 @@ const NewPet = () => {
         error,
     } = useAxios();
 
-    const {
-        values,
-        handleInputChange,
-        inputErrors,
-        setInputErrors,
-        validate,
-    } = useForm({
+    const { values, handleInputChange, inputErrors, validate } = useForm({
         initialValues: {
             name: "",
             description: "",
