@@ -1,9 +1,7 @@
 const HttpError = require("../models/http-error");
 const { validationResult } = require("express-validator");
-const Pet = require("../models/pet");
-const User = require("../models/user");
+
 const Meal = require("../models/meal");
-const mongoose = require("mongoose");
 
 /* READ */
 /* TODO:
@@ -63,6 +61,15 @@ const getLatestMealByPetId = async (req, res, next) => {
 
 /* CREATE */
 const createMeal = async (req, res, next) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        const error = new HttpError(
+            "Invalid inputs passed, please check data",
+            422
+        );
+        return next(error);
+    }
+
     const { time, comment, feeder, pet } = req.body;
 
     const createdMeal = new Meal({

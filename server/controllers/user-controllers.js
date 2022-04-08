@@ -12,6 +12,15 @@ const Pet = require("../models/pet");
 /* READ */
 // TODO consider password library passport (local mongoose).
 const login = async (req, res, next) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        const error = new HttpError(
+            "Invalid inputs passed, please check data",
+            422
+        );
+        return next(error);
+    }
+
     const { password, email } = req.body;
 
     let exsitingUser;
@@ -232,7 +241,7 @@ const deleteUser = async (req, res, next) => {
 const updateUserDetails = async (req, res, next) => {
     const error = validationResult(req);
     if (!error.isEmpty()) {
-        const error = HttpError(
+        const error = new HttpError(
             "Invalid inputs passed, please check data",
             422
         );

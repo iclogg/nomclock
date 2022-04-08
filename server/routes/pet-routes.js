@@ -21,9 +21,25 @@ router.post("/:petId/family", addFamilyMember);
 router.delete("/:petId/family", deleteFamilyMember);
 router.get("/:petId", getPetById);
 router.delete("/:petId", deletePet);
-router.patch("/:petId", [check("name").not().isEmpty()], updatePet);
+router.patch(
+    "/:petId",
+    [
+        check("name").not().isEmpty().trim().escape(),
+        check("description").not().isEmpty().trim().escape(),
+        check("maxMeals").isInt({ min: 1, max: 99 }),
+    ],
+    updatePet
+);
 
-router.post("/", [check("name").not().isEmpty()], createPet);
+router.post(
+    "/",
+    [
+        check("name").not().isEmpty().trim().escape(),
+        check("description").not().isEmpty().trim().escape(),
+        check("maxMeals").isInt({ min: 1, max: 99 }),
+    ],
+    createPet
+);
 
 module.exports = router;
 

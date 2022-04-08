@@ -14,13 +14,24 @@ const router = express.Router();
 
 router.post(
     "/",
-    [check("name").not().isEmpty(), check("email").normalizeEmail().isEmail()],
+    [
+        check("name").not().isEmpty().trim().escape(),
+        check("email").normalizeEmail().isEmail().trim().escape(),
+        check("password").isLength({ min: 6 }).trim().escape(),
+    ],
     createUser
 );
 
 router.get("/:userId/families", getUserFamilies);
 
-router.post("/login", login);
+router.post(
+    "/login",
+    [
+        check("email").normalizeEmail().isEmail().trim().escape(),
+        check("password").isLength({ min: 6 }).trim().escape(),
+    ],
+    login
+);
 
 router.use(checkAuth);
 
@@ -28,7 +39,11 @@ router.delete("/:userId", deleteUser);
 
 router.patch(
     "/:userId",
-    [check("name").not().isEmpty(), check("email").normalizeEmail().isEmail()],
+    [
+        check("name").not().isEmpty(),
+        check("email").normalizeEmail().isEmail(),
+        check("password").isLength({ min: 6 }).trim().escape(),
+    ],
     updateUserDetails
 );
 
