@@ -210,13 +210,15 @@ const updatePet = async (req, res, next) => {
 
     let pet;
     try {
-        pet = await Pet.findById(petId);
+        pet = await Pet.findById(petId)
+            .populate("owner", "-password -pets")
+            .populate("family", "-password -pets");
     } catch (err) {
         const error = new HttpError("Something whent wrong", 500);
         return next(error);
     }
 
-    if (pet.owner.toString() !== req.userData.userId) {
+    if (pet.owner._id.toString() !== req.userData.userId) {
         const error = new HttpError("You are not the owner.", 401);
         return next(error);
     }
