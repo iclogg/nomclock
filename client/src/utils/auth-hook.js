@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 let logoutTimer;
 
 export const useAuth = () => {
+    const [authLoading, setAuthLoading] = useState(true);
     const [token, setToken] = useState(false);
     const [tokenExpirationDate, setTokenExpirationDate] = useState();
     const [userId, setUserId] = useState(false);
@@ -20,8 +21,7 @@ export const useAuth = () => {
                 expiration: updatedTokenExpirationDate.toISOString(),
             })
         );
-
-        console.log("isloggeed in");
+        console.log("login");
     }, []);
 
     const logout = useCallback(() => {
@@ -29,7 +29,7 @@ export const useAuth = () => {
         setUserId(null);
         setTokenExpirationDate(null);
         localStorage.removeItem("userData");
-        console.log("islogged out");
+        console.log("logout");
     }, []);
 
     useEffect(() => {
@@ -55,7 +55,9 @@ export const useAuth = () => {
                 new Date(storedData.expiration)
             );
         }
+        //To avoid redirecting when waiting for auth
+        setAuthLoading(false);
     }, [login]);
 
-    return { token, userId, login, logout };
+    return { token, userId, login, logout, authLoading };
 };

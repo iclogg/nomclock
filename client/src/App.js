@@ -42,38 +42,39 @@ const theme = createTheme({
 });
 
 const App = () => {
-    const { token, userId, login, logout } = useAuth();
+    const { token, userId, login, logout, authLoading } = useAuth();
 
     let routes;
 
-    if (token) {
-        routes = (
-            <Switch>
-                <Route path="/user" exact>
-                    <User />
-                </Route>
-                <Route path="/pets/new" exact>
-                    <NewPet />
-                </Route>
-                <Route path="/pets/:petId" exact>
-                    <Pet />
-                </Route>
-
-                <Redirect to="/user" />
-            </Switch>
-        );
-    } else {
-        routes = (
-            <Switch>
-                <Route path="/user/new" exact>
-                    <NewUser />
-                </Route>
-                <Route path="/user/login" exact>
-                    <Login />
-                </Route>
-                <Redirect to="/user/login" />
-            </Switch>
-        );
+    if (!authLoading) {
+        if (token) {
+            routes = (
+                <Switch>
+                    <Route path="/user" exact>
+                        <User />
+                    </Route>
+                    <Route path="/pets/new" exact>
+                        <NewPet />
+                    </Route>
+                    <Route path="/pets/:petId" exact>
+                        <Pet />
+                    </Route>
+                    <Redirect to="/user" />
+                </Switch>
+            );
+        } else {
+            routes = (
+                <Switch>
+                    <Route path="/user/new" exact>
+                        <NewUser />
+                    </Route>
+                    <Route path="/user/login" exact>
+                        <Login />
+                    </Route>
+                    <Redirect to="/user/login" />
+                </Switch>
+            );
+        }
     }
 
     return (
