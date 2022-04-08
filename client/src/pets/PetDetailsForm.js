@@ -1,5 +1,4 @@
-import { Button, Typography } from "@mui/material";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { Button } from "@mui/material";
 
 import { Form } from "../shared/form/Form";
 import TextInput from "../shared/form/TextInput";
@@ -40,9 +39,6 @@ const PetDetailsForm = ({
             <Button type="submit" color="secondary" variant="contained">
                 SAVE
             </Button>
-            <Typography>
-                <CheckCircleOutlineIcon /> Updates saved!
-            </Typography>
         </Form>
     );
 };

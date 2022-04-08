@@ -2,6 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Button, Typography, Box } from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 import NewFamilyMember from "../pets/NewFamilyMember";
 import RemoveFamilyMember from "../pets/RemoveFamilyMember";
@@ -13,6 +14,7 @@ import { useForm } from "../shared/form/Form";
 
 const UpdatePet = (props) => {
     const { toggleSetIsUpdating, petUpdateHandler, pet } = props;
+
     const auth = useContext(AuthContext);
 
     const { values, handleInputChange, inputErrors, validate } = useForm({
@@ -24,12 +26,13 @@ const UpdatePet = (props) => {
         validateOnChange: true,
     });
 
-    const { sendRequest, isLoading } = useAxios();
+    const { sendRequest } = useAxios();
 
     const petId = useParams().petId;
 
     const submitHandler = async (e) => {
         e.preventDefault();
+
         if (validate()) {
             try {
                 const response = await sendRequest(
@@ -44,6 +47,7 @@ const UpdatePet = (props) => {
                 );
 
                 petUpdateHandler(response.data.pet);
+                setUpdateConfirmation(true);
             } catch (error) {
                 console.log(error);
             }
@@ -52,9 +56,33 @@ const UpdatePet = (props) => {
         }
     };
 
+    //update confirmation Icon
+    const [showUpdateConfirmation, setUpdateConfirmation] = useState(false);
+    useEffect(() => {
+        if (showUpdateConfirmation) {
+            setUpdateConfirmation(false);
+        }
+    }, [values]);
+    //
+
     return (
         <Box sx={{ mt: "10px" }}>
             <Typography variant="h4">Update Pet</Typography>{" "}
+            <Typography
+                sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    color: "green",
+                    height: "1em",
+                }}
+            >
+                {" "}
+                {showUpdateConfirmation && (
+                    <span>
+                        <CheckCircleOutlineIcon /> "Updates saved!"
+                    </span>
+                )}
+            </Typography>
             <PetDetailsForm
                 submitHandler={submitHandler}
                 values={values}
