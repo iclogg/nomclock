@@ -33,8 +33,15 @@ const NavBar = (props) => {
     return (
         <AppBar position="static">
             <Toolbar>
-                <Typography sx={{ mr: 2 }}>
-                    <PetsIcon />
+                <Typography
+                    sx={{
+                        mr: 2,
+                        fontFamily: "Chakra Petch , sans-serif;",
+                        fontWeight: 600,
+                        textAlign: "center",
+                    }}
+                >
+                    NOMCLOCK <PetsIcon />
                 </Typography>
                 <Box sx={{ flexGrow: 1 }}>
                     {pages.map((page) => {
