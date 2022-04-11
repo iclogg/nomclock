@@ -8,11 +8,10 @@ import "./Clock.css";
 import useMeals from "../utils/meal-hooks";
 
 const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
-    // Set up state value for keeping track of what time it is a
     const { deleteMeal, addMeal } = useMeals();
 
+    /* Keeping track of current time */
     const [time, setTime] = useState(new Date());
-
     useEffect(() => {
         const intervalID = setInterval(() => {
             setTime(new Date());
@@ -23,13 +22,17 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
         };
     }, []);
 
-    // calculate css for meals left indicators on disk
+    // Colors for meals-disk
+    const pink = "#e81e62"; //#e81e62 #ff608f
+    const grey = "#eceff1";
+
+    // Calculate css for indicator lines on meals-disk for how many meals left in the day
     const getMealsLeftIndicator = (noMeals) => {
         if (noMeals) {
             return `
-                #eceff1 0deg,
-                #ff608f 1deg 2deg,
-                #eceff1 3deg,
+                ${grey} 0deg,
+                ${pink} 1deg 2deg,
+                ${grey} 3deg,
                 
             `;
         }
@@ -42,26 +45,18 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
 
         for (let i = 1; i <= nLines; i++) {
             returnStr += `
-                #eceff1 ${(meals.length / maxMeal) * 360 + degEach * i}deg,
-                #ff608f ${(meals.length / maxMeal) * 360 + degEach * i + 1}deg,
-                #ff608f ${(meals.length / maxMeal) * 360 + degEach * i + 2}deg,
-                #eceff1 ${(meals.length / maxMeal) * 360 + degEach * i + 3}deg,
+                ${grey} ${(meals.length / maxMeal) * 360 + degEach * i}deg,
+                ${pink} ${(meals.length / maxMeal) * 360 + degEach * i + 1}deg,
+                ${pink} ${(meals.length / maxMeal) * 360 + degEach * i + 2}deg,
+                ${grey} ${(meals.length / maxMeal) * 360 + degEach * i + 3}deg,
                 `;
         }
         return returnStr;
     };
 
-    //and dynamically style the hour pointer.
+    //Style object for styles indicating the tracking of current time and amount of meals left and eaten.
     const trackingStyle = {
-        hour: {
-            transform: `rotate(${
-                ((parseInt(moment(time).format("HH") - 6 > 0)
-                    ? parseInt(moment(time).format("HH")) - 6
-                    : parseInt(moment(time).format("HH")) + 18) /
-                    24) *
-                360
-            }deg)`,
-        },
+        //Calculates the CSS for showing the current time.
         minutesInDay: {
             transform: `rotate(${
                 ((parseInt(
@@ -85,29 +80,19 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
                 360
             }deg)`,
         },
-        // Translate amount of eaten meals to a % of 360
-        meals: {
-            transform: `rotate(${
-                (meals.length / maxMeal) * 360 - 90 > 0
-                    ? (meals.length / maxMeal) * 360 - 90
-                    : (meals.length / maxMeal) * 360 + 270
-            }deg)`,
-        },
-        // and visually represent it in clock. filled space for eaten meals
-        // logic for dynamically adjusting the disk.
-
+        // Translate amount of eaten meals and meals left into color segments on the meals-disk. First checks if any meals at all. Fills in Pink for amount of eaten. Then uses getMealsLeftIndicator to get segmented section.
         disk: {
             background: `conic-gradient(
                 from 180deg,
-                ${meals.length ? "#e81e62 0deg," : getMealsLeftIndicator(true)}
-                #e81e62 ${(meals.length / maxMeal) * 360}deg,
-                #eceff1 ${(meals.length / maxMeal) * 360 + 1}deg,
+                ${meals.length ? `${pink} 0deg,` : getMealsLeftIndicator(true)}
+                ${pink} ${(meals.length / maxMeal) * 360}deg,
+                ${grey} ${(meals.length / maxMeal) * 360 + 1}deg,
                 ${getMealsLeftIndicator()}
-                #eceff1 360deg              
+                ${grey} 360deg              
                 )`,
         },
     };
-
+    // Check if there is a meal eaten or not in the hour passed to it and returns either an icon for eaten or the number of the hour passed.
     const checkMeal = (hour) => {
         let mealHour = meals.find((meal) => {
             let h = moment(meal.time).format("HH");
@@ -135,7 +120,7 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
             hour || "24"
         );
     };
-
+    //Toggles adding and deleting a meal for the hour clicked.
     const clickHandler = (e) => {
         if (e.target.innerText) {
             addMeal(mealsUpdateHandler, e.target.innerText, "", meals);
@@ -172,7 +157,7 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
                             {checkMeal(6)}
                         </div>
                     </div>
-                    {/* Hour Markings */}
+                    {/* Hour of the Day Markings */}
                     <div className="marking marking-one">
                         <div onClick={clickHandler} className="pm">
                             {checkMeal(13)}
