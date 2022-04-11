@@ -27,8 +27,6 @@
 
 /* Positions thicker quaterday marking lines for 6 & 18 */
 .outer-clock-face::after {
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
     transform: rotate(90deg);
 }
 
@@ -70,8 +68,6 @@
 
 /* Positions Numbers quaterday markings horizontal */
 .outer-clock-face .marking.marking-horizontal {
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
     transform: rotate(90deg);
 }
 
@@ -82,8 +78,6 @@
 
 /* Positions Numbers quaterday markings vertical */
 .outer-clock-face .marking.marking-vertical {
-    -webkit-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
     transform: rotate(180deg);
 }
 
@@ -99,8 +93,6 @@
 
 /* Positions each individual marking line and number for the right degree for each hour. One = 1 and 13 etc. Then targets the number div and spinns it so it is upright */
 .outer-clock-face .marking.marking-one {
-    -webkit-transform: rotate(15deg);
-    -moz-transform: rotate(15deg);
     transform: rotate(15deg);
 }
 
@@ -109,8 +101,6 @@
 }
 
 .outer-clock-face .marking.marking-two {
-    -webkit-transform: rotate(30deg);
-    -moz-transform: rotate(30deg);
     transform: rotate(30deg);
 }
 
@@ -119,8 +109,6 @@
 }
 
 .outer-clock-face .marking.marking-three {
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
     transform: rotate(45deg);
 }
 
@@ -129,8 +117,6 @@
 }
 
 .outer-clock-face .marking.marking-four {
-    -webkit-transform: rotate(60deg);
-    -moz-transform: rotate(60deg);
     transform: rotate(60deg);
 }
 
@@ -139,8 +125,6 @@
 }
 
 .outer-clock-face .marking.marking-five {
-    -webkit-transform: rotate(75deg);
-    -moz-transform: rotate(75deg);
     transform: rotate(75deg);
 }
 
@@ -149,8 +133,6 @@
 }
 
 .outer-clock-face .marking.marking-seven {
-    -webkit-transform: rotate(105deg);
-    -moz-transform: rotate(105deg);
     transform: rotate(105deg);
 }
 
@@ -159,8 +141,6 @@
 }
 
 .outer-clock-face .marking.marking-eight {
-    -webkit-transform: rotate(120deg);
-    -moz-transform: rotate(120deg);
     transform: rotate(120deg);
 }
 .marking-eight > div {
@@ -168,8 +148,6 @@
 }
 
 .outer-clock-face .marking.marking-nine {
-    -webkit-transform: rotate(135deg);
-    -moz-transform: rotate(135deg);
     transform: rotate(135deg);
 }
 
@@ -178,8 +156,6 @@
 }
 
 .outer-clock-face .marking.marking-ten {
-    -webkit-transform: rotate(150deg);
-    -moz-transform: rotate(150deg);
     transform: rotate(150deg);
 }
 
@@ -188,8 +164,6 @@
 }
 
 .outer-clock-face .marking.marking-eleven {
-    -webkit-transform: rotate(165deg);
-    -moz-transform: rotate(165deg);
     transform: rotate(165deg);
 }
 
@@ -204,8 +178,6 @@
     left: 10%;
     width: 80%;
     height: 80%;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
     border-radius: 100%;
     z-index: 1;
     border: 30px solid white;
