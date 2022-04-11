@@ -6,9 +6,8 @@ const axios = baseAxios.create({
     timeout: 50000,
 });
 
-//TODO check what needs to be added for security to axios instance
-
 //TODO add error handling
+//TODO check what needs to be added for security to axios instance
 
 const useAxios = () => {
     const [isLoading, setIsLoading] = useState(true);

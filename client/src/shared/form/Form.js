@@ -47,7 +47,7 @@ export const Form = (props) => {
     return (
         <form
             style={formStyle}
-            {...other} /* TODO: uncomment this when not needed for testing autoComplete="off" */
+            {...other} /* TODO: uncomment this when not needed for smother login when developing: autoComplete="off" */
         >
             {children}
         </form>

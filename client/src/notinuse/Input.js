@@ -40,8 +40,6 @@ const Input = (props) => {
         });
     };
 
-    /* TODO logic or library for not showinr error at start of input. One possibility is use onBlur and touchHandler */
-
     const element =
         props.element === "input" ? (
             <input

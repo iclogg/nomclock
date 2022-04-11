@@ -68,7 +68,7 @@ const Pet = () => {
 
     const deletePet = async (e) => {
         e.preventDefault();
-        // ToDo investigate if there is a better way to aviod unnessesary api calls because Daily meals rerendering on isLoading being set and unset by the delete api call below.
+
         setPet({});
 
         try {

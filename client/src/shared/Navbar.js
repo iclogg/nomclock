@@ -10,15 +10,6 @@ import Logout from "../users/Logout";
 
 import { AuthContext } from "../utils/auth-context";
 
-/* TODO 
-home icon button
-responsiveness 
-test if links can be btns instead
-remove unsused imports
-fix redirect bug refreshing page/ or logging in and out
-
-*/
-
 const pages = [
     { auth: true, text: "Home", url: "/user" },
     { auth: true, text: "Add Pet", url: "/pets/new" },
