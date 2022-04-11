@@ -1,17 +1,12 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import { AppBar, Box, Typography, Toolbar, Link } from "@mui/material";
+
 import PetsIcon from "@mui/icons-material/Pets";
-import LogoutIcon from "@mui/icons-material/Logout";
-
-import Button from "@mui/material/Button";
-
-import Link from "@mui/material/Link";
 
 import { NavLink as RouterLink } from "react-router-dom";
+
+import Logout from "../users/Logout";
 
 import { AuthContext } from "../utils/auth-context";
 
@@ -73,15 +68,7 @@ const NavBar = (props) => {
                         }
                     })}
                 </Box>
-                {auth.isLoggedIn && (
-                    <Button
-                        color="secondary"
-                        size="small"
-                        onClick={auth.logout}
-                    >
-                        <LogoutIcon />
-                    </Button>
-                )}
+                {auth.isLoggedIn && <Logout />}
             </Toolbar>
         </AppBar>
     );

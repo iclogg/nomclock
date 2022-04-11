@@ -1,12 +1,19 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 
-import { Button } from "../shared/Button";
+import { Tooltip, Button } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import { AuthContext } from "../utils/auth-context";
 
 const Logout = () => {
     const auth = useContext(AuthContext);
-    return <Button onClick={auth.logout}>Logout</Button>;
+    return (
+        <Tooltip title="Logout">
+            <Button color="secondary" size="small" onClick={auth.logout}>
+                <LogoutIcon />
+            </Button>
+        </Tooltip>
+    );
 };
 
 export default Logout;
