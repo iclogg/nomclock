@@ -93,8 +93,7 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
                     : (meals.length / maxMeal) * 360 + 270
             }deg)`,
         },
-        // and visually represent it in clock.
-        // filled space for eaten meals
+        // and visually represent it in clock. filled space for eaten meals
         // logic for dynamically adjusting the disk.
 
         disk: {
@@ -149,6 +148,14 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
         <div className="clockContainer">
             <div className="clock">
                 <div className="outer-clock-face">
+                    {/* Meals-Disk and Current Time */}
+                    <div style={trackingStyle.disk} className="meals-disk">
+                        <div
+                            style={trackingStyle.minutesInDay}
+                            className="time "
+                        ></div>
+                    </div>
+                    {/* Quater Day Markings */}
                     <div className="marking marking-vertical quaterday">
                         <div onClick={clickHandler} className="pm">
                             {checkMeal(0)}
@@ -157,6 +164,15 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
                             {checkMeal(12)}
                         </div>
                     </div>
+                    <div className="marking marking-horizontal quaterday">
+                        <div onClick={clickHandler} className="pm">
+                            {checkMeal(18)}
+                        </div>
+                        <div onClick={clickHandler} className="am">
+                            {checkMeal(6)}
+                        </div>
+                    </div>
+                    {/* Hour Markings */}
                     <div className="marking marking-one">
                         <div onClick={clickHandler} className="pm">
                             {checkMeal(13)}
@@ -197,30 +213,7 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
                             {checkMeal(5)}
                         </div>
                     </div>
-
-                    <div
-                        style={trackingStyle.disk}
-                        className="inner-clock-face"
-                    >
-                        {/*  <div
-                            style={trackingStyle.hour}
-                            className="hand hour-hand time"
-                        ></div> */}
-                        <div
-                            style={trackingStyle.minutesInDay}
-                            className="hand min-hand time"
-                        ></div>
-                        {/* <div className=" hand second-hand time"></div> */}
-                    </div>
-                    <div className="marking marking-horizontal quaterday">
-                        <div onClick={clickHandler} className="pm">
-                            {checkMeal(18)}
-                        </div>
-                        <div onClick={clickHandler} className="am">
-                            {checkMeal(6)}
-                        </div>
-                    </div>
-                    <div className="marking marking-six">
+                    <div className="marking marking-seven">
                         <div onClick={clickHandler} className="pm">
                             {checkMeal(19)}
                         </div>
@@ -228,7 +221,7 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
                             {checkMeal(7)}
                         </div>
                     </div>
-                    <div className="marking marking-seven">
+                    <div className="marking marking-eight">
                         <div onClick={clickHandler} className="pm">
                             {checkMeal(20)}
                         </div>
@@ -236,7 +229,7 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
                             {checkMeal(8)}
                         </div>
                     </div>
-                    <div className="marking marking-eight">
+                    <div className="marking marking-nine">
                         <div onClick={clickHandler} className="pm">
                             {checkMeal(21)}
                         </div>
@@ -244,7 +237,7 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
                             {checkMeal(9)}
                         </div>
                     </div>
-                    <div className="marking marking-nine">
+                    <div className="marking marking-ten">
                         <div onClick={clickHandler} className="pm">
                             {checkMeal(22)}
                         </div>
@@ -252,7 +245,7 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
                             {checkMeal(10)}
                         </div>
                     </div>
-                    <div className="marking marking-ten">
+                    <div className="marking marking-eleven">
                         <div onClick={clickHandler} className="pm">
                             {checkMeal(23)}
                         </div>

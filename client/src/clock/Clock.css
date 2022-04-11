@@ -25,12 +25,14 @@
     border-radius: 100%;
 }
 
+/* Positions thicker quaterday marking lines for 6 & 18 */
 .outer-clock-face::after {
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     transform: rotate(90deg);
 }
 
+/* Posistion and style of numbers, hour and quaterday indicators.*/
 .outer-clock-face::after,
 .outer-clock-face::before,
 .outer-clock-face .marking {
@@ -43,15 +45,12 @@
     left: 49%;
 }
 
+/* Width of hour indicator lines */
 .outer-clock-face .marking {
-    background: #bdbdcb;
     width: 3px;
 }
 
-.marking.quaterday {
-    background: none;
-}
-
+/* Styles and posistions for Numbers */
 .marking > div {
     position: absolute;
     color: #bdbdcb;
@@ -69,26 +68,36 @@
     right: -10px;
 }
 
+/* Positions Numbers quaterday markings horizontal */
 .outer-clock-face .marking.marking-horizontal {
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     transform: rotate(90deg);
 }
 
+/* Rotates the numbers 6 and 8 so they are not sideways */
 .marking-horizontal div {
     transform: rotate(-90deg);
 }
 
+/* Positions Numbers quaterday markings vertical */
 .outer-clock-face .marking.marking-vertical {
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     transform: rotate(180deg);
 }
 
+/* Rotates the numbers 12 and 24 so they are not up side down */
 .marking-vertical div {
     transform: rotate(-180deg);
 }
 
+/* Making the numbers and hamburger icons look clickable */
+.marking > * {
+    cursor: pointer;
+}
+
+/* Positions each individual marking line and number for the right degree for each hour. One = 1 and 13 etc. Then targets the number div and spinns it so it is upright */
 .outer-clock-face .marking.marking-one {
     -webkit-transform: rotate(15deg);
     -moz-transform: rotate(15deg);
@@ -139,56 +148,57 @@
     transform: rotate(-75deg);
 }
 
-.outer-clock-face .marking.marking-six {
+.outer-clock-face .marking.marking-seven {
     -webkit-transform: rotate(105deg);
     -moz-transform: rotate(105deg);
     transform: rotate(105deg);
 }
 
-.marking-six > div {
+.marking-seven > div {
     transform: rotate(-105deg);
 }
 
-.outer-clock-face .marking.marking-seven {
+.outer-clock-face .marking.marking-eight {
     -webkit-transform: rotate(120deg);
     -moz-transform: rotate(120deg);
     transform: rotate(120deg);
 }
-.marking-seven > div {
+.marking-eight > div {
     transform: rotate(-120deg);
 }
 
-.outer-clock-face .marking.marking-eight {
+.outer-clock-face .marking.marking-nine {
     -webkit-transform: rotate(135deg);
     -moz-transform: rotate(135deg);
     transform: rotate(135deg);
 }
 
-.marking-eight > div {
+.marking-nine > div {
     transform: rotate(-135deg);
 }
 
-.outer-clock-face .marking.marking-nine {
+.outer-clock-face .marking.marking-ten {
     -webkit-transform: rotate(150deg);
     -moz-transform: rotate(150deg);
     transform: rotate(150deg);
 }
 
-.marking-nine > div {
+.marking-ten > div {
     transform: rotate(-150deg);
 }
 
-.outer-clock-face .marking.marking-ten {
+.outer-clock-face .marking.marking-eleven {
     -webkit-transform: rotate(165deg);
     -moz-transform: rotate(165deg);
     transform: rotate(165deg);
 }
 
-.marking-ten > div {
+.marking-eleven > div {
     transform: rotate(-165deg);
 }
 
-.inner-clock-face {
+/* The meals-disk.  */
+.meals-disk {
     position: absolute;
     top: 10%;
     left: 10%;
@@ -201,7 +211,8 @@
     border: 30px solid white;
 }
 
-.inner-clock-face::before {
+/* The inner circle of the meals disk */
+.meals-disk::before {
     content: "";
     position: absolute;
     top: 50%;
@@ -216,55 +227,21 @@
     z-index: 11;
 }
 
-.hand {
-    width: 50%;
+/* Positions and styles the hand indicating the time of day. */
+.time {
     right: 50%;
-    height: 6px;
+    height: 3px;
+    width: 60%;
+    z-index: 10;
     background: #babdbe;
     position: absolute;
     top: 50%;
     border-radius: 6px;
     transform-origin: 100%;
     transform: rotate(90deg);
-    transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
-}
-
-.hand.hour-hand {
-    width: 30%;
-    z-index: 3;
-    transform: rotateX(180deg);
-}
-
-/* Rotates hour hand */
-/* .hand.hour-hand.time {
-    transform: rotate(300deg);
-}
- */
-.hand.min-hand {
-    height: 3px;
-    z-index: 10;
-    width: 60%;
-}
-
-/* Rotates min hand */
-.hand.min-hand.time {
-    transform: rotate(360deg);
-}
-
-/* Second second hand */
-
-.hand.second-hand {
-    background: #e81e62;
-    height: 2px;
-    width: 45%;
-    transform: rotate(100deg);
 }
 
 /* Preventing events to be triggered on path instead of SVG element */
 .clockburger.MuiSvgIcon-root * {
     pointer-events: none;
-}
-
-.marking > * {
-    cursor: pointer;
 }
