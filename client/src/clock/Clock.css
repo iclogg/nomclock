@@ -11,7 +11,7 @@
     width: 20rem;
     height: 20rem;
     position: relative;
-    padding: 2rem;
+    padding: 2.3rem;
     border: 5px solid #babdbe;
     border-radius: 50%;
     margin: 50px auto;
@@ -51,12 +51,23 @@
 /* Styles and posistions for Numbers */
 .marking > div {
     position: absolute;
-    color: #bdbdcb;
-    width: 1.5rem;
+    color: #bdbdcb; /* #bdbdcb; */
+    width: 1rem;
     text-align: center;
+    font-size: 1.1rem;
 }
 
 .marking > div.pm {
+    top: -31px;
+    left: -6px;
+}
+
+.marking > div.am {
+    bottom: -31px;
+    right: -6px;
+}
+
+/* .marking > div.pm {
     top: -27px;
     left: -12px;
 }
@@ -64,7 +75,7 @@
 .marking > div.am {
     bottom: -27px;
     right: -10px;
-}
+} */
 
 /* Positions Numbers quaterday markings horizontal */
 .outer-clock-face .marking.marking-horizontal {
