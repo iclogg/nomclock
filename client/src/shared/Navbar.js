@@ -1,8 +1,7 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import { AppBar, Box, Typography, Toolbar, Link } from "@mui/material";
-
-import PetsIcon from "@mui/icons-material/Pets";
 
 import { NavLink as RouterLink } from "react-router-dom";
 
@@ -14,28 +13,48 @@ const pages = [
     { auth: true, text: "Home", url: "/user" },
     { auth: true, text: "Add Pet", url: "/pets/new" },
 
-    { auth: false, text: "Sign up", url: "/user/new" },
-    { auth: false, text: " Login", url: "/user/login" },
+    { auth: false, text: "Go to Signup", url: "/user/new" },
+    { auth: false, text: "Go to Login", url: "/user/login" },
 ];
 
 const NavBar = (props) => {
     const auth = useContext(AuthContext);
+    let location = useLocation();
 
     return (
         <AppBar position="static">
-            <Toolbar>
+            <Toolbar
+                sx={{
+                    paddingLeft: "2px",
+                }}
+            >
                 <Typography
                     sx={{
                         mr: 2,
-                        fontFamily: "Chakra Petch , sans-serif;",
-                        fontWeight: 600,
-                        textAlign: "center",
+                        fontFamily: "Shadows Into Light, cursive",
+                        fontSize: "40px",
+                        fontWeight: "bold",
+                        color: "#e81e62",
+                        textShadow: "2px 2px 2px #babdbe",
                     }}
                 >
-                    NOMCLOCK <PetsIcon />
+                    NOMCLOCK{" "}
                 </Typography>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box
+                    sx={{
+                        flexGrow: 1,
+                        textAlign: "right",
+                    }}
+                >
                     {pages.map((page) => {
+                        /* Toggles Login/Signup */
+                        if (
+                            location.pathname === page.url &&
+                            auth.isLoggedIn === false
+                        ) {
+                            return null;
+                        }
+                        /* Toggles auth/no auth options */
                         if (auth.isLoggedIn === page.auth) {
                             return (
                                 <Link
@@ -49,6 +68,7 @@ const NavBar = (props) => {
                                             textDecoration: "none",
                                             color: "secondary.main",
                                         },
+                                        verticalAlign: "sub",
                                     }}
                                     to={page.url}
                                     key={page.url}
@@ -66,6 +86,7 @@ const NavBar = (props) => {
                         }
                     })}
                 </Box>
+
                 {auth.isLoggedIn && <Logout />}
             </Toolbar>
         </AppBar>

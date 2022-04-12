@@ -12,7 +12,8 @@ export const TextInput = ({
     /*    const typeObj = type === "number" ? `type="number" InputLabelProps={{shrink: true,}}` : ""}; */
 
     const inputStyle = {
-        margin: "5px",
+        margin: "10px",
+        width: "400px",
     };
 
     if (type === "number") {

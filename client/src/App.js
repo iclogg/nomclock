@@ -39,6 +39,13 @@ const theme = createTheme({
             contrastText: "#000",
         },
     },
+    typography: {
+        fontFamily: `"Josefin Sans", sans-serif`,
+        fontSize: 17,
+        fontWeightLight: 300,
+        fontWeightRegular: 400,
+        fontWeightMedium: 500,
+    },
 });
 
 const App = () => {
