@@ -163,6 +163,7 @@ const deleteFamilyMember = async (req, res, next) => {
         pet = await Pet.findOneAndUpdate(
             {
                 $and: [
+                    { _id: petId },
                     {
                         $or: [
                             { owner: req.userData.userId },
@@ -173,7 +174,6 @@ const deleteFamilyMember = async (req, res, next) => {
                             },
                         ],
                     },
-                    { _id: petId },
                 ],
             },
             { $pullAll: { family: [memberId] } },
@@ -209,6 +209,7 @@ const updatePet = async (req, res, next) => {
     const petId = req.params.petId;
     const { name, description, maxMeals, image } = req.body;
 
+    // Find the pet
     let pet;
     try {
         pet = await Pet.findById(petId)
@@ -219,11 +220,13 @@ const updatePet = async (req, res, next) => {
         return next(error);
     }
 
+    // Check that it is the owner that is updating
     if (pet.owner._id.toString() !== req.userData.userId) {
         const error = new HttpError("You are not the owner.", 401);
         return next(error);
     }
 
+    // Update the pet
     pet.name = name;
     pet.description = description;
     pet.maxMeals = maxMeals;
@@ -249,6 +252,8 @@ const addFamilyMember = async (req, res, next) => {
 
     let pet;
     let newMember;
+
+    // Find the pet
     try {
         pet = await Pet.findById(petId)
             .populate("owner", "-password -pets")
@@ -260,6 +265,22 @@ const addFamilyMember = async (req, res, next) => {
         return next(error);
     }
 
+    // Check that request is made by the owner
+    if (pet.owner.id !== req.userData.userId) {
+        const error = new HttpError("You are not the owner.", 401);
+        return next(error);
+    }
+
+    // Check that the new member is not the owner
+    if (pet.owner.email === email) {
+        const error = new HttpError(
+            "Seams this user is already part of the family.",
+            401
+        );
+        return next(error);
+    }
+
+    // Find the user to be added to the family
     try {
         newMember = await User.findOne({ email }, "-password -pets");
     } catch (err) {
@@ -275,6 +296,7 @@ const addFamilyMember = async (req, res, next) => {
         return next(error);
     }
 
+    // Check so that the user is not already in the family
     const alreadyFamily = pet.family.filter((member) => {
         return member.email === newMember.email;
     });
@@ -286,6 +308,8 @@ const addFamilyMember = async (req, res, next) => {
         );
         return next(error);
     }
+
+    // Add the new member
 
     pet.family.push(newMember);
 
