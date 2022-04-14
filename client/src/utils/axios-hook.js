@@ -21,6 +21,7 @@ const useAxios = () => {
             const axiosAbortCtrl = new AbortController();
             activeHttpRequests.current.push(axiosAbortCtrl);
             console.log("url:", url);
+            console.log("method:", method);
 
             let response;
             try {
@@ -43,7 +44,8 @@ const useAxios = () => {
                     (abortCtrl) => abortCtrl !== axiosAbortCtrl
                 );
 
-                /* TODO see if replacement for below isgit diff  needed */
+                /* TODO see if replacement for below is needed */
+                /* below is for error handling in cases of the non ok statustext. Investigate usecase of this. Start in mern corse. */
                 /* if (
                     response.statusText !== "OK" ||
                     response.statusText !== "Created"

@@ -14,15 +14,14 @@ const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
-router.use(checkAuth);
-
-router.get("/owner/:uid", getPetsByOwner);
-router.post("/:petId/family", addFamilyMember);
-router.delete("/:petId/family", deleteFamilyMember);
-router.get("/:petId", getPetById);
-router.delete("/:petId", deletePet);
+router.get("/owner/:uid", checkAuth, getPetsByOwner);
+router.post("/:petId/family", checkAuth, addFamilyMember);
+router.delete("/:petId/family", checkAuth, deleteFamilyMember);
+router.get("/:petId", checkAuth, getPetById);
+router.delete("/:petId", checkAuth, deletePet);
 router.patch(
     "/:petId",
+    checkAuth,
     [
         check("name").not().isEmpty().trim().escape(),
         check("description").not().isEmpty().trim().escape(),
@@ -33,6 +32,7 @@ router.patch(
 
 router.post(
     "/",
+    checkAuth,
     [
         check("name").not().isEmpty().trim().escape(),
         check("description").not().isEmpty().trim().escape(),
@@ -42,5 +42,3 @@ router.post(
 );
 
 module.exports = router;
-
-/* TODO check that there is error handling for all routes */

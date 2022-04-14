@@ -12,6 +12,7 @@ const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
+/* No-Auth routes: */
 router.post(
     "/",
     [
@@ -22,8 +23,6 @@ router.post(
     createUser
 );
 
-router.get("/:userId/families", getUserFamilies);
-
 router.post(
     "/login",
     [
@@ -33,12 +32,15 @@ router.post(
     login
 );
 
-router.use(checkAuth);
+/* Auth routes: */
 
-router.delete("/:userId", deleteUser);
+router.get("/:userId/families", checkAuth, getUserFamilies);
+
+router.delete("/:userId", checkAuth, deleteUser);
 
 router.patch(
     "/:userId",
+    checkAuth,
     [
         check("name").not().isEmpty(),
         check("email").normalizeEmail().isEmail(),

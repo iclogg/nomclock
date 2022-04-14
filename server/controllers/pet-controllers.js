@@ -4,10 +4,6 @@ const Pet = require("../models/pet");
 const User = require("../models/user");
 const mongoose = require("mongoose");
 
-// TODO add package (or use mongodb? to create unique ids) uuid v4 perhaps?
-
-// TODO research and implement error handling options
-
 /* READ */
 const getPetById = async (req, res, next) => {
     const petId = req.params.petId;
@@ -95,7 +91,7 @@ const createPet = async (req, res, next) => {
         sess.startTransaction();
         await createdPet.save({ session: sess });
 
-        owner.pets.push(createdPet); //mongoose behind the scenes established the connection and saves only the id is saved to mpngo
+        owner.pets.push(createdPet); // NOTE: mongoose behind the scenes established the connection and saves. only the id is saved to mpngo
 
         await owner.save({ session: sess });
 
@@ -196,7 +192,7 @@ const deleteFamilyMember = async (req, res, next) => {
     res.json({ pet: pet.toObject({ getters: true }) });
 };
 /* UPDATE */
-/* TODO Ad change owner to change owner */
+/* TODO Ad change owner */
 const updatePet = async (req, res, next) => {
     const error = validationResult(req);
     if (!error.isEmpty()) {

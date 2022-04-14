@@ -4,22 +4,21 @@ const { check } = require("express-validator");
 const {
     getMealsByPetId,
     deleteMeal,
-    /*     updateMeal,
-     */ createMeal,
+    /*updateMeal,*/
+    createMeal,
     getLatestMealByPetId,
 } = require("../controllers/meal-controllers");
 const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
-router.use(checkAuth);
+router.get("/:petId/latest", checkAuth, getLatestMealByPetId);
 
-router.get("/:petId/latest", getLatestMealByPetId);
-
-router.get("/:petId", getMealsByPetId);
-router.delete("/:mealId", deleteMeal);
+router.get("/:petId", checkAuth, getMealsByPetId);
+router.delete("/:mealId", checkAuth, deleteMeal);
 router.post(
     "/",
+    checkAuth,
     [
         check("comment").trim().escape(),
         check("time").isISO8601(),
@@ -29,9 +28,7 @@ router.post(
     createMeal
 );
 
-/* needed? */
-/* router.patch("/:mealId", updateMeal); */
+/* TODO: needed? */
+/* router.patch("/:mealId", checkAuth, updateMeal); */
 
 module.exports = router;
-
-/* TODO check that there is error handling for all routes */

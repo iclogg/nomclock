@@ -12,6 +12,8 @@ const Pet = require("../models/pet");
 /* READ */
 // TODO consider password library passport (local mongoose).
 const login = async (req, res, next) => {
+    console.log("login server");
+
     const error = validationResult(req);
     if (!error.isEmpty()) {
         const error = new HttpError(
@@ -85,8 +87,6 @@ const getUserFamilies = async (req, res, next) => {
         );
         return next(error);
     }
-
-    console.log("pets", pets);
 
     pets = pets.map((pet) => pet.toObject({ getters: true }));
 
