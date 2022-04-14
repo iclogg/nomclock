@@ -9,9 +9,11 @@ const {
     getLatestMealByPetId,
 } = require("../controllers/meal-controllers");
 const checkAuth = require("../middleware/check-auth");
+const validationResultChecker = require("../middleware/validation-result-check");
 
 const router = express.Router();
 
+/* Auth routes: */
 router.get("/:petId/latest", checkAuth, getLatestMealByPetId);
 
 router.get("/:petId", checkAuth, getMealsByPetId);
@@ -25,6 +27,7 @@ router.post(
         check("feeder").isMongoId(),
         check("pet").isMongoId(),
     ],
+    validationResultChecker,
     createMeal
 );
 

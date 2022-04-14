@@ -10,10 +10,13 @@ const {
     addFamilyMember,
     deleteFamilyMember,
 } = require("../controllers/pet-controllers");
+
 const checkAuth = require("../middleware/check-auth");
+const validationResultChecker = require("../middleware/validation-result-check");
 
 const router = express.Router();
 
+/* Auth routes: */
 router.get("/owner/:uid", checkAuth, getPetsByOwner);
 router.post("/:petId/family", checkAuth, addFamilyMember);
 router.delete("/:petId/family", checkAuth, deleteFamilyMember);
@@ -27,6 +30,7 @@ router.patch(
         check("description").not().isEmpty().trim().escape(),
         check("maxMeals").isInt({ min: 1, max: 99 }),
     ],
+    validationResultChecker,
     updatePet
 );
 
@@ -38,6 +42,7 @@ router.post(
         check("description").not().isEmpty().trim().escape(),
         check("maxMeals").isInt({ min: 1, max: 99 }),
     ],
+    validationResultChecker,
     createPet
 );
 

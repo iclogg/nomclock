@@ -8,7 +8,9 @@ const {
     deleteUser,
     updateUserDetails,
 } = require("../controllers/user-controllers");
+
 const checkAuth = require("../middleware/check-auth");
+const validationResultChecker = require("../middleware/validation-result-check");
 
 const router = express.Router();
 
@@ -20,6 +22,7 @@ router.post(
         check("email").normalizeEmail().isEmail().trim().escape(),
         check("password").isLength({ min: 6 }).trim().escape(),
     ],
+    validationResultChecker,
     createUser
 );
 
@@ -29,6 +32,7 @@ router.post(
         check("email").normalizeEmail().isEmail().trim().escape(),
         check("password").isLength({ min: 6 }).trim().escape(),
     ],
+    validationResultChecker,
     login
 );
 
@@ -46,6 +50,7 @@ router.patch(
         check("email").normalizeEmail().isEmail(),
         check("password").isLength({ min: 6 }).trim().escape(),
     ],
+    validationResultChecker,
     updateUserDetails
 );
 

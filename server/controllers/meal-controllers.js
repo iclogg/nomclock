@@ -1,5 +1,4 @@
 const HttpError = require("../models/http-error");
-const { validationResult } = require("express-validator");
 
 const Meal = require("../models/meal");
 
@@ -61,15 +60,6 @@ const getLatestMealByPetId = async (req, res, next) => {
 
 /* CREATE */
 const createMeal = async (req, res, next) => {
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
-        const error = new HttpError(
-            "Invalid inputs passed, please check data",
-            422
-        );
-        return next(error);
-    }
-
     const { time, comment, feeder, pet } = req.body;
 
     const createdMeal = new Meal({
@@ -122,15 +112,8 @@ const deleteMeal = async (req, res, next) => {
 
 /* UPDATE */
 /* TODO update meal needed? perhaps jsut better to delete*/
-const updateMeal = async (req, res, next) => {
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
-        return next(
-            new HttpError("Invalid inputs passed, plase check data", 422)
-        );
-    }
-};
-
+/* const updateMeal = async (req, res, next) => {};
+ */
 /* EXPORTS */
 exports.getMealsByPetId = getMealsByPetId;
 exports.getLatestMealByPetId = getLatestMealByPetId;

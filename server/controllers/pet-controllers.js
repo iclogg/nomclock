@@ -1,5 +1,4 @@
 const HttpError = require("../models/http-error");
-const { validationResult } = require("express-validator");
 const Pet = require("../models/pet");
 const User = require("../models/user");
 const mongoose = require("mongoose");
@@ -51,16 +50,7 @@ const getPetsByOwner = async (req, res, next) => {
 };
 
 /* CREATE */
-/* TODO check if express validator check and validation result can be moved into their own middleware file and if there is best practise around that */
 const createPet = async (req, res, next) => {
-    const error = validationResult(req);
-
-    if (!error.isEmpty()) {
-        return next(
-            new HttpError("Invalid inputs passed, plase check data", 422)
-        );
-    }
-
     const { name, description, maxMeals, image } = req.body;
 
     const createdPet = new Pet({
@@ -194,13 +184,6 @@ const deleteFamilyMember = async (req, res, next) => {
 /* UPDATE */
 /* TODO Ad change owner */
 const updatePet = async (req, res, next) => {
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
-        return next(
-            new HttpError("Invalid inputs passed, plase check data", 422)
-        );
-    }
-
     const petId = req.params.petId;
     const { name, description, maxMeals, image } = req.body;
 

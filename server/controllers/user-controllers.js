@@ -1,4 +1,3 @@
-const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -13,15 +12,6 @@ const Pet = require("../models/pet");
 // TODO consider password library passport (local mongoose).
 const login = async (req, res, next) => {
     console.log("login server");
-
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
-        const error = new HttpError(
-            "Invalid inputs passed, please check data",
-            422
-        );
-        return next(error);
-    }
 
     const { password, email } = req.body;
 
@@ -95,15 +85,6 @@ const getUserFamilies = async (req, res, next) => {
 
 /* CREATE */
 const createUser = async (req, res, next) => {
-    const err = validationResult(req);
-    if (!err.isEmpty()) {
-        const error = new HttpError(
-            "Incomplete information entered. Please check to make sure you filled everything in correctly",
-            422
-        );
-        return next(error);
-    }
-
     const { name, email, password } = req.body;
 
     let exsitingUser;
@@ -239,15 +220,6 @@ const deleteUser = async (req, res, next) => {
 
 /* UPDATE */
 const updateUserDetails = async (req, res, next) => {
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
-        const error = new HttpError(
-            "Invalid inputs passed, please check data",
-            422
-        );
-        return next(error);
-    }
-
     const userId = req.userData.userId;
     const { name, email } = req.body;
 
