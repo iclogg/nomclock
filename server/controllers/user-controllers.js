@@ -11,7 +11,7 @@ const Pet = require("../models/pet");
 /* READ */
 // TODO consider password library passport (local mongoose).
 const login = async (req, res, next) => {
-    console.log("login server");
+    console.log("Login server");
 
     const { password, email } = req.body;
 
@@ -50,7 +50,7 @@ const login = async (req, res, next) => {
     let token;
     try {
         token = jwt.sign({ userId: exsitingUser.id }, process.env.JWT_KEY, {
-            expiresIn: "1h",
+            expiresIn: "3h",
         });
     } catch (err) {
         const error = new HttpError(
@@ -65,7 +65,7 @@ const login = async (req, res, next) => {
 };
 
 const getUserFamilies = async (req, res, next) => {
-    userId = req.params.userId;
+    userId = req.userData.userId;
     let pets;
 
     try {
@@ -148,7 +148,7 @@ const createUser = async (req, res, next) => {
 
 /* DELETE */
 const deleteUser = async (req, res, next) => {
-    userId = req.params.userId;
+    userId = req.userData.userId;
     let user;
     //TODO consider using fidnbyidanddelete and and removing one trycatch block
 

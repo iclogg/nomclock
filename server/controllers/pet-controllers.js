@@ -25,7 +25,7 @@ const getPetById = async (req, res, next) => {
 };
 
 const getPetsByOwner = async (req, res, next) => {
-    const ownerId = req.params.uid;
+    const ownerId = req.userData.userId;
 
     let pets;
     let owner;
@@ -101,6 +101,7 @@ const deletePet = async (req, res, next) => {
 
     let pet;
 
+    // Find the pet
     try {
         pet = await Pet.findById(petId).populate("owner", "-password");
     } catch (err) {
@@ -119,11 +120,14 @@ const deletePet = async (req, res, next) => {
         return next(error);
     }
 
+    // Check that delete request is made by the owner
     if (pet.owner.id !== req.userData.userId) {
         const error = new HttpError("You are not the owner.", 401);
         return next(error);
     }
 
+    // Delete the pet and remove it from owners list of pets.
+    // TODO: Also remove all its meals.
     try {
         const sess = await mongoose.startSession();
         sess.startTransaction();
@@ -149,11 +153,29 @@ const deleteFamilyMember = async (req, res, next) => {
     const petId = req.params.petId;
     const { memberId } = req.query;
 
-    let pet;
+    // Check if a person is making a request to remove themselvs.
+    const removeSelf =
+        memberId === req.userData.userId ? req.userData.userId : null;
 
+    // Check that delete request is made by the owner or person self and update family array.
+    let pet;
     try {
         pet = await Pet.findOneAndUpdate(
-            { _id: petId },
+            {
+                $and: [
+                    {
+                        $or: [
+                            { owner: req.userData.userId },
+                            {
+                                family: {
+                                    $in: [removeSelf],
+                                },
+                            },
+                        ],
+                    },
+                    { _id: petId },
+                ],
+            },
             { $pullAll: { family: [memberId] } },
             {
                 new: true,

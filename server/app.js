@@ -12,10 +12,10 @@ const app = express();
 // Middleware
 app.use(express.json());
 
-//Sanatize
+// Sanatize
 app.use(mongoSanitize());
 
-//CORS
+// CORS
 app.use(function (req, res, next) {
     console.log("req.url:", req.url, "method:", req.method);
 
@@ -33,7 +33,7 @@ app.use("/api/pets", petRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/meals", mealRoutes);
 
-//Catch all middleware
+// Catch all middleware
 app.use((req, res, next) => {
     const error = new HttpError("Page not found.", 404);
     throw error;
@@ -53,7 +53,7 @@ app.use((error, req, res, next) => {
     res.json({ message: error.message || "An unknow error happened." });
 });
 
-// set port and start server, connect to database
+// Set port and start server, connect to database
 const port = process.env.PORT || 5000;
 
 mongoose
