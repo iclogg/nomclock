@@ -101,15 +101,12 @@ const App = () => {
                         <Router>
                             <Navbar />
                             <Container
-                                sx={{
-                                    minHeight: "calc(100vh - 164px)",
-                                    pt: "20px",
-                                }}
+                                sx={{ backgroundColor: "lightblue" }}
                                 component="main"
                             >
                                 {routes}
                             </Container>
-                            <Footer />
+                            {/*  <Footer /> */}
                         </Router>
                     </AuthContext.Provider>
                 </ThemeProvider>
@@ -119,3 +116,8 @@ const App = () => {
 };
 
 export default App;
+
+/*   sx={{
+         minHeight: "calc(100vh - 164px)",
+         pt: "20px",
+          }} */
