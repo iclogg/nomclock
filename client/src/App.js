@@ -101,8 +101,8 @@ const App = () => {
                         <Router>
                             <Navbar />
                             <Container
-                                sx={{ backgroundColor: "lightblue" }}
-                                component="main"
+                                /*                                 sx={{ backgroundColor: "lightblue" }}
+                                 */ component="main"
                             >
                                 {routes}
                             </Container>

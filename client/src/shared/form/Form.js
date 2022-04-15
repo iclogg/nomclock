@@ -1,4 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
+
+import { Grid, Box } from "@mui/material";
 
 import inputValidator from "./validators";
 
@@ -27,7 +29,7 @@ export const useForm = ({ initialValues, validateOnChange = false }) => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
 
-        // Set new value
+        // Set new value state
         setValues({ ...values, [name]: value });
 
         // Set error status if needed
@@ -47,16 +49,59 @@ export const useForm = ({ initialValues, validateOnChange = false }) => {
 };
 
 export const Form = (props) => {
-    const formStyle = { margin: "20px" };
-
     const { children, ...other } = props;
     return (
-        <form
-            style={formStyle}
-            {...other}
-            /* TODO: uncomment this when not needed for smother login when developing: autoComplete="off" */
+        <Box
+            m={3}
+            display="flex"
+            justifyContent="center"
+            /*             sx={{ backgroundColor: "lightgreen" }}
+             */
         >
-            {children}
-        </form>
+            <form
+                {...other}
+                /* TODO: uncomment this when not needed for smother login when developing: autoComplete="off" */
+                style={{
+                    maxWidth: "800px",
+                    /*     backgroundColor: "red", */
+                    flexGrow: 1,
+                }}
+            >
+                <Grid container justifyContent="flex-end">
+                    {React.Children.map(children, (child) => {
+                        console.log("child", child);
+
+                        /*      if (child.type.render.name === "Typography") {
+                            return (
+                                <Grid
+                                    item
+                                    xs={12}
+                                    sm={4}
+                                    sx={{
+                                        alignContent: "stretch",
+                                    }}
+                                >
+                                    {React.cloneElement(child, {
+                                        fullWidth: "true",
+                                    })}
+                                </Grid>
+                            );
+                        }
+ */
+                        // Give the submit button a grid item wrapper and style
+                        if (child.props.type === "submit") {
+                            return (
+                                <Grid item xs={12} sm={4}>
+                                    {React.cloneElement(child, {
+                                        fullWidth: true,
+                                    })}
+                                </Grid>
+                            );
+                        }
+                        return child;
+                    })}
+                </Grid>
+            </form>
+        </Box>
     );
 };

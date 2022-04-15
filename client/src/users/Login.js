@@ -1,13 +1,13 @@
 import { useEffect, useContext } from "react";
-import { Typography, Box, Button } from "@mui/material";
+import { Typography, Button, Grid } from "@mui/material";
 
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 import TextInput from "../shared/form/TextInput";
+import AuthGrid from "./AuthGrid";
 
 import { useForm, Form } from "../shared/form/Form";
 
-import inputValidator from "../shared/form/validators";
 import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 
@@ -22,13 +22,7 @@ const Login = () => {
         error,
     } = useAxios();
 
-    const {
-        values,
-        handleInputChange,
-        inputErrors,
-        setInputErrors,
-        validate,
-    } = useForm({
+    const { values, handleInputChange, inputErrors, validate } = useForm({
         initialValues: {
             email: "",
             password: "",
@@ -58,30 +52,35 @@ const Login = () => {
     }, [clearIsLoading]);
 
     return (
-        <Box sx={{ mt: "10px" }}>
+        <AuthGrid>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
-            <Typography variant="h4">Enter your details to log in!</Typography>
-            <Form action="" onSubmit={submitHandler}>
-                <TextInput
-                    name="email"
-                    label="Email"
-                    value={values.email}
-                    onChange={handleInputChange}
-                    error={inputErrors.email}
-                />
-                <TextInput
-                    name="password"
-                    label="Password"
-                    type="password"
-                    value={values.password}
-                    onChange={handleInputChange}
-                />
-                <Button type="submit" color="secondary" variant="contained">
-                    LOG IN
-                </Button>
-            </Form>
-        </Box>
+
+            <Grid item xs={12}>
+                <Form action="" onSubmit={submitHandler}>
+                    <Typography align="left" variant="h6">
+                        Enter your details to log in!
+                    </Typography>
+                    <TextInput
+                        name="email"
+                        label="Email"
+                        value={values.email}
+                        onChange={handleInputChange}
+                        error={inputErrors.email}
+                    />
+                    <TextInput
+                        name="password"
+                        label="Password"
+                        type="password"
+                        value={values.password}
+                        onChange={handleInputChange}
+                    />
+                    <Button type="submit" color="secondary" variant="contained">
+                        LOG IN
+                    </Button>
+                </Form>
+            </Grid>
+        </AuthGrid>
     );
 };
 

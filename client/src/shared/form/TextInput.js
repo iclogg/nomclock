@@ -1,4 +1,4 @@
-import TextField from "@mui/material/TextField";
+import { TextField, Grid } from "@mui/material";
 
 export const TextInput = ({
     label,
@@ -7,49 +7,49 @@ export const TextInput = ({
     onChange,
     type,
     error = null,
+    item = true,
     ...other
 }) => {
-    /*    const typeObj = type === "number" ? `type="number" InputLabelProps={{shrink: true,}}` : ""}; */
-
-    const inputStyle = {
-        margin: "10px",
-        width: "400px",
-    };
-
     if (type === "number") {
         return (
+            <Grid item={item} xs={12}>
+                <TextField
+                    margin="normal"
+                    fullWidth
+                    variant="outlined"
+                    label={label}
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    type="number"
+                    id="outlined-number"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    error={!!error}
+                    helperText={error}
+                    {...other}
+                ></TextField>
+            </Grid>
+        );
+    }
+
+    return (
+        <Grid item={item} xs={12}>
             <TextField
-                style={inputStyle}
+                margin="normal"
+                fullWidth
                 variant="outlined"
                 label={label}
                 name={name}
                 value={value}
                 onChange={onChange}
-                type="number"
-                id="outlined-number"
-                InputLabelProps={{
-                    shrink: true,
-                }}
+                type={type}
                 error={!!error}
                 helperText={error}
                 {...other}
             ></TextField>
-        );
-    }
-
-    return (
-        <TextField
-            style={inputStyle}
-            variant="outlined"
-            label={label}
-            name={name}
-            value={value}
-            onChange={onChange}
-            type={type}
-            error={!!error}
-            helperText={error}
-            {...other}
-        ></TextField>
+        </Grid>
     );
 };
 
