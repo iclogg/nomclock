@@ -22,7 +22,10 @@ const NavBar = (props) => {
     let location = useLocation();
 
     return (
-        <AppBar position="static">
+        <AppBar
+            position={auth.isLoggedIn ? "static" : "fixed"}
+            color="transparent"
+        >
             <Toolbar
                 sx={{
                     paddingLeft: "2px",
@@ -35,7 +38,7 @@ const NavBar = (props) => {
                         fontSize: "40px",
                         fontWeight: "bold",
                         color: "#e81e62",
-                        textShadow: "2px 2px 2px #babdbe",
+                        textShadow: "5px 1px 5px white",
                     }}
                 >
                     NOMCLOCK{" "}
@@ -69,6 +72,7 @@ const NavBar = (props) => {
                                             color: "secondary.main",
                                         },
                                         verticalAlign: "sub",
+                                        textDecoration: "none",
                                     }}
                                     to={page.url}
                                     key={page.url}
