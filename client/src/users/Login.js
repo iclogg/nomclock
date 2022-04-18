@@ -77,9 +77,7 @@ const Login = () => {
                     sx={{ backgroundColor: "rgba(255, 255, 255, 0.75)" }}
                 >
                     <Form action="" onSubmit={submitHandler}>
-                        <Typography isformtitle="true">
-                            Enter your details to log in!
-                        </Typography>
+                        <Typography isformtitle="true">LOGIN</Typography>
                         <TextInput
                             name="email"
                             label="Email"
@@ -102,6 +100,26 @@ const Login = () => {
                             LOG IN
                         </Button>
                     </Form>
+                    <Typography
+                        variant="body2"
+                        sx={{
+                            textShadow: "5px 1px 5px white",
+                        }}
+                        p={2}
+                    >
+                        DON'T HAVE AN ACCOUNT?{" "}
+                        <Typography
+                            variant="body1"
+                            sx={{
+                                fontFamily: "Shadows Into Light, cursive",
+                                fontWeight: "bold",
+                                color: "#e81e62",
+                                textShadow: "1px 1px 1px",
+                            }}
+                        >
+                            SIGNUP HERE
+                        </Typography>
+                    </Typography>
                 </Paper>
             </Grid>
         </AuthGrid>

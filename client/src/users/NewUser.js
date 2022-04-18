@@ -78,9 +78,7 @@ const NewUser = () => {
                     sx={{ backgroundColor: "rgba(255, 255, 255, 0.75)" }}
                 >
                     <Form action="" onSubmit={submitHandler}>
-                        <Typography isformtitle="true">
-                            Enter your details to sign up!
-                        </Typography>
+                        <Typography isformtitle="true">SIGNUP</Typography>
                         <TextInput
                             name="name"
                             type="text"
