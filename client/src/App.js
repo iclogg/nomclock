@@ -46,6 +46,16 @@ const theme = createTheme({
         fontWeightRegular: 400,
         fontWeightMedium: 500,
     },
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    // Fixing verical placing of text caused by font.
+                    paddingBottom: "0px",
+                },
+            },
+        },
+    },
 });
 
 const App = () => {
@@ -100,12 +110,7 @@ const App = () => {
                     >
                         <Router>
                             <Navbar />
-                            <Container
-                                /*                                 sx={{ backgroundColor: "lightblue" }}
-                                 */ component="main"
-                            >
-                                {routes}
-                            </Container>
+                            <>{routes}</>
                             {/*  <Footer /> */}
                         </Router>
                     </AuthContext.Provider>
@@ -121,3 +126,5 @@ export default App;
          minHeight: "calc(100vh - 164px)",
          pt: "20px",
           }} */
+/* sx={{ backgroundColor: "lightblue" }}
+                                component="main" */
