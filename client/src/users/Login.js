@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { Typography, Button, Grid } from "@mui/material";
+import { Typography, Button, Grid, Paper } from "@mui/material";
 
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
@@ -12,7 +12,6 @@ import { AuthContext } from "../utils/auth-context";
 import useAxios from "../utils/axios-hook";
 
 const Login = () => {
-    const blah = "blah";
     const auth = useContext(AuthContext);
     const {
         sendRequest,
@@ -56,29 +55,38 @@ const Login = () => {
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
 
-            <Grid item xs={12}>
-                <Form action="" onSubmit={submitHandler}>
-                    <Typography isformtitle="true">
-                        Enter your details to log in!
-                    </Typography>
-                    <TextInput
-                        name="email"
-                        label="Email"
-                        value={values.email}
-                        onChange={handleInputChange}
-                        error={inputErrors.email}
-                    />
-                    <TextInput
-                        name="password"
-                        label="Password"
-                        type="password"
-                        value={values.password}
-                        onChange={handleInputChange}
-                    />
-                    <Button type="submit" color="secondary" variant="contained">
-                        LOG IN
-                    </Button>
-                </Form>
+            <Grid item xs={10} mb={20}>
+                <Paper
+                    elevation={8}
+                    sx={{ backgroundColor: "rgba(255, 255, 255, 0.75)" }}
+                >
+                    <Form action="" onSubmit={submitHandler}>
+                        <Typography isformtitle="true">
+                            Enter your details to log in!
+                        </Typography>
+                        <TextInput
+                            name="email"
+                            label="Email"
+                            value={values.email}
+                            onChange={handleInputChange}
+                            error={inputErrors.email}
+                        />
+                        <TextInput
+                            name="password"
+                            label="Password"
+                            type="password"
+                            value={values.password}
+                            onChange={handleInputChange}
+                        />
+                        <Button
+                            type="submit"
+                            color="secondary"
+                            variant="contained"
+                        >
+                            LOG IN
+                        </Button>
+                    </Form>
+                </Paper>
             </Grid>
         </AuthGrid>
     );
