@@ -51,19 +51,12 @@ export const useForm = ({ initialValues, validateOnChange = false }) => {
 export const Form = (props) => {
     const { children, ...other } = props;
     return (
-        <Box
-            m={3}
-            display="flex"
-            justifyContent="center"
-            /*             sx={{ backgroundColor: "lightgreen" }}
-             */
-        >
+        <Box p={3} display="flex" justifyContent="center">
             <form
                 {...other}
                 /* TODO: uncomment this when not needed for smother login when developing: autoComplete="off" */
                 style={{
                     maxWidth: "800px",
-                    /*     backgroundColor: "red", */
                     flexGrow: 1,
                 }}
             >
