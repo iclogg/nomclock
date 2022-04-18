@@ -33,6 +33,7 @@ const NavBar = (props) => {
             >
                 <Typography
                     sx={{
+                        ml: 1,
                         mr: 2,
                         fontFamily: "Shadows Into Light, cursive",
                         fontSize: "40px",
