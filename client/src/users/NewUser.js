@@ -57,7 +57,22 @@ const NewUser = () => {
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
 
-            <Grid item xs={10} mb={20}>
+            <Grid xs={12} sm={10} pt={10}>
+                <Typography
+                    align="center"
+                    variant="h1"
+                    sx={{
+                        fontFamily: "Shadows Into Light, cursive",
+                        fontWeight: "bold",
+                        color: "#e81e62",
+                        textShadow: "5px 1px 5px white",
+                    }}
+                >
+                    <Typography variant="h6">WELCOME TO </Typography> NOMCLOCK{" "}
+                </Typography>
+            </Grid>
+
+            <Grid item xs={10} md="auto" mb={20}>
                 <Paper
                     elevation={8}
                     sx={{ backgroundColor: "rgba(255, 255, 255, 0.75)" }}
