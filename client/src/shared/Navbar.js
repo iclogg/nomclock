@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 
 import { AppBar, Box, Typography, Toolbar, Link } from "@mui/material";
@@ -24,7 +24,7 @@ const NavBar = (props) => {
     return (
         <AppBar
             position={auth.isLoggedIn ? "static" : "fixed"}
-            color="transparent"
+            sx={{ backgroundColor: "rgba(250, 229, 236, 0.51)" }}
         >
             <Toolbar
                 sx={{

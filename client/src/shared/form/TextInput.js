@@ -22,13 +22,13 @@ export const TextInput = ({
                     value={value}
                     onChange={onChange}
                     type="number"
+                    error={!!error}
+                    helperText={error}
+                    {...other}
                     id="outlined-number"
                     InputLabelProps={{
                         shrink: true,
                     }}
-                    error={!!error}
-                    helperText={error}
-                    {...other}
                 ></TextField>
             </Grid>
         );
