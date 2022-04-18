@@ -69,29 +69,21 @@ export const Form = (props) => {
             >
                 <Grid container justifyContent="flex-end">
                     {React.Children.map(children, (child) => {
-                        console.log("child", child);
-
-                        /*      if (child.type.render.name === "Typography") {
+                        // Give the submit form label a grid item wrapper and style
+                        if (child.props && child.props.isformtitle) {
                             return (
-                                <Grid
-                                    item
-                                    xs={12}
-                                    sm={4}
-                                    sx={{
-                                        alignContent: "stretch",
-                                    }}
-                                >
+                                <Grid item xs={12}>
                                     {React.cloneElement(child, {
-                                        fullWidth: "true",
+                                        variant: "h6",
                                     })}
                                 </Grid>
                             );
                         }
- */
+
                         // Give the submit button a grid item wrapper and style
-                        if (child.props.type === "submit") {
+                        if (child.props && child.props.type === "submit") {
                             return (
-                                <Grid item xs={12} sm={4}>
+                                <Grid item xs={12} sm={6}>
                                     {React.cloneElement(child, {
                                         fullWidth: true,
                                     })}

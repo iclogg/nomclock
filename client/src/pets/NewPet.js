@@ -65,13 +65,16 @@ const NewPet = () => {
         <Box sx={{ mt: "10px" }}>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
-            <Typography variant="h4">Register Your Darling</Typography>{" "}
             <PetDetailsForm
                 submitHandler={submitHandler}
                 values={values}
                 handleInputChange={handleInputChange}
                 inputErrors={inputErrors}
-            />
+            >
+                <Typography isformtitle="true">
+                    Register Your Darling
+                </Typography>
+            </PetDetailsForm>
         </Box>
     );
 };

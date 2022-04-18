@@ -3,14 +3,18 @@ import { Button } from "@mui/material";
 import { Form } from "../shared/form/Form";
 import TextInput from "../shared/form/TextInput";
 
-const PetDetailsForm = ({
-    submitHandler,
-    values,
-    handleInputChange,
-    inputErrors,
-}) => {
+const PetDetailsForm = (props) => {
+    const {
+        submitHandler,
+        values,
+        handleInputChange,
+        inputErrors,
+        children,
+    } = props;
+
     return (
         <Form action="" onSubmit={submitHandler}>
+            {children}
             <TextInput
                 label="The Darlings name goes here."
                 name="name"

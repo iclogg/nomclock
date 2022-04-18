@@ -67,19 +67,20 @@ const UpdatePet = (props) => {
 
     return (
         <Box sx={{ mt: "10px" }}>
-            <Typography variant="h4">Update Pet</Typography>{" "}
             <Typography
                 sx={{
                     display: "flex",
                     justifyContent: "flex-end",
-                    color: "green",
                     height: "1em",
                 }}
             >
                 {" "}
                 {showUpdateConfirmation && (
                     <span>
-                        <CheckCircleOutlineIcon /> "Updates saved!"
+                        <CheckCircleOutlineIcon
+                            sx={{ verticalAlign: "-6px" }}
+                        />{" "}
+                        Updates saved!
                     </span>
                 )}
             </Typography>
@@ -88,7 +89,9 @@ const UpdatePet = (props) => {
                 values={values}
                 handleInputChange={handleInputChange}
                 inputErrors={inputErrors}
-            />
+            >
+                <Typography isformtitle="true">Pet Details</Typography>
+            </PetDetailsForm>
             <NewFamilyMember
                 petUpdateHandler={petUpdateHandler}
                 toggleSetIsUpdating={toggleSetIsUpdating}

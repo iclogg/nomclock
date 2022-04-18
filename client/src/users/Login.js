@@ -58,7 +58,7 @@ const Login = () => {
 
             <Grid item xs={12}>
                 <Form action="" onSubmit={submitHandler}>
-                    <Typography align="left" variant="h6">
+                    <Typography isformtitle="true">
                         Enter your details to log in!
                     </Typography>
                     <TextInput

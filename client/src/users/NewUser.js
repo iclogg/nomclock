@@ -63,12 +63,10 @@ const NewUser = () => {
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
             <Grid item xs={12}>
-                <Typography variant="h4">
-                    Enter your details to sign up!
-                </Typography>
-            </Grid>
-            <Grid item xs={12}>
                 <Form action="" onSubmit={submitHandler}>
+                    <Typography isformtitle="true">
+                        Enter your details to sign up!
+                    </Typography>
                     <TextInput
                         name="name"
                         type="text"

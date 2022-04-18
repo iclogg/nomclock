@@ -1,4 +1,4 @@
-import { Button, FormGroup } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
@@ -17,7 +17,6 @@ const NewFamilyMember = ({ petUpdateHandler }) => {
         setValues,
         handleInputChange,
         inputErrors,
-        setInputErrors,
         validate,
     } = useForm({
         initialValues: {
@@ -57,17 +56,16 @@ const NewFamilyMember = ({ petUpdateHandler }) => {
 
     return (
         <Form action="" onSubmit={submitHandler}>
-            <FormGroup>
-                <TextInput
-                    name="email"
-                    type="email"
-                    label="Email"
-                    value={values.email}
-                    onChange={handleInputChange}
-                    type="email"
-                    error={inputErrors.email}
-                />
-            </FormGroup>
+            <Typography isformtitle="true">Pet Family</Typography>
+            <TextInput
+                name="email"
+                type="email"
+                label="Email"
+                value={values.email}
+                onChange={handleInputChange}
+                type="email"
+                error={inputErrors.email}
+            />
             <Button type="submit" variant="contained" color="secondary">
                 Add Family Member
             </Button>

@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 
 import {
     Button,
-    Box,
     MenuItem,
     FormControl,
     Select,
@@ -22,7 +21,6 @@ export const RemoveFamilyMember = ({ pet, petUpdateHandler }) => {
         setValues,
         handleInputChange,
         inputErrors,
-        setInputErrors,
         validate,
     } = useForm({
         initialValues: {
@@ -64,35 +62,36 @@ export const RemoveFamilyMember = ({ pet, petUpdateHandler }) => {
 
     return (
         <Form action="" onSubmit={submitHandler}>
-            <Box sx={{ minWidth: "110px" }}>
-                <FormControl fullWidth error={!!inputErrors.memberId}>
-                    <InputLabel id="demo-simple-select-label">Name</InputLabel>
-                    <Select
-                        id="name"
-                        label="Name"
-                        variant="outlined"
-                        name="memberId"
-                        value={values.memberId}
-                        type="memberId"
-                        onChange={handleInputChange}
-                    >
-                        {pet.family &&
-                            pet.family.map((member) => {
-                                return (
-                                    <MenuItem
-                                        key={member._id}
-                                        value={member._id}
-                                    >
-                                        {member.name}
-                                    </MenuItem>
-                                );
-                            })}
-                    </Select>{" "}
-                    {inputErrors.memberId && (
-                        <FormHelperText>{inputErrors.memberId}</FormHelperText>
-                    )}
-                </FormControl>
-            </Box>
+            <FormControl
+                error={!!inputErrors.memberId}
+                margin="normal"
+                fullWidth
+            >
+                <InputLabel id="name-member">Name</InputLabel>
+                <Select
+                    labelId="name-member"
+                    id="name"
+                    label="Name"
+                    variant="outlined"
+                    name="memberId"
+                    value={values.memberId}
+                    type="memberId"
+                    onChange={handleInputChange}
+                >
+                    {pet.family &&
+                        pet.family.map((member) => {
+                            return (
+                                <MenuItem key={member._id} value={member._id}>
+                                    {member.name}
+                                </MenuItem>
+                            );
+                        })}
+                </Select>{" "}
+                {inputErrors.memberId && (
+                    <FormHelperText>{inputErrors.memberId}</FormHelperText>
+                )}
+            </FormControl>
+
             <Button type="submit" variant="contained" color="secondary">
                 Remove Family Member
             </Button>
