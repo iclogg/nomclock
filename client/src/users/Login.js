@@ -55,73 +55,26 @@ const Login = () => {
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
 
-            <Grid xs={12} sm={10} pt={10}>
-                <Typography
-                    align="center"
-                    variant="h1"
-                    sx={{
-                        fontFamily: "Shadows Into Light, cursive",
-                        fontWeight: "bold",
-                        color: "#e81e62",
-                        textShadow: "5px 1px 5px white",
-                    }}
-                >
-                    <Typography variant="h6">WELCOME BACK TO </Typography>{" "}
-                    NOMCLOCK{" "}
-                </Typography>
-            </Grid>
-
-            <Grid item xs={10} md="auto" mb={20}>
-                <Paper
-                    elevation={8}
-                    sx={{ backgroundColor: "rgba(255, 255, 255, 0.75)" }}
-                >
-                    <Form action="" onSubmit={submitHandler}>
-                        <Typography isformtitle="true">LOGIN</Typography>
-                        <TextInput
-                            name="email"
-                            label="Email"
-                            value={values.email}
-                            onChange={handleInputChange}
-                            error={inputErrors.email}
-                        />
-                        <TextInput
-                            name="password"
-                            label="Password"
-                            type="password"
-                            value={values.password}
-                            onChange={handleInputChange}
-                        />
-                        <Button
-                            type="submit"
-                            color="secondary"
-                            variant="contained"
-                        >
-                            LOG IN
-                        </Button>
-                    </Form>
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            textShadow: "5px 1px 5px white",
-                        }}
-                        p={2}
-                    >
-                        DON'T HAVE AN ACCOUNT?{" "}
-                        <Typography
-                            variant="body1"
-                            sx={{
-                                fontFamily: "Shadows Into Light, cursive",
-                                fontWeight: "bold",
-                                color: "#e81e62",
-                                textShadow: "1px 1px 1px",
-                            }}
-                        >
-                            SIGNUP HERE
-                        </Typography>
-                    </Typography>
-                </Paper>
-            </Grid>
+            <Form action="" onSubmit={submitHandler}>
+                <Typography isformtitle="true">LOGIN</Typography>
+                <TextInput
+                    name="email"
+                    label="Email"
+                    value={values.email}
+                    onChange={handleInputChange}
+                    error={inputErrors.email}
+                />
+                <TextInput
+                    name="password"
+                    label="Password"
+                    type="password"
+                    value={values.password}
+                    onChange={handleInputChange}
+                />
+                <Button type="submit" color="secondary" variant="contained">
+                    LOG IN
+                </Button>
+            </Form>
         </AuthGrid>
     );
 };

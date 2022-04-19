@@ -57,7 +57,7 @@ const NewUser = () => {
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
 
-            <Grid xs={12} sm={10} pt={10}>
+            {/*      <Grid xs={12} sm={10} pt={10}>
                 <Typography
                     align="center"
                     variant="h1"
@@ -70,49 +70,43 @@ const NewUser = () => {
                 >
                     <Typography variant="h6">WELCOME TO </Typography> NOMCLOCK{" "}
                 </Typography>
-            </Grid>
+            </Grid> */}
 
-            <Grid item xs={10} md="auto" mb={20}>
+            {/*      <Grid item xs={10} md="auto" mb={20}>
                 <Paper
                     elevation={8}
                     sx={{ backgroundColor: "rgba(255, 255, 255, 0.75)" }}
-                >
-                    <Form action="" onSubmit={submitHandler}>
-                        <Typography isformtitle="true">SIGNUP</Typography>
-                        <TextInput
-                            name="name"
-                            type="text"
-                            label="Name"
-                            value={values.name}
-                            onChange={handleInputChange}
-                            error={inputErrors.name}
-                        />
-                        <TextInput
-                            name="email"
-                            type="email"
-                            label="Email"
-                            value={values.email}
-                            onChange={handleInputChange}
-                            error={inputErrors.email}
-                        />
-                        <TextInput
-                            name="password"
-                            label="Password"
-                            value={values.password}
-                            type="password"
-                            onChange={handleInputChange}
-                            error={inputErrors.password}
-                        />
-                        <Button
-                            type="submit"
-                            color="secondary"
-                            variant="contained"
-                        >
-                            SIGN UP
-                        </Button>
-                    </Form>
-                </Paper>
-            </Grid>
+                > */}
+            <Form action="" onSubmit={submitHandler}>
+                <Typography isformtitle="true">SIGNUP</Typography>
+                <TextInput
+                    name="name"
+                    type="text"
+                    label="Name"
+                    value={values.name}
+                    onChange={handleInputChange}
+                    error={inputErrors.name}
+                />
+                <TextInput
+                    name="email"
+                    type="email"
+                    label="Email"
+                    value={values.email}
+                    onChange={handleInputChange}
+                    error={inputErrors.email}
+                />
+                <TextInput
+                    name="password"
+                    label="Password"
+                    value={values.password}
+                    type="password"
+                    onChange={handleInputChange}
+                    error={inputErrors.password}
+                />
+                <Button type="submit" color="secondary" variant="contained">
+                    SIGN UP
+                </Button>
+            </Form>
         </AuthGrid>
     );
 };
