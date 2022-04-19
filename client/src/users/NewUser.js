@@ -5,7 +5,7 @@ import { Typography, Button, Grid, Paper } from "@mui/material";
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 import TextInput from "../shared/form/TextInput";
-import AuthGrid from "./AuthGrid";
+import AuthGrid from "../layout/AuthGrid";
 
 import { useForm, Form } from "../shared/form/Form";
 
@@ -57,26 +57,6 @@ const NewUser = () => {
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
 
-            {/*      <Grid xs={12} sm={10} pt={10}>
-                <Typography
-                    align="center"
-                    variant="h1"
-                    sx={{
-                        fontFamily: "Shadows Into Light, cursive",
-                        fontWeight: "bold",
-                        color: "#e81e62",
-                        textShadow: "5px 1px 5px white",
-                    }}
-                >
-                    <Typography variant="h6">WELCOME TO </Typography> NOMCLOCK{" "}
-                </Typography>
-            </Grid> */}
-
-            {/*      <Grid item xs={10} md="auto" mb={20}>
-                <Paper
-                    elevation={8}
-                    sx={{ backgroundColor: "rgba(255, 255, 255, 0.75)" }}
-                > */}
             <Form action="" onSubmit={submitHandler}>
                 <Typography isformtitle="true">SIGNUP</Typography>
                 <TextInput

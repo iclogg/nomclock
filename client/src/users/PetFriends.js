@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 
+import Typography from "@mui/material/Typography";
+
 import PetsList from "../pets/PetsList";
 import Loading from "../shared/Loading";
 
@@ -32,7 +34,19 @@ const PetFriends = () => {
     return (
         <>
             {isLoading && <Loading />}
-            {!isLoading && <PetsList items={petFriends}>Hello</PetsList>}
+            {petFriends.length ? (
+                <Typography variant="h5" mt={3}>
+                    Your Extended Family
+                </Typography>
+            ) : (
+                ""
+            )}
+
+            {petFriends.length && !isLoading ? (
+                <PetsList items={petFriends}></PetsList>
+            ) : (
+                ""
+            )}
         </>
     );
 };

@@ -2,12 +2,13 @@ import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
 import PetsIcon from "@mui/icons-material/Pets";
 import Grid from "@mui/material/Grid";
 
 import { Link as RRDLink } from "react-router-dom";
 
-const PetList = (props) => {
+const PetsList = (props) => {
     if (props.items.length === 0) {
         return (
             <Typography variant="h5">
@@ -35,42 +36,81 @@ const PetList = (props) => {
     }
 
     return (
-        <Grid container spacing={2} sx={{ width: "40%" }}>
-            {props.items.map((pet) => {
-                return (
-                    <Grid item sx={{ width: 75 }} key={pet.id}>
-                        <Link
-                            to={`/pets/${pet.id}`}
-                            component={RRDLink}
-                            sx={{
-                                "&:hover p": {
-                                    color: "secondary.main",
-                                    textDecoration: "none",
-                                },
-                            }}
-                        >
-                            <Avatar
+        <>
+            {" "}
+            {props.ownPets && <Typography variant="h5">Your Pets</Typography>}
+            <Grid container spacing={1}>
+                {props.items.map((pet) => {
+                    return (
+                        <Grid item xs={12} sm={6} md={4}>
+                            <Paper
+                                elevation={8}
                                 sx={{
-                                    width: 56,
-                                    height: 56,
+                                    backgroundColor:
+                                        "rgba(255, 255, 255, 0.75)",
                                 }}
-                                alt={pet.name}
-                                src={pet.image}
-                            />
-                            <Typography
-                                sx={{
-                                    color: "primary.contrastText",
-                                }}
-                                variant="body1"
                             >
-                                {pet.name}
-                            </Typography>
-                        </Link>
-                    </Grid>
-                );
-            })}
-        </Grid>
+                                <Grid container xs={12} key={pet.id}>
+                                    <Grid xs={5} m={1} p={1}>
+                                        {" "}
+                                        <Link
+                                            to={`/pets/${pet.id}`}
+                                            component={RRDLink}
+                                            sx={{
+                                                "&:hover p": {
+                                                    color: "secondary.main",
+                                                    textDecoration: "none",
+                                                },
+                                            }}
+                                        >
+                                            <Avatar
+                                                sx={{
+                                                    width: 56,
+                                                    height: 56,
+                                                }}
+                                                alt={pet.name}
+                                                src={pet.image}
+                                            />
+                                            <Typography
+                                                m={0}
+                                                sx={{
+                                                    color:
+                                                        "primary.contrastText",
+                                                    width: "50px",
+                                                }}
+                                                variant="subtitle1"
+                                            >
+                                                {pet.name}
+                                            </Typography>
+                                        </Link>
+                                    </Grid>
+
+                                    <Grid
+                                        item
+                                        display="flex"
+                                        xs={6}
+                                        sx={{
+                                            border: "solid 1px white",
+                                            flexDirection: "column",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <Typography variant="caption">
+                                            LATEST MEAL
+                                        </Typography>
+
+                                        <Typography variant="h4">
+                                            13:40
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </Grid>
+                    );
+                })}
+            </Grid>
+        </>
     );
 };
 
-export default PetList;
+export default PetsList;

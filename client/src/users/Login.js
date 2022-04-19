@@ -4,7 +4,7 @@ import { Typography, Button, Grid, Paper } from "@mui/material";
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 import TextInput from "../shared/form/TextInput";
-import AuthGrid from "./AuthGrid";
+import AuthGrid from "../layout/AuthGrid";
 
 import { useForm, Form } from "../shared/form/Form";
 
