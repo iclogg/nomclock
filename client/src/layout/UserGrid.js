@@ -19,7 +19,3 @@ const UserGrid = (props) => {
 };
 
 export default UserGrid;
-
-/*  <Grid xs={12} sm={10} pt={10}>
-     <Typography align="center" variant="h1"></Typography>
- </Grid>; */

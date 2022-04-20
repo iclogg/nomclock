@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import Typography from "@mui/material/Typography";
 import { Box, Tabs, Tab, Grid } from "@mui/material";
 
 import Loading from "../shared/Loading";
@@ -64,71 +63,77 @@ const User = () => {
             "aria-controls": `simple-tabpanel-${index}`,
         };
     }
-    //
+
+    // Tabs Border Styling
+    const lineStyle = "solid 2px #ff608f";
+    const transitionStyle = "border 0.1s linear";
+
+    const zero = {
+        active: {
+            borderRight: lineStyle,
+            borderBottom: lineStyle,
+            transition: transitionStyle,
+        },
+        inactive: {
+            borderLeft: lineStyle,
+            borderTop: lineStyle,
+            transition: transitionStyle,
+        },
+    };
+
+    const one = {
+        active: {
+            borderLeft: lineStyle,
+            borderBottom: lineStyle,
+            transition: transitionStyle,
+        },
+        inactive: {
+            borderTop: lineStyle,
+            borderRight: lineStyle,
+        },
+    };
+
+    const tabBorderStyle0 = tabValue !== 0 ? zero.active : zero.inactive;
+    const tabBorderStyle1 = tabValue !== 1 ? one.active : one.inactive;
+    const contentBorderStyle = {
+        borderRight: lineStyle,
+        borderLeft: lineStyle,
+        borderBottom: lineStyle,
+    };
 
     return (
         <UserGrid>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
-            <Grid
-                item
-                xs={10}
-                /*    sx={{
-                    backgroundColor: "lightyellow",
-                }} */
-            >
+            <Grid item xs={10} mt={3}>
                 <Tabs
                     value={tabValue}
                     onChange={handleChange}
                     aria-label="account tabs"
                     textColor={"secondary"}
-                    indicatorColor="secondary"
+                    indicatorColor="transparent"
+                    variant="fullWidth"
                 >
-                    <Tab label="Pets" {...a11yProps(0)} />
-                    <Tab label="Account" {...a11yProps(1)} />
+                    <Tab label="Pets" {...a11yProps(0)} sx={tabBorderStyle0} />
+                    <Tab
+                        label="Account"
+                        {...a11yProps(1)}
+                        sx={tabBorderStyle1}
+                    />
                 </Tabs>
+                <div style={contentBorderStyle}>
+                    <TabPanel value={tabValue} index={0}>
+                        {!isLoading && <PetsList items={pets} ownPets={true} />}
 
-                <TabPanel value={tabValue} index={0}>
-                    {!isLoading && <PetsList items={pets} ownPets={true} />}
-
-                    <PetFriends />
-                </TabPanel>
-                <TabPanel value={tabValue} index={1}>
-                    <Settings />
-                </TabPanel>
+                        <PetFriends />
+                    </TabPanel>
+                    <TabPanel value={tabValue} index={1}>
+                        <Settings />
+                    </TabPanel>
+                </div>
             </Grid>
         </UserGrid>
     );
 };
 
 export default User;
-
-/*   <Box sx={{ width: "100%" }}>
-                    <Box
-                        sx={{
-                            borderColor: "divider",
-                        }}
-                    >
-                        <Tabs
-                            value={tabValue}
-                            onChange={handleChange}
-                            aria-label="account tabs"
-                            textColor={"secondary"}
-                            indicatorColor="secondary"
-                        >
-                            <Tab label="Pets" {...a11yProps(0)} />
-                            <Tab label="Pet Friends" {...a11yProps(1)} />
-                            <Tab label="Account" {...a11yProps(2)} />
-                        </Tabs>
-                    </Box>
-
-                    <TabPanel value={tabValue} index={0}>
-                        {!isLoading && <PetsList items={pets} ownPets={true} />}
-                    </TabPanel>
-                    <TabPanel value={tabValue} index={1}>
-                        <PetFriends />
-                    </TabPanel>
-                    <TabPanel value={tabValue} index={2}>
-                        <Settings />
-                    </TabPanel>
-                </Box> */

@@ -41,7 +41,15 @@ const PetsList = (props) => {
             <Grid container spacing={1}>
                 {props.items.map((pet) => {
                     return (
-                        <Grid item xs={8} sm={6} md={4} key={pet.id}>
+                        <Grid
+                            item
+                            xs={11}
+                            sm={5}
+                            md={4}
+                            lg={3}
+                            maxWidth="250px"
+                            key={pet.id}
+                        >
                             <Paper
                                 elevation={8}
                                 sx={{
@@ -79,7 +87,7 @@ const PetsList = (props) => {
                                                       "..."}
                                             </Typography>
                                         </Grid>
-                                        <Grid item xs="auto" py={1}>
+                                        <Grid item xs={4} py={1}>
                                             <Avatar
                                                 sx={{
                                                     width: 65,
