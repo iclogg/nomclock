@@ -1,11 +1,18 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import { Typography, Container, Box, Button, Modal, Grid } from "@mui/material";
+import {
+    Typography,
+    Container,
+    Box,
+    Button,
+    Modal,
+    Grid,
+    Avatar,
+} from "@mui/material";
 
 import { useParams } from "react-router-dom";
 
-import Avatar from "../shared/Avatar";
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 import PageNotFound from "../shared/PageNotFound";
@@ -137,7 +144,14 @@ const Pet = () => {
             {pet.name && !isLoading && !isUpdating && (
                 <Box sx={{ textAlign: "center" }}>
                     <Typography variant="h1">{pet.name}'s own page</Typography>
-                    <Avatar name={pet.name} image={pet.image} />
+                    <Avatar
+                        sx={{
+                            width: 100,
+                            height: 100,
+                        }}
+                        alt={pet.name}
+                        src={pet.image}
+                    />
                     <Typography>{pet.description}</Typography>
                     <Typography variant="body1">
                         {pet.name} is allowed {pet.maxMeals} meals each day.
