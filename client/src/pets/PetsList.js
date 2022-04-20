@@ -1,16 +1,19 @@
-import React from "react";
-import { Avatar, Typography, Link, Paper, Grid, Stack } from "@mui/material";
+import { Avatar, Typography, Link, Paper, Grid } from "@mui/material";
 import PetsIcon from "@mui/icons-material/Pets";
+
+import LatestMealMini from "../meals/LatestMealMini";
 
 import { Link as RRDLink } from "react-router-dom";
 
 const PetsList = (props) => {
     if (props.items.length === 0) {
         return (
-            <Typography variant="h5">
+            <Typography variant="h5" mt={5}>
                 No lovely little friend added yet.{" "}
                 {props.ownPets && (
                     <>
+                        <br />
+                        <br />
                         <span>Click </span>
                         <Link
                             component={RRDLink}
@@ -90,20 +93,14 @@ const PetsList = (props) => {
 
                                         <Grid
                                             item
-                                            display="flex"
                                             xs="auto"
+                                            display="flex"
                                             sx={{
                                                 flexDirection: "column",
                                                 justifyContent: "center",
                                             }}
                                         >
-                                            <Typography variant="caption">
-                                                Latest Meal
-                                            </Typography>
-
-                                            <Typography variant="h5">
-                                                13:40
-                                            </Typography>
+                                            <LatestMealMini petId={pet._id} />
                                         </Grid>
                                     </Grid>
                                 </Link>
