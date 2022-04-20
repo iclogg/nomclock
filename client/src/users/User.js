@@ -6,6 +6,7 @@ import Error from "../shared/Error";
 import UserGrid from "../layout/UserGrid";
 
 import PetsList from "../pets/PetsList";
+import NewPet from "../pets/NewPet";
 import Settings from "../users/Settings";
 import PetFriends from "../users/PetFriends";
 
@@ -68,33 +69,20 @@ const User = () => {
     const lineStyle = "solid 2px #ff608f";
     const transitionStyle = "border 0.1s linear";
 
-    const zero = {
-        active: {
-            borderRight: lineStyle,
-            borderBottom: lineStyle,
-            transition: transitionStyle,
-        },
-        inactive: {
-            borderLeft: lineStyle,
-            borderTop: lineStyle,
-            transition: transitionStyle,
-        },
+    const active = {
+        borderLeft: lineStyle,
+        borderTop: lineStyle,
+        borderRight: lineStyle,
+        transition: transitionStyle,
     };
 
-    const one = {
-        active: {
-            borderLeft: lineStyle,
-            borderBottom: lineStyle,
-            transition: transitionStyle,
-        },
-        inactive: {
-            borderTop: lineStyle,
-            borderRight: lineStyle,
-        },
+    const inactive = {
+        borderBottom: lineStyle,
+        transition: transitionStyle,
     };
 
-    const tabBorderStyle0 = tabValue !== 0 ? zero.active : zero.inactive;
-    const tabBorderStyle1 = tabValue !== 1 ? one.active : one.inactive;
+    const checkActive = (num) => (tabValue === num ? active : inactive);
+
     const contentBorderStyle = {
         borderRight: lineStyle,
         borderLeft: lineStyle,
@@ -114,21 +102,35 @@ const User = () => {
                     indicatorColor="transparent"
                     variant="fullWidth"
                 >
-                    <Tab label="Pets" {...a11yProps(0)} sx={tabBorderStyle0} />
+                    <Tab label="Pets" {...a11yProps(0)} sx={checkActive(0)} />
                     <Tab
                         label="Account"
                         {...a11yProps(1)}
-                        sx={tabBorderStyle1}
+                        sx={checkActive(1)}
+                    />
+                    <Tab
+                        label="Add Pet"
+                        {...a11yProps(2)}
+                        sx={checkActive(2)}
                     />
                 </Tabs>
                 <div style={contentBorderStyle}>
                     <TabPanel value={tabValue} index={0}>
-                        {!isLoading && <PetsList items={pets} ownPets={true} />}
+                        {!isLoading && (
+                            <PetsList
+                                setTabValue={setTabValue}
+                                items={pets}
+                                ownPets={true}
+                            />
+                        )}
 
                         <PetFriends />
                     </TabPanel>
                     <TabPanel value={tabValue} index={1}>
                         <Settings />
+                    </TabPanel>
+                    <TabPanel value={tabValue} index={2}>
+                        <NewPet />
                     </TabPanel>
                 </div>
             </Grid>

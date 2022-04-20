@@ -11,8 +11,8 @@ import { AuthContext } from "../utils/auth-context";
 
 const pages = [
     { auth: true, text: "Home", url: "/user" },
-    { auth: true, text: "Add Pet", url: "/pets/new" },
-
+    /*     { auth: true, text: "Add Pet", url: "/pets/new" },
+     */
     { auth: false, text: "Go to Signup", url: "/user/new" },
     { auth: false, text: "Go to Login", url: "/user/login" },
 ];

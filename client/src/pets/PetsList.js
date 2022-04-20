@@ -1,5 +1,4 @@
-import { Avatar, Typography, Link, Paper, Grid } from "@mui/material";
-import PetsIcon from "@mui/icons-material/Pets";
+import { Avatar, Typography, Link, Paper, Grid, Button } from "@mui/material";
 
 import LatestMealMini from "../meals/LatestMealMini";
 
@@ -15,18 +14,24 @@ const PetsList = (props) => {
                         <br />
                         <br />
                         <span>Click </span>
-                        <Link
-                            component={RRDLink}
-                            to={`/pets/new`}
+                        <Button
+                            variant="contained"
+                            size="large"
+                            onClick={() => {
+                                props.setTabValue(2);
+                            }}
                             sx={{
-                                color: "secondary.main",
                                 textDecoration: "none",
+                                verticalAlign: "3",
+                                paddingBottom: "8px",
+                                paddingTop: "10px",
+                                paddingLeft: "0px",
+                                paddingRight: "0px",
                             }}
                             color="secondary"
                         >
-                            <PetsIcon fontSize="small" /> here{" "}
-                            <PetsIcon fontSize="small" />{" "}
-                        </Link>
+                            here{" "}
+                        </Button>
                         <span> to register your darling.</span>
                     </>
                 )}

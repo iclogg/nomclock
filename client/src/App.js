@@ -1,5 +1,5 @@
 import React from "react";
-import { CssBaseline, Container } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 /* To support time pickers */
@@ -70,9 +70,9 @@ const App = () => {
                     <Route path="/user" exact>
                         <User />
                     </Route>
-                    <Route path="/pets/new" exact>
+                    {/* <Route path="/pets/new" exact>
                         <NewPet />
-                    </Route>
+                    </Route> */}
                     <Route path="/pets/:petId" exact>
                         <Pet />
                     </Route>

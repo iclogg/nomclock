@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import { Typography, Box } from "@mui/material";
+import { Typography, Paper } from "@mui/material";
 
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
@@ -62,7 +62,10 @@ const NewPet = () => {
     }, [clearIsLoading]);
 
     return (
-        <Box sx={{ mt: "10px" }}>
+        <Paper
+            elevation={8}
+            sx={{ backgroundColor: "rgba(255, 255, 255, 0.75)" }}
+        >
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
             <PetDetailsForm
@@ -75,7 +78,7 @@ const NewPet = () => {
                     Register Your Darling
                 </Typography>
             </PetDetailsForm>
-        </Box>
+        </Paper>
     );
 };
 
