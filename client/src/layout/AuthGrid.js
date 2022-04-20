@@ -40,7 +40,7 @@ const AuthGrid = (props) => {
                 backgroundPosition: "center",
             }}
         >
-            <Grid xs={12} sm={10} pt={10}>
+            <Grid sm={12} pt={10} sx={{ display: { xs: "none", sm: "block" } }}>
                 <Typography
                     align="center"
                     variant="h1"
@@ -59,7 +59,26 @@ const AuthGrid = (props) => {
                 </Typography>
             </Grid>
 
-            <Grid item xs={10} md="auto" mb={20}>
+            <Grid xs={12} pt={10} sx={{ display: { xs: "block", sm: "none" } }}>
+                <Typography
+                    align="center"
+                    variant="h2"
+                    sx={{
+                        fontFamily: "Shadows Into Light, cursive",
+                        fontWeight: "bold",
+                        color: "#e81e62",
+                        textShadow: "5px 1px 5px white",
+                    }}
+                >
+                    <Typography variant="h6">
+                        {" "}
+                        {locationVariables.headerText}
+                    </Typography>{" "}
+                    NOMCLOCK{" "}
+                </Typography>
+            </Grid>
+
+            <Grid item xs={10} md="auto" mb={15}>
                 <Paper
                     elevation={8}
                     sx={{ backgroundColor: "rgba(255, 255, 255, 0.75)" }}
