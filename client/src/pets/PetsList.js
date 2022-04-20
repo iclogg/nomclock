@@ -41,7 +41,7 @@ const PetsList = (props) => {
             <Grid container spacing={1}>
                 {props.items.map((pet) => {
                     return (
-                        <Grid item xs={12} sm={5} md={3} key={pet.id}>
+                        <Grid item xs={8} sm={6} md={4} key={pet.id}>
                             <Paper
                                 elevation={8}
                                 sx={{
@@ -60,8 +60,8 @@ const PetsList = (props) => {
                                         textDecoration: "none",
                                     }}
                                 >
-                                    <Grid container m={1}>
-                                        <Grid item xs={11}>
+                                    <Grid container m={1} columnSpacing={1}>
+                                        <Grid item xs={10}>
                                             <Typography
                                                 mt={1}
                                                 sx={{
@@ -79,7 +79,7 @@ const PetsList = (props) => {
                                                       "..."}
                                             </Typography>
                                         </Grid>
-                                        <Grid item xs={5} py={1}>
+                                        <Grid item xs="auto" py={1}>
                                             <Avatar
                                                 sx={{
                                                     width: 65,
@@ -93,7 +93,7 @@ const PetsList = (props) => {
 
                                         <Grid
                                             item
-                                            xs="auto"
+                                            xs={8}
                                             display="flex"
                                             sx={{
                                                 flexDirection: "column",
