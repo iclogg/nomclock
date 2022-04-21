@@ -1,17 +1,25 @@
 import { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import { Typography, Container, Box, Button, Modal, Grid } from "@mui/material";
+import {
+    Typography,
+    Container,
+    Box,
+    Button,
+    Modal,
+    Grid,
+    Avatar,
+} from "@mui/material";
 
 import { useParams } from "react-router-dom";
 
-import Avatar from "../shared/Avatar";
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
 import PageNotFound from "../shared/PageNotFound";
 import UpdatePet from "../pets/UpdatePet";
 import DailyMeals from "../meals/DailyMeals";
 import PetsFamily from "../pets/PetsFamily";
+import PetGrid from "../layout/PetGrid";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
@@ -28,7 +36,7 @@ const ModalStyle = {
     p: 4,
 };
 
-const Pet = () => {
+const PetNewDesign = () => {
     const auth = useContext(AuthContext);
     const history = useHistory();
 
@@ -90,7 +98,7 @@ const Pet = () => {
     };
 
     return (
-        <Container>
+        <PetGrid>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
             {!pet._id && !isLoading && <PageNotFound />}
@@ -137,7 +145,14 @@ const Pet = () => {
             {pet.name && !isLoading && !isUpdating && (
                 <Box sx={{ textAlign: "center" }}>
                     <Typography variant="h1">{pet.name}'s own page</Typography>
-                    <Avatar name={pet.name} image={pet.image} />
+                    <Avatar
+                        sx={{
+                            width: 100,
+                            height: 100,
+                        }}
+                        alt={pet.name}
+                        src={pet.image}
+                    />
                     <Typography>{pet.description}</Typography>
                     <Typography variant="body1">
                         {pet.name} is allowed {pet.maxMeals} meals each day.
@@ -173,8 +188,8 @@ const Pet = () => {
                     <DailyMeals maxMeals={pet.maxMeals} />
                 </Box>
             )}
-        </Container>
+        </PetGrid>
     );
 };
 
-export default Pet;
+export default PetNewDesign;

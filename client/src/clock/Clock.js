@@ -24,7 +24,7 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
 
     // Colors for meals-disk
     const pink = "#e81e62"; //#e81e62 #ff608f
-    const grey = "#eceff1";
+    const grey = "#ffefee";
 
     // Calculate css for indicator lines on meals-disk for how many meals left in the day
     const getMealsLeftIndicator = (noMeals) => {

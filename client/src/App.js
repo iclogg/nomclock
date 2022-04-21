@@ -13,14 +13,17 @@ import {
     Redirect,
 } from "react-router-dom";
 
-import Pet from "./pets/Pet";
-import NewPet from "./pets/NewPet";
+/* import Pet from "./pets/Pet";
+ */ import PetNewDesign from "./pets/PetNewDesign";
+/* import NewPet from "./pets/NewPet";
+ */
 import NewUser from "./users/NewUser";
 import User from "./users/User";
 import Navbar from "./shared/Navbar";
 import Login from "./users/Login";
-import Footer from "./shared/Footer";
 
+/* import Footer from "./shared/Footer";
+ */
 import { AuthContext } from "./utils/auth-context";
 import { useAuth } from "./utils/auth-hook";
 
@@ -74,7 +77,7 @@ const App = () => {
                         <NewPet />
                     </Route> */}
                     <Route path="/pets/:petId" exact>
-                        <Pet />
+                        <PetNewDesign />
                     </Route>
                     <Redirect to="/user" />
                 </Switch>
