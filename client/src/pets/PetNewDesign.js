@@ -180,7 +180,7 @@ const PetNewDesign = () => {
                 </Box>
             </Modal>
 
-            <Grid item xs={10} mt={3}>
+            <Grid item xs={10} mt={3} mb={3}>
                 <Tabs
                     value={tabValue}
                     onChange={handleChange}

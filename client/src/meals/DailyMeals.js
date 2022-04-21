@@ -64,7 +64,6 @@ const DailyMeals = (props) => {
         <Grid
             container
             justifyContent="center"
-            sx={{ p: "10px", m: "10px" }}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
             <Box>
@@ -89,11 +88,18 @@ const DailyMeals = (props) => {
                         backgroundColor: "rgba(255, 255, 255, 0.75)",
                     }}
                 >
-                    <Typography pt={2} variant="h5">
+                    <Typography pt={3} variant="h5">
                         Today's Meals
                     </Typography>
                     {/* Timeline for meals under max amount for day */}
-                    <Timeline position="left" sx={{ paddingX: "5px" }}>
+                    <Timeline
+                        position="left"
+                        sx={{
+                            paddingX: "5px",
+                            paddingBottom: "0px",
+                            marginBottom: "0px",
+                        }}
+                    >
                         {props.maxMeals &&
                             maxM.arr.map((mealTime, i) => {
                                 return (
