@@ -1,9 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import moment from "moment";
 
-import { useParams } from "react-router-dom";
-
-import { Grid, Box, Typography, Paper } from "@mui/material";
+import { Grid, Typography, Paper } from "@mui/material";
 
 import {
     Timeline,
@@ -17,7 +15,7 @@ import {
 
 import NewMeal from "./NewMeal";
 import DeleteMeal from "./DeleteMeal";
-import LatestMeal from "./LatestMeal";
+/* import LatestMeal from "./LatestMeal"; */
 import Clock from "../clock/Clock";
 
 import useMeals from "../utils/meal-hooks";
@@ -25,7 +23,6 @@ import mealNames from "../utils/meal-names";
 
 const DailyMeals = (props) => {
     const { getMeals } = useMeals();
-    const { petId } = useParams();
     const [meals, setMeals] = useState([]);
 
     let maxM = {};
@@ -55,7 +52,7 @@ const DailyMeals = (props) => {
         getMeals(mealsUpdateHandler);
     }, []);
 
-    // Fontsize dynamic styling based on screen size
+    // Fontsize dynamic styling based on screen size for TimeLine
 
     const fontSizeMDtoXL = "1em";
     const fontSizeXS = "0.8em";
@@ -63,17 +60,18 @@ const DailyMeals = (props) => {
     return (
         <Grid
             container
-            justifyContent="center"
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            alignItems="center"
+            justifyContent="space-evenly"
+            spacing={1}
         >
-            <Box>
+            <Grid item xs="auto">
                 <Clock
                     meals={meals}
                     maxMeal={props.maxMeals}
                     mealsUpdateHandler={mealsUpdateHandler}
                 />
-            </Box>
-            <Grid xs={6} item>
+            </Grid>
+            <Grid xs={12} sm={6} item>
                 <NewMeal
                     mealsUpdateHandler={mealsUpdateHandler}
                     meals={meals}
@@ -81,7 +79,7 @@ const DailyMeals = (props) => {
                 {/*   <LatestMeal petId={petId} /> */}
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid item xs={12} md={10} xl={8}>
                 <Paper
                     elevation={8}
                     sx={{
