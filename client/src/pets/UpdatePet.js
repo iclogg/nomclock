@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Button, Typography, Box } from "@mui/material";
+import { Typography, Paper } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 import NewFamilyMember from "../pets/NewFamilyMember";
@@ -13,7 +13,8 @@ import useAxios from "../utils/axios-hook";
 import { useForm } from "../shared/form/Form";
 
 const UpdatePet = (props) => {
-    const { toggleSetIsUpdating, petUpdateHandler, pet } = props;
+    const { petUpdateHandler, pet } = props;
+    const [saveBtnStatus, setSaveBtnStatus] = useState("initial");
 
     const auth = useContext(AuthContext);
 
@@ -47,7 +48,6 @@ const UpdatePet = (props) => {
                 );
 
                 petUpdateHandler(response.data.pet);
-                setUpdateConfirmation(true);
             } catch (error) {
                 console.log(error);
             }
@@ -56,60 +56,39 @@ const UpdatePet = (props) => {
         }
     };
 
-    //update confirmation Icon
-    const [showUpdateConfirmation, setUpdateConfirmation] = useState(false);
+    // Fix for setting saveBtn status
+    // TODO Check if there is a way to not have the component remount after update and not to have values or handle change run directely on mount. Behavior changed after I refactored to use the tabs to swap between update and pet component.
     useEffect(() => {
-        if (showUpdateConfirmation) {
-            setUpdateConfirmation(false);
+        if (saveBtnStatus === "initial") {
+            setSaveBtnStatus(true);
+        } else {
+            setSaveBtnStatus(false);
         }
     }, [values]);
     //
 
     return (
-        <Box sx={{ mt: "10px" }}>
-            <Typography
-                sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    height: "1em",
-                }}
-            >
-                {" "}
-                {showUpdateConfirmation && (
-                    <span>
-                        <CheckCircleOutlineIcon
-                            sx={{ verticalAlign: "-6px" }}
-                        />{" "}
-                        Updates saved!
-                    </span>
-                )}
-            </Typography>
+        <Paper
+            elevation={8}
+            sx={{ backgroundColor: "rgba(255, 255, 255, 0.75)" }}
+        >
             <PetDetailsForm
                 submitHandler={submitHandler}
                 values={values}
                 handleInputChange={handleInputChange}
                 inputErrors={inputErrors}
+                saveBtnStatus={saveBtnStatus}
             >
                 <Typography isformtitle="true">Pet Details</Typography>
             </PetDetailsForm>
-            <NewFamilyMember
-                petUpdateHandler={petUpdateHandler}
-                toggleSetIsUpdating={toggleSetIsUpdating}
-            />
+            <NewFamilyMember petUpdateHandler={petUpdateHandler} />
             {!!pet.family.length && (
                 <RemoveFamilyMember
                     petUpdateHandler={petUpdateHandler}
                     pet={pet}
                 />
             )}
-            <Button
-                sx={{ mt: 3 }}
-                onClick={toggleSetIsUpdating}
-                color="secondary"
-            >
-                Done
-            </Button>
-        </Box>
+        </Paper>
     );
 };
 

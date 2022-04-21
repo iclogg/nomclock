@@ -10,6 +10,7 @@ const PetDetailsForm = (props) => {
         handleInputChange,
         inputErrors,
         children,
+        saveBtnStatus = false,
     } = props;
 
     return (
@@ -40,7 +41,12 @@ const PetDetailsForm = (props) => {
                 error={inputErrors.description}
                 sx={{ minWidth: "300px" }}
             />
-            <Button type="submit" color="secondary" variant="contained">
+            <Button
+                type="submit"
+                color="secondary"
+                variant="contained"
+                disabled={!!saveBtnStatus}
+            >
                 SAVE
             </Button>
         </Form>

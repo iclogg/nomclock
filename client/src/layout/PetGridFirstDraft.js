@@ -1,41 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import { Box, Tabs, Tab, Grid } from "@mui/material";
 
-import Loading from "../shared/Loading";
-import Error from "../shared/Error";
-import UserGrid from "../layout/UserGrid";
-
-import PetsList from "../pets/PetsList";
-import NewPet from "../pets/NewPet";
-import Settings from "../users/Settings";
-import PetFriends from "../users/PetFriends";
-
-import useAxios from "../utils/axios-hook";
-import { AuthContext } from "../utils/auth-context";
-
-const User = () => {
-    const auth = useContext(AuthContext);
-    const [pets, setPets] = useState([]);
-    const { sendRequest, clearError, isLoading, error } = useAxios();
-
-    useEffect(() => {
-        const getPets = async () => {
-            if (auth.userId) {
-                try {
-                    const response = await sendRequest(
-                        `pets/owner/${auth.userId}`,
-                        "get",
-                        {},
-                        { authorization: "Bearer " + auth.token }
-                    );
-
-                    setPets([...response.data.pets]);
-                } catch (err) {}
-            }
-        };
-
-        getPets();
-    }, [auth, sendRequest]);
+export const PetGrid = (props) => {
+    console.log(props.children);
 
     // TAB LOGIC
     const [tabValue, setTabValue] = useState(0);
@@ -90,9 +57,21 @@ const User = () => {
     };
 
     return (
-        <UserGrid>
-            {isLoading && <Loading />}
-            {error && <Error message={error} onClick={clearError} />}
+        <Grid
+            container
+            alignItems="flex-end"
+            justifyContent="center"
+            sx={{
+                backgroundImage: "linear-gradient(#eceff1, #ff3f2a)",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+            }}
+        >
+            {props.children[0]}
+            {props.children[1]}
+            {props.children[2]}
+            {props.children[3]}
             <Grid item xs={10} mt={3}>
                 <Tabs
                     value={tabValue}
@@ -102,40 +81,30 @@ const User = () => {
                     indicatorColor="transparent"
                     variant="fullWidth"
                 >
-                    <Tab label="Pets" {...a11yProps(0)} sx={checkActive(0)} />
+                    <Tab label="Clock" {...a11yProps(0)} sx={checkActive(0)} />
                     <Tab
-                        label="Account"
+                        label="TimeLine"
                         {...a11yProps(1)}
                         sx={checkActive(1)}
                     />
                     <Tab
-                        label="Add Pet"
+                        label="Update Pet"
                         {...a11yProps(2)}
                         sx={checkActive(2)}
                     />
                 </Tabs>
                 <div style={contentBorderStyle}>
                     <TabPanel value={tabValue} index={0}>
-                        {!isLoading && (
-                            <PetsList
-                                setTabValue={setTabValue}
-                                items={pets}
-                                ownPets={true}
-                            />
-                        )}
-
-                        <PetFriends />
+                        {props.children[5]}
                     </TabPanel>
-                    <TabPanel value={tabValue} index={1}>
-                        <Settings />
-                    </TabPanel>
+                    <TabPanel value={tabValue} index={1}></TabPanel>
                     <TabPanel value={tabValue} index={2}>
-                        <NewPet />
+                        {props.children[4]}
                     </TabPanel>
                 </div>
             </Grid>
-        </UserGrid>
+        </Grid>
     );
 };
 
-export default User;
+export default PetGrid;
