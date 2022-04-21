@@ -5,13 +5,13 @@ export const PetGrid = (props) => {
     return (
         <Grid
             container
-            alignItems="flex-end"
             justifyContent="center"
             sx={{
                 backgroundImage: "linear-gradient(#eceff1, #ff3f2a)",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
+                minHeight: "calc(100vh - 64px)",
             }}
         >
             {props.children}

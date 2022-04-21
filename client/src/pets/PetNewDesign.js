@@ -204,10 +204,12 @@ const PetNewDesign = () => {
                 <div style={contentBorderStyle}>
                     <TabPanel value={tabValue} index={0}>
                         {pet.name && !isLoading && (
-                            <Box sx={{ textAlign: "center" }}>
-                                <Typography variant="h1">
-                                    {pet.name}'s own page
-                                </Typography>
+                            <Grid container sx={{ textAlign: "center" }}>
+                                <Grid item>
+                                    <Typography variant="h4">
+                                        {pet.name}'s own page
+                                    </Typography>
+                                </Grid>
                                 <Avatar
                                     sx={{
                                         width: 100,
@@ -251,7 +253,7 @@ const PetNewDesign = () => {
                                     </Grid>
                                 </Grid>
                                 <DailyMeals maxMeals={pet.maxMeals} />
-                            </Box>
+                            </Grid>
                         )}
                     </TabPanel>
                     <TabPanel value={tabValue} index={1}></TabPanel>

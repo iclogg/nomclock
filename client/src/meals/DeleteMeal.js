@@ -16,7 +16,7 @@ const DeleteMeal = ({ mealId, meals, mealsUpdateHandler }) => {
     return (
         <Tooltip title="Delete">
             <IconButton
-                sx={{ verticalAlign: "-2.9px", pt: "0" }}
+                sx={{ verticalAlign: "-1.5px", pt: "0", pl: "2px" }}
                 onClick={submitHandler}
             >
                 <DeleteIcon
