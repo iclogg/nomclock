@@ -1,4 +1,4 @@
-import { TextField, Button, FormGroup } from "@mui/material";
+import { TextField, Button, Paper, Grid } from "@mui/material";
 import TimePicker from "@mui/lab/TimePicker";
 
 import useMeals from "../utils/meal-hooks";
@@ -31,8 +31,13 @@ const NewMeal = ({ mealsUpdateHandler, meals }) => {
     };
 
     return (
-        <Form onSubmit={submitHandler}>
-            <FormGroup>
+        <Paper
+            elevation={8}
+            sx={{
+                backgroundColor: "rgba(255, 255, 255, 0.75)",
+            }}
+        >
+            <Form onSubmit={submitHandler}>
                 <TextInput
                     label="Comment"
                     color="secondary"
@@ -41,23 +46,30 @@ const NewMeal = ({ mealsUpdateHandler, meals }) => {
                     value={values.comment}
                     onChange={handleInputChange}
                 />
-                <TimePicker
-                    ampm={false}
-                    label="Meal Time"
-                    value={values.time}
-                    name="time"
-                    onChange={(newValue) => {
-                        setValues({ ...values, time: newValue });
-                    }}
-                    renderInput={(params) => (
-                        <TextField {...params} sx={{ margin: "5px" }} />
-                    )}
-                />
+                <Grid item xs={12}>
+                    <TimePicker
+                        ampm={false}
+                        label="Meal Time"
+                        value={values.time}
+                        name="time"
+                        onChange={(newValue) => {
+                            setValues({ ...values, time: newValue });
+                        }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                fullWidth
+                                sx={{ marginBottom: "10px" }}
+                            />
+                        )}
+                    />
+                </Grid>
+
                 <Button variant="contained" color="secondary" type="submit">
                     Add Meal
                 </Button>
-            </FormGroup>
-        </Form>
+            </Form>
+        </Paper>
     );
 };
 

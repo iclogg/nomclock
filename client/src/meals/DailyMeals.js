@@ -73,7 +73,7 @@ const DailyMeals = (props) => {
                     mealsUpdateHandler={mealsUpdateHandler}
                 />
             </Box>
-            <Grid xs={3} item>
+            <Grid xs={6} item>
                 <NewMeal
                     mealsUpdateHandler={mealsUpdateHandler}
                     meals={meals}

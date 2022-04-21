@@ -62,7 +62,7 @@ export const Form = (props) => {
             >
                 <Grid container justifyContent="flex-end">
                     {React.Children.map(children, (child) => {
-                        // Give the submit form label a grid item wrapper and style
+                        // Give the form label a grid item wrapper and style
                         if (child.props && child.props.isformtitle) {
                             return (
                                 <Grid item xs={12}>
