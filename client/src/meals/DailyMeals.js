@@ -71,7 +71,7 @@ const DailyMeals = (props) => {
                     mealsUpdateHandler={mealsUpdateHandler}
                 />
             </Grid>
-            <Grid xs={12} sm={6} item>
+            <Grid xs={12} md={6} item>
                 <NewMeal
                     mealsUpdateHandler={mealsUpdateHandler}
                     meals={meals}
@@ -84,6 +84,7 @@ const DailyMeals = (props) => {
                     elevation={8}
                     sx={{
                         backgroundColor: "rgba(255, 255, 255, 0.75)",
+                        textAlign: "center",
                     }}
                 >
                     <Typography pt={3} variant="h5">

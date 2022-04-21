@@ -48,7 +48,7 @@ const PetNewDesign = () => {
 
     //Delete Modal
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpenDeleteModal = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const petUpdateHandler = (obj) => {
@@ -189,12 +189,8 @@ const PetNewDesign = () => {
                     indicatorColor="transparent"
                     variant="fullWidth"
                 >
-                    <Tab label="Clock" {...a11yProps(0)} sx={checkActive(0)} />
-                    <Tab
-                        label="TimeLine"
-                        {...a11yProps(1)}
-                        sx={checkActive(1)}
-                    />
+                    <Tab label="Meals" {...a11yProps(0)} sx={checkActive(0)} />
+                    <Tab label="about" {...a11yProps(1)} sx={checkActive(1)} />
                     <Tab
                         label="Update Pet"
                         {...a11yProps(2)}
@@ -202,46 +198,65 @@ const PetNewDesign = () => {
                     />
                 </Tabs>
                 <div style={contentBorderStyle}>
+                    {/* MEALS PANEL */}
                     <TabPanel value={tabValue} index={0}>
                         {pet.name && !isLoading && (
-                            <Grid container sx={{ textAlign: "center" }}>
-                                <Grid item>
+                            <Grid container>
+                                <Grid item xs={12}>
                                     <Typography variant="h4">
-                                        {pet.name}'s own page
+                                        {pet.name}
                                     </Typography>
                                 </Grid>
-                                <Avatar
-                                    sx={{
-                                        width: 100,
-                                        height: 100,
-                                    }}
-                                    alt={pet.name}
-                                    src={pet.image}
-                                />
-                                <Typography>{pet.description}</Typography>
+                                <Grid item xs={12}>
+                                    {" "}
+                                </Grid>
+
                                 <Typography variant="body1">
                                     {pet.name} is allowed {pet.maxMeals} meals
                                     each day.
                                 </Typography>
-                                <Button color="secondary" onClick={handleOpen}>
-                                    Remove Pet
-                                </Button>
 
-                                <Grid
-                                    container
-                                    sx={{
-                                        justifyContent: "center",
-                                    }}
-                                >
-                                    <Grid item xs={1}>
+                                <DailyMeals maxMeals={pet.maxMeals} />
+                            </Grid>
+                        )}
+                    </TabPanel>
+
+                    {/* ABOUT PANEL */}
+                    <TabPanel value={tabValue} index={1}>
+                        {pet.name && !isLoading && (
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <Typography variant="h4">
+                                        {pet.name}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    {" "}
+                                    <Avatar
+                                        sx={{
+                                            width: 100,
+                                            height: 100,
+                                        }}
+                                        alt={pet.name}
+                                        src={pet.image}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography variant="body1">
+                                        {pet.description}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography variant="body1">
+                                        {pet.name} is allowed {pet.maxMeals}{" "}
+                                        meals each day.
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={12} container>
+                                    <Grid item xs={12}>
                                         {" "}
-                                        <Typography
-                                            sx={{
-                                                textTransform: "uppercase",
-                                                color: "secondary.main",
-                                                mt: "20px",
-                                            }}
-                                        >
+                                        <Typography variant="h5">
                                             Family:{" "}
                                         </Typography>
                                     </Grid>
@@ -252,15 +267,16 @@ const PetNewDesign = () => {
                                         />
                                     </Grid>
                                 </Grid>
-                                <DailyMeals maxMeals={pet.maxMeals} />
                             </Grid>
                         )}
                     </TabPanel>
-                    <TabPanel value={tabValue} index={1}></TabPanel>
+                    {/* UPDATE PANEL */}
+
                     <TabPanel value={tabValue} index={2}>
                         {pet.name && (
                             <UpdatePet
                                 petUpdateHandler={petUpdateHandler}
+                                handleOpenDeleteModal={handleOpenDeleteModal}
                                 pet={pet}
                             />
                         )}

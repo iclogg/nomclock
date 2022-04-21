@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Typography, Paper } from "@mui/material";
+import { Typography, Paper, Button, Box } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 import NewFamilyMember from "../pets/NewFamilyMember";
@@ -13,7 +13,7 @@ import useAxios from "../utils/axios-hook";
 import { useForm } from "../shared/form/Form";
 
 const UpdatePet = (props) => {
-    const { petUpdateHandler, pet } = props;
+    const { petUpdateHandler, pet, handleOpenDeleteModal } = props;
     const [saveBtnStatus, setSaveBtnStatus] = useState("initial");
 
     const auth = useContext(AuthContext);
@@ -88,6 +88,24 @@ const UpdatePet = (props) => {
                     pet={pet}
                 />
             )}
+            <Box p={3} display="flex" justifyContent="center">
+                <Box
+                    sx={{
+                        maxWidth: "800px",
+                        display: "flex",
+                        flexGrow: 1,
+                        justifyContent: "flex-end",
+                    }}
+                >
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={handleOpenDeleteModal}
+                    >
+                        Remove Pet
+                    </Button>
+                </Box>
+            </Box>
         </Paper>
     );
 };
