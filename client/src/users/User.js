@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Box, Tabs, Tab, Grid } from "@mui/material";
+import { Box, Tabs, Tab, Grid, Typography } from "@mui/material";
 
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
@@ -8,7 +8,6 @@ import MainGrid from "../layout/MainGrid";
 import PetsList from "../pets/PetsList";
 import NewPet from "../pets/NewPet";
 import Settings from "../users/Settings";
-import PetFriends from "../users/PetFriends";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
@@ -16,8 +15,10 @@ import { AuthContext } from "../utils/auth-context";
 const User = () => {
     const auth = useContext(AuthContext);
     const [pets, setPets] = useState([]);
+
     const { sendRequest, clearError, isLoading, error } = useAxios();
 
+    // Getting users own pets
     useEffect(() => {
         const getPets = async () => {
             if (auth.userId) {
@@ -35,6 +36,30 @@ const User = () => {
         };
 
         getPets();
+    }, [auth, sendRequest]);
+
+    // Getting pets of friends
+    const [petFriends, setPetFriends] = useState([]);
+
+    useEffect(() => {
+        const getPetFriends = async () => {
+            try {
+                const response = await sendRequest(
+                    `users/${auth.userId}/families`,
+                    "get",
+                    {},
+                    { authorization: "Bearer " + auth.token }
+                );
+
+                console.log(response);
+
+                if (!response.data.noFamily) {
+                    setPetFriends([...response.data.pets]);
+                }
+            } catch (err) {}
+        };
+
+        getPetFriends();
     }, [auth, sendRequest]);
 
     // TAB LOGIC
@@ -116,7 +141,7 @@ const User = () => {
                 </Tabs>
                 <div style={contentBorderStyle}>
                     <TabPanel value={tabValue} index={0}>
-                        {!isLoading && (
+                        {!isLoading && pets && (
                             <PetsList
                                 setTabValue={setTabValue}
                                 items={pets}
@@ -124,7 +149,17 @@ const User = () => {
                             />
                         )}
 
-                        <PetFriends />
+                        {!isLoading && petFriends && (
+                            <>
+                                <Typography variant="h5" mt={3}>
+                                    Your Extended Family
+                                </Typography>
+                                <PetsList
+                                    setTabValue={setTabValue}
+                                    items={pets}
+                                />
+                            </>
+                        )}
                     </TabPanel>
                     <TabPanel value={tabValue} index={1}>
                         <Settings />

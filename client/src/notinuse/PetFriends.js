@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import Typography from "@mui/material/Typography";
 
@@ -8,11 +8,11 @@ import Loading from "../shared/Loading";
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
 
-const PetFriends = () => {
+const PetFriends = ({ petFriends }) => {
     const auth = useContext(AuthContext);
     const { sendRequest, isLoading } = useAxios();
 
-    const [petFriends, setPetFriends] = useState([]);
+    /*    const [petFriends, setPetFriends] = useState([]);
 
     useEffect(() => {
         const getPetFriends = async () => {
@@ -24,12 +24,16 @@ const PetFriends = () => {
                     { authorization: "Bearer " + auth.token }
                 );
 
-                setPetFriends([...response.data.pets]);
+                console.log(response);
+
+                if (!response.data.noFamily) {
+                    setPetFriends([...response.data.pets]);
+                }
             } catch (err) {}
         };
 
         getPetFriends();
-    }, [auth, sendRequest]);
+    }, [auth, sendRequest]); */
 
     return (
         <>

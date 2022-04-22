@@ -78,9 +78,19 @@ const getUserFamilies = async (req, res, next) => {
         return next(error);
     }
 
-    pets = pets.map((pet) => pet.toObject({ getters: true }));
+    console.log("user families", pets);
 
-    res.json({ pets });
+    if (!pets || pets.length === 0) {
+        console.log("woop");
+
+        res.json({
+            message: "No extended pet family found.",
+            noFamily: true,
+        });
+    } else {
+        pets = pets.map((pet) => pet.toObject({ getters: true }));
+        res.json({ pets });
+    }
 };
 
 /* CREATE */
