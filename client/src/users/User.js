@@ -3,7 +3,7 @@ import { Box, Tabs, Tab, Grid } from "@mui/material";
 
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
-import UserGrid from "../layout/UserGrid";
+import MainGrid from "../layout/MainGrid";
 
 import PetsList from "../pets/PetsList";
 import NewPet from "../pets/NewPet";
@@ -90,7 +90,7 @@ const User = () => {
     };
 
     return (
-        <UserGrid>
+        <MainGrid>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
             <Grid item xs={10} mt={3}>
@@ -134,7 +134,7 @@ const User = () => {
                     </TabPanel>
                 </div>
             </Grid>
-        </UserGrid>
+        </MainGrid>
     );
 };
 

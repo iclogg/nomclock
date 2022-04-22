@@ -24,7 +24,7 @@ const NavBar = (props) => {
     return (
         <AppBar
             position={auth.isLoggedIn ? "static" : "fixed"}
-            sx={{ backgroundColor: "rgba(250, 229, 236, 0.51)" }}
+            sx={{ backgroundColor: "rgba(237, 240, 242, 0.75)" }} // primary.main with transparency 0.75
         >
             <Toolbar
                 sx={{

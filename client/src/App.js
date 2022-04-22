@@ -58,6 +58,16 @@ const theme = createTheme({
                 },
             },
         },
+        MuiPaper: {
+            defaultProps: {
+                elevation: 8,
+            },
+            styleOverrides: {
+                root: {
+                    backgroundColor: "rgba(255, 255, 255, 0.75)",
+                },
+            },
+        },
     },
 });
 

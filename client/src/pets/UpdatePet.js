@@ -68,10 +68,7 @@ const UpdatePet = (props) => {
     //
 
     return (
-        <Paper
-            elevation={8}
-            sx={{ backgroundColor: "rgba(255, 255, 255, 0.75)" }}
-        >
+        <Paper>
             <PetDetailsForm
                 submitHandler={submitHandler}
                 values={values}

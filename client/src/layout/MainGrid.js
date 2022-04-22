@@ -1,13 +1,13 @@
 import { useEffect, useState, useContext } from "react";
 import { Box, Tabs, Tab, Grid } from "@mui/material";
 
-export const PetGrid = (props) => {
+export const MainGrid = (props) => {
     return (
         <Grid
             container
             justifyContent="center"
             sx={{
-                backgroundImage: "linear-gradient(#eceff1, #ff3f2a)",
+                backgroundImage: "linear-gradient(#eceff1, #babdbe)", // primary.main, primary.dark
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
@@ -19,4 +19,4 @@ export const PetGrid = (props) => {
     );
 };
 
-export default PetGrid;
+export default MainGrid;

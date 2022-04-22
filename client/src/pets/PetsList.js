@@ -70,13 +70,7 @@ const PetsList = (props) => {
                             maxWidth="250px"
                             key={pet.id}
                         >
-                            <Paper
-                                elevation={8}
-                                sx={{
-                                    backgroundColor:
-                                        "rgba(255, 255, 255, 0.75)",
-                                }}
-                            >
+                            <Paper>
                                 {" "}
                                 <Link
                                     to={`/pets/${pet.id}`}

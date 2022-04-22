@@ -21,7 +21,7 @@ import PageNotFound from "../shared/PageNotFound";
 import UpdatePet from "../pets/UpdatePet";
 import DailyMeals from "../meals/DailyMeals";
 import PetsFamily from "../pets/PetsFamily";
-import PetGrid from "../layout/PetGrid";
+import MainGrid from "../layout/MainGrid";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
@@ -146,7 +146,7 @@ const PetNewDesign = () => {
     };
 
     return (
-        <PetGrid>
+        <MainGrid>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
             {!pet._id && !isLoading && <PageNotFound />}
@@ -237,7 +237,7 @@ const PetNewDesign = () => {
                                     </Typography>
                                 </Grid>
 
-                                <Grid item xs="auto">
+                                <Grid item mt={1} xs="auto">
                                     {" "}
                                     <Avatar
                                         sx={{
@@ -252,13 +252,7 @@ const PetNewDesign = () => {
 
                                 <Grid item xs={12} md={6}>
                                     {" "}
-                                    <Paper
-                                        elevation={8}
-                                        sx={{
-                                            backgroundColor:
-                                                "rgba(255, 255, 255, 0.75)",
-                                        }}
-                                    >
+                                    <Paper>
                                         <Grid container m={1} spacing={2}>
                                             <Grid item xs={10}>
                                                 <Typography variant="h5">
@@ -309,7 +303,7 @@ const PetNewDesign = () => {
                     </TabPanel>
                 </div>
             </Grid>
-        </PetGrid>
+        </MainGrid>
     );
 };
 

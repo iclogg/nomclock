@@ -62,10 +62,7 @@ const NewPet = () => {
     }, [clearIsLoading]);
 
     return (
-        <Paper
-            elevation={8}
-            sx={{ backgroundColor: "rgba(255, 255, 255, 0.75)" }}
-        >
+        <Paper>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
             <PetDetailsForm

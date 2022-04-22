@@ -81,10 +81,7 @@ const AuthGrid = (props) => {
             </Grid>
 
             <Grid item xs={10} md="auto" mb={15}>
-                <Paper
-                    elevation={8}
-                    sx={{ backgroundColor: "rgba(255, 255, 255, 0.75)" }}
-                >
+                <Paper>
                     {props.children}
 
                     <Typography

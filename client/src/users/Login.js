@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { Typography, Button, Grid, Paper } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
