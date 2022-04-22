@@ -68,6 +68,16 @@ const theme = createTheme({
                 },
             },
         },
+        MuiInputBase: {
+            defaultProps: {
+                color: "secondary",
+            },
+        },
+        MuiInputLabel: {
+            defaultProps: {
+                color: "secondary",
+            },
+        },
     },
 });
 
