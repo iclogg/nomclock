@@ -21,13 +21,14 @@ const randomPicExtraWord = [
 
 const PetsFamily = ({ family, owner }) => {
     return (
-        <Grid container>
+        <>
             {owner && (
-                <Grid item sx={{ mr: 1 }} key={owner._id}>
+                <Grid item sx={4} key={owner._id} textAlign="center">
                     <Avatar
                         sx={{
-                            width: 56,
-                            height: 56,
+                            width: "80px",
+                            height: "80px",
+                            border: "3px solid black",
                         }}
                         alt={owner.name}
                         src={`https://source.unsplash.com/random?profilepicture,${
@@ -48,11 +49,12 @@ const PetsFamily = ({ family, owner }) => {
             {family &&
                 family.map((member) => {
                     return (
-                        <Grid item sx={{ mr: 1 }} key={member._id}>
+                        <Grid sx={4} textAlign="center" item key={member._id}>
                             <Avatar
                                 sx={{
-                                    width: 56,
-                                    height: 56,
+                                    width: "80px",
+                                    height: "80px",
+                                    border: "3px solid black",
                                 }}
                                 alt={member.name}
                                 src={`https://source.unsplash.com/random?profilepicture,${
@@ -72,7 +74,7 @@ const PetsFamily = ({ family, owner }) => {
                         </Grid>
                     );
                 })}
-        </Grid>
+        </>
     );
 };
 

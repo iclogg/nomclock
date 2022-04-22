@@ -10,6 +10,7 @@ import {
     Tabs,
     Tab,
     Avatar,
+    Paper,
 } from "@mui/material";
 
 import { useParams } from "react-router-dom";
@@ -224,48 +225,73 @@ const PetNewDesign = () => {
                     {/* ABOUT PANEL */}
                     <TabPanel value={tabValue} index={1}>
                         {pet.name && !isLoading && (
-                            <Grid container spacing={2}>
+                            <Grid
+                                container
+                                spacing={3}
+                                justifyContent="space-evenly"
+                                direction="row-reverse"
+                            >
                                 <Grid item xs={12}>
                                     <Typography variant="h4">
                                         {pet.name}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={12}>
+
+                                <Grid item xs="auto">
                                     {" "}
                                     <Avatar
                                         sx={{
-                                            width: 100,
-                                            height: 100,
+                                            width: 300,
+                                            height: 300,
+                                            border: "5px solid black",
                                         }}
                                         alt={pet.name}
                                         src="https://source.unsplash.com/random?pet"
                                     />
                                 </Grid>
-                                <Grid item xs={12}>
-                                    <Typography variant="body1">
-                                        {pet.description}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Typography variant="body1">
-                                        {pet.name} is allowed {pet.maxMeals}{" "}
-                                        meals each day.
-                                    </Typography>
-                                </Grid>
 
-                                <Grid item xs={12} container>
-                                    <Grid item xs={12}>
-                                        {" "}
-                                        <Typography variant="h5">
-                                            Family:{" "}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs="auto">
-                                        <PetsFamily
-                                            family={pet.family}
-                                            owner={pet.owner}
-                                        />
-                                    </Grid>
+                                <Grid item xs={12} md={6}>
+                                    {" "}
+                                    <Paper
+                                        elevation={8}
+                                        sx={{
+                                            backgroundColor:
+                                                "rgba(255, 255, 255, 0.75)",
+                                        }}
+                                    >
+                                        <Grid container m={1} spacing={2}>
+                                            <Grid item xs={10}>
+                                                <Typography variant="h5">
+                                                    About the Darling:
+                                                </Typography>
+                                                <Typography
+                                                    variant="body1"
+                                                    m={3}
+                                                >
+                                                    {pet.description}
+                                                </Typography>
+                                            </Grid>
+
+                                            <Grid
+                                                item
+                                                container
+                                                xs={10}
+                                                container
+                                                spacing={2}
+                                            >
+                                                <Grid item xs={12}>
+                                                    {" "}
+                                                    <Typography variant="h5">
+                                                        Family:{" "}
+                                                    </Typography>
+                                                </Grid>
+                                                <PetsFamily
+                                                    family={pet.family}
+                                                    owner={pet.owner}
+                                                />
+                                            </Grid>
+                                        </Grid>
+                                    </Paper>
                                 </Grid>
                             </Grid>
                         )}
