@@ -26,6 +26,8 @@ const AuthGrid = (props) => {
             ? locationOptions.login
             : locationOptions.signup;
 
+    const logoStyle = {};
+
     return (
         <Grid
             container
@@ -47,8 +49,8 @@ const AuthGrid = (props) => {
                     sx={{
                         fontFamily: "Shadows Into Light, cursive",
                         fontWeight: "bold",
-                        color: "#e81e62",
-                        textShadow: "5px 1px 5px white",
+                        color: "secondary.main",
+                        textShadow: "3px 1px 3px #eceff1" /* primary.main */,
                     }}
                 >
                     <Typography variant="h6">
@@ -66,8 +68,8 @@ const AuthGrid = (props) => {
                     sx={{
                         fontFamily: "Shadows Into Light, cursive",
                         fontWeight: "bold",
-                        color: "#e81e62",
-                        textShadow: "5px 1px 5px white",
+                        color: "secondary.main",
+                        textShadow: "5px 1px 5px #eceff1" /* primary.main */,
                     }}
                 >
                     <Typography variant="h6">

@@ -4,6 +4,21 @@ import LatestMealMini from "../meals/LatestMealMini";
 
 import { Link as RRDLink } from "react-router-dom";
 
+const randomPicExtraWord = [
+    "fun",
+    "cat",
+    "puppy",
+    "dog",
+    "parrot",
+    "outside",
+    "sleeping",
+    "cute",
+    "adorable",
+    "hamster",
+    "horse",
+    "kitten",
+];
+
 const PetsList = (props) => {
     if (props.items.length === 0) {
         return (
@@ -100,7 +115,13 @@ const PetsList = (props) => {
                                                     border: "3px solid black",
                                                 }}
                                                 alt={pet.name}
-                                                src={pet.image}
+                                                src={`https://source.unsplash.com/random?pet,${
+                                                    randomPicExtraWord[
+                                                        Math.floor(
+                                                            Math.random() * 12
+                                                        )
+                                                    ]
+                                                }`}
                                             />
                                         </Grid>
 

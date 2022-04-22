@@ -22,7 +22,6 @@ const PetDetailsForm = (props) => {
                 value={values.name}
                 onChange={handleInputChange}
                 error={inputErrors.name}
-                sx={{ minWidth: "250px" }}
             />
             <TextInput
                 type="number"
@@ -31,7 +30,6 @@ const PetDetailsForm = (props) => {
                 onChange={handleInputChange}
                 value={values.maxMeals}
                 error={inputErrors.maxMeals}
-                inputProps={{ min: 1 }}
             />
             <TextInput
                 label="Tell us about the Darling."
@@ -39,7 +37,6 @@ const PetDetailsForm = (props) => {
                 value={values.description}
                 onChange={handleInputChange}
                 error={inputErrors.description}
-                sx={{ minWidth: "300px" }}
             />
             <Button
                 type="submit"

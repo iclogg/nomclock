@@ -4,6 +4,21 @@ import Typography from "@mui/material/Typography";
 
 import Grid from "@mui/material/Grid";
 
+const randomPicExtraWord = [
+    "young",
+    "cool",
+    "retired",
+    "female",
+    "male",
+    "kid",
+    "fun",
+    "artsy",
+    "fun",
+    "girl",
+    "boy",
+    "person",
+];
+
 const PetsFamily = ({ family, owner }) => {
     return (
         <Grid container>
@@ -15,6 +30,9 @@ const PetsFamily = ({ family, owner }) => {
                             height: 56,
                         }}
                         alt={owner.name}
+                        src={`https://source.unsplash.com/random?profilepicture,${
+                            randomPicExtraWord[Math.floor(Math.random() * 12)]
+                        }`}
                     />
                     <Typography
                         sx={{
@@ -37,6 +55,11 @@ const PetsFamily = ({ family, owner }) => {
                                     height: 56,
                                 }}
                                 alt={member.name}
+                                src={`https://source.unsplash.com/random?profilepicture,${
+                                    randomPicExtraWord[
+                                        Math.floor(Math.random() * 12)
+                                    ]
+                                }`}
                             />
                             <Typography
                                 sx={{

@@ -150,7 +150,7 @@ const Pet = () => {
                             height: 100,
                         }}
                         alt={pet.name}
-                        src={pet.image}
+                        src={"https://source.unsplash.com/random?pet"}
                     />
                     <Typography>{pet.description}</Typography>
                     <Typography variant="body1">

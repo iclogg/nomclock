@@ -238,7 +238,7 @@ const PetNewDesign = () => {
                                             height: 100,
                                         }}
                                         alt={pet.name}
-                                        src={pet.image}
+                                        src="https://source.unsplash.com/random?pet"
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
