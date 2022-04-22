@@ -6,40 +6,18 @@ import { Typography } from "@mui/material";
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
 
-const LatestMealMini = ({ petId }) => {
-    const auth = useContext(AuthContext);
-    const { sendRequest } = useAxios();
-
-    const [meal, setMeal] = useState({});
-
-    const getMeal = async () => {
-        try {
-            const response = await sendRequest(
-                `meals/${petId}/latest`,
-                "get",
-                {},
-                { authorization: "Bearer " + auth.token }
-            );
-
-            if (!response.data.noMeal) {
-                setMeal(response.data.meal);
-            }
-        } catch (err) {
-            setMeal({});
-            console.log(err);
-        }
-    };
-
-    useEffect(() => {
-        getMeal();
-    }, [sendRequest, auth, petId]);
-
+const LatestMealMini = ({ meal }) => {
     return (
-        <Typography variant="body1" sx={{ fontSize: "0.7em" }}>
-            {meal.time ? "Latest Meal" : "No Meal Saved"}{" "}
-            {meal.time && (
+        <Typography
+            variant="body1"
+            sx={{ fontSize: "0.7em", color: "secondary.contrastText" }}
+        >
+            {meal ? "Latest Meal" : "No Meal Saved"}{" "}
+            {meal && (
                 <>
+                    <br />
                     <Typography
+                        variant="span"
                         sx={{
                             color: "secondary.main",
                             fontSize: "2em",
@@ -48,6 +26,7 @@ const LatestMealMini = ({ petId }) => {
                     >
                         {moment(meal.time).format("HH:mm")}
                     </Typography>
+                    <br />
 
                     {moment(meal.time).calendar(null, {
                         sameDay: "[Today]",

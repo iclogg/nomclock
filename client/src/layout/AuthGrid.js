@@ -42,7 +42,12 @@ const AuthGrid = (props) => {
                 backgroundPosition: "center",
             }}
         >
-            <Grid sm={12} pt={10} sx={{ display: { xs: "none", sm: "block" } }}>
+            <Grid
+                item
+                sm={12}
+                pt={10}
+                sx={{ display: { xs: "none", sm: "block" } }}
+            >
                 <Typography
                     align="center"
                     variant="h1"
@@ -53,7 +58,12 @@ const AuthGrid = (props) => {
                         textShadow: "3px 1px 3px #eceff1" /* primary.main */,
                     }}
                 >
-                    <Typography variant="h6">
+                    <Typography
+                        variant="body1"
+                        sx={{
+                            fontSize: "2rem",
+                        }}
+                    >
                         {" "}
                         {locationVariables.headerText}
                     </Typography>{" "}
@@ -61,7 +71,12 @@ const AuthGrid = (props) => {
                 </Typography>
             </Grid>
 
-            <Grid xs={12} pt={10} sx={{ display: { xs: "block", sm: "none" } }}>
+            <Grid
+                item
+                xs={12}
+                pt={10}
+                sx={{ display: { xs: "block", sm: "none" } }}
+            >
                 <Typography
                     align="center"
                     variant="h2"
@@ -72,7 +87,12 @@ const AuthGrid = (props) => {
                         textShadow: "5px 1px 5px #eceff1" /* primary.main */,
                     }}
                 >
-                    <Typography variant="h6">
+                    <Typography
+                        variant="body1"
+                        sx={{
+                            fontSize: "2rem",
+                        }}
+                    >
                         {" "}
                         {locationVariables.headerText}
                     </Typography>{" "}
@@ -99,10 +119,12 @@ const AuthGrid = (props) => {
                                 textDecoration: "none",
                             }}
                         >
+                            <br />
                             <Typography
-                                variant="body1"
+                                variant="span"
                                 sx={{
                                     fontFamily: "Shadows Into Light, cursive",
+                                    fontSize: "1.5rem",
                                     fontWeight: "bold",
                                     color: "#e81e62",
                                     textShadow: "1px 1px 1px",

@@ -23,7 +23,7 @@ const PetsFamily = ({ family, owner }) => {
     return (
         <>
             {owner && (
-                <Grid item sx={4} key={owner._id} textAlign="center">
+                <Grid item key={owner._id} textAlign="center">
                     <Avatar
                         sx={{
                             width: "80px",
@@ -49,7 +49,7 @@ const PetsFamily = ({ family, owner }) => {
             {family &&
                 family.map((member) => {
                     return (
-                        <Grid sx={4} textAlign="center" item key={member._id}>
+                        <Grid textAlign="center" item key={member._id}>
                             <Avatar
                                 sx={{
                                     width: "80px",

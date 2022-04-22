@@ -20,6 +20,8 @@ const randomPicExtraWord = [
 ];
 
 const PetsList = (props) => {
+    console.log("props", props);
+
     if (props.items.length === 0) {
         return (
             <Typography variant="h5" mt={5}>
@@ -128,7 +130,9 @@ const PetsList = (props) => {
                                                 justifyContent: "center",
                                             }}
                                         >
-                                            <LatestMealMini petId={pet._id} />
+                                            <LatestMealMini
+                                                meal={pet.latestMeal}
+                                            />
                                         </Grid>
                                     </Grid>
                                 </Link>

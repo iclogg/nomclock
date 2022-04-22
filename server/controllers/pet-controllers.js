@@ -1,6 +1,7 @@
 const HttpError = require("../models/http-error");
 const Pet = require("../models/pet");
 const User = require("../models/user");
+const Meal = require("../models/meal");
 const mongoose = require("mongoose");
 
 /* READ */
@@ -29,6 +30,8 @@ const getPetsByOwner = async (req, res, next) => {
 
     let pets;
     let owner;
+
+    // Finding the usesrs pets
     try {
         owner = await User.findById(ownerId, "-password").populate("pets");
     } catch (err) {
@@ -44,6 +47,27 @@ const getPetsByOwner = async (req, res, next) => {
         });
     } else {
         pets = owner.pets.map((pet) => pet.toObject({ getters: true }));
+
+        // Attaching the latest meal of the pet
+        for (let i = 0; i < pets.length; i++) {
+            let meal;
+
+            try {
+                meal = await Meal.findOne({ pet: pets[i]._id }).sort({
+                    time: "-1",
+                });
+            } catch (err) {
+                console.log(err);
+
+                const error = new HttpError(
+                    "Something went wrong when checking for meals.",
+                    500
+                );
+                return next(error);
+            }
+
+            pets[i].latestMeal = meal;
+        }
 
         res.json({ pets });
     }

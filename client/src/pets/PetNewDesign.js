@@ -187,8 +187,12 @@ const PetNewDesign = () => {
                     onChange={handleChange}
                     aria-label="account tabs"
                     textColor={"secondary"}
-                    indicatorColor="transparent"
                     variant="fullWidth"
+                    TabIndicatorProps={{
+                        style: {
+                            backgroundColor: "transparent",
+                        },
+                    }}
                 >
                     <Tab label="Meals" {...a11yProps(0)} sx={checkActive(0)} />
                     <Tab label="about" {...a11yProps(1)} sx={checkActive(1)} />

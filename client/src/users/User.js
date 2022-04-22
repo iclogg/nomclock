@@ -29,6 +29,7 @@ const User = () => {
                         {},
                         { authorization: "Bearer " + auth.token }
                     );
+                    console.log(response);
 
                     setPets([...response.data.pets]);
                 } catch (err) {}
@@ -55,12 +56,16 @@ const User = () => {
 
                 if (!response.data.noFamily) {
                     setPetFriends([...response.data.pets]);
+                } else {
+                    setPetFriends(["noFamily"]);
                 }
             } catch (err) {}
         };
 
         getPetFriends();
     }, [auth, sendRequest]);
+
+    // Getting
 
     // TAB LOGIC
     const [tabValue, setTabValue] = useState(0);
@@ -124,8 +129,12 @@ const User = () => {
                     onChange={handleChange}
                     aria-label="account tabs"
                     textColor={"secondary"}
-                    indicatorColor="transparent"
                     variant="fullWidth"
+                    TabIndicatorProps={{
+                        style: {
+                            backgroundColor: "transparent",
+                        },
+                    }}
                 >
                     <Tab label="Pets" {...a11yProps(0)} sx={checkActive(0)} />
                     <Tab
@@ -149,17 +158,19 @@ const User = () => {
                             />
                         )}
 
-                        {!isLoading && petFriends && (
-                            <>
-                                <Typography variant="h5" mt={3}>
-                                    Your Extended Family
-                                </Typography>
-                                <PetsList
-                                    setTabValue={setTabValue}
-                                    items={pets}
-                                />
-                            </>
-                        )}
+                        {!isLoading &&
+                            petFriends &&
+                            petFriends[0] !== "noFamily" && (
+                                <>
+                                    <Typography variant="h5" mt={3}>
+                                        Your Extended Family
+                                    </Typography>
+                                    <PetsList
+                                        setTabValue={setTabValue}
+                                        items={petFriends}
+                                    />
+                                </>
+                            )}
                     </TabPanel>
                     <TabPanel value={tabValue} index={1}>
                         <Settings />

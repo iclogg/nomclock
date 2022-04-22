@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
 const Pet = require("../models/pet");
+const Meal = require("../models/meal");
 
 /* TODO check that all status codes are correct after copy pasting */
 
@@ -67,28 +68,41 @@ const login = async (req, res, next) => {
 const getUserFamilies = async (req, res, next) => {
     userId = req.userData.userId;
     let pets;
-
+    // Finding all the pets where the user is part of the family
     try {
         pets = await Pet.find({ family: userId });
     } catch (err) {
-        const error = new HttpError(
-            "Something went wrong. User not deleted",
-            500
-        );
+        const error = new HttpError("Something went wrong.", 500);
         return next(error);
     }
 
-    console.log("user families", pets);
-
     if (!pets || pets.length === 0) {
-        console.log("woop");
-
         res.json({
             message: "No extended pet family found.",
             noFamily: true,
         });
     } else {
         pets = pets.map((pet) => pet.toObject({ getters: true }));
+
+        // Attaching the latest meal of the pet
+        for (let i = 0; i < pets.length; i++) {
+            let meal;
+
+            try {
+                meal = await Meal.findOne({ pet: pets[i]._id }).sort({
+                    time: "-1",
+                });
+            } catch (err) {
+                const error = new HttpError(
+                    "Something went wrong when checking for meals.",
+                    500
+                );
+                return next(error);
+            }
+
+            pets[i].latestMeal = meal;
+        }
+
         res.json({ pets });
     }
 };
