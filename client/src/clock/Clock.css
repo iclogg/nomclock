@@ -12,10 +12,10 @@
     height: 20rem;
     position: relative;
     padding: 2.3rem;
-    border: 5px solid black; /*  border around clock #babdbe*/
+    border: 5px solid black; /*  border around clock */
     border-radius: 50%;
     margin: 50px auto;
-    background-color: #ffefee;
+    background-color: white; /* Backgroundcolor numbers and hour lines. OBS! this value is overridden and set dynamically by the global theme in the clock component.*/
 }
 
 .outer-clock-face {
@@ -39,7 +39,7 @@
     position: absolute;
     width: 5px;
     height: 100%;
-    background: black; /* lines for hours #bdbdcb */
+    background: black; /* lines for hours */
     z-index: 0;
     left: 49%;
 }
@@ -52,7 +52,7 @@
 /* Styles and posistions for Numbers */
 .marking > div {
     position: absolute;
-    color: black; /* numbers color #bdbdcb; */
+    color: black; /* numbers color ; */
     width: 1rem;
     text-align: center;
     font-size: 1.1rem;
@@ -67,16 +67,6 @@
     bottom: -31px;
     right: -6px;
 }
-
-/* .marking > div.pm {
-    top: -27px;
-    left: -12px;
-}
-
-.marking > div.am {
-    bottom: -27px;
-    right: -10px;
-} */
 
 /* Positions Numbers quaterday markings horizontal */
 .outer-clock-face .marking.marking-horizontal {
@@ -192,7 +182,7 @@
     height: 80%;
     border-radius: 100%;
     z-index: 1;
-    border: 30px solid #ffefee;
+    border: 30px solid white; /* Backgroundcolor inside hourlines and around meals disk. OBS! this value is overridden and set dynamically by the global theme in the clock component. */
 }
 
 /* The inner circle of the meals disk */
@@ -206,7 +196,7 @@
     border-radius: 18px;
     margin-left: -9px;
     margin-top: -6px;
-    background: #e81e62; /* center of center circle e81e62 */
+    background: white; /* center of center circle. OBS! not updated with global theme */
     border: black solid 3px; /* border of center circle */
     z-index: 11;
 }
@@ -215,7 +205,7 @@
 .time {
     right: 50%;
     height: 3px;
-    width: 60%;
+    width: 60%; /* The length of the pointer */
     z-index: 10;
     background: black;
     position: absolute;

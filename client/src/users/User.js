@@ -63,7 +63,7 @@ const User = () => {
         };
 
         getPetFriends();
-    }, [auth, sendRequest]);
+    }, [auth.userId]);
 
     // Getting
 

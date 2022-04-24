@@ -4,6 +4,7 @@ import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import Tooltip from "@mui/material/Tooltip";
 
 import "./Clock.css";
+import { theme } from "../App";
 
 import useMeals from "../utils/meal-hooks";
 
@@ -23,16 +24,23 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
     }, []);
 
     // Colors for meals-disk
-    const pink = "#e81e62"; //#e81e62 #ff608f
-    const grey = "#ffefee";
+    const indicatorColor = theme.palette.secondary.main;
+    const clockBackgroundColor = theme.palette.primary.light;
+
+    const styleBackgroundColor = {
+        clock: { backgroundColor: clockBackgroundColor },
+        disk: {
+            borderColor: clockBackgroundColor,
+        },
+    };
 
     // Calculate css for indicator lines on meals-disk for how many meals left in the day
     const getMealsLeftIndicator = (noMeals) => {
         if (noMeals) {
             return `
-                ${grey} 0deg,
-                ${pink} 1deg 2deg,
-                ${grey} 3deg,
+                ${clockBackgroundColor} 0deg,
+                ${indicatorColor} 1deg 2deg,
+                ${clockBackgroundColor} 3deg,
                 
             `;
         }
@@ -45,10 +53,18 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
 
         for (let i = 1; i <= nLines; i++) {
             returnStr += `
-                ${grey} ${(meals.length / maxMeal) * 360 + degEach * i}deg,
-                ${pink} ${(meals.length / maxMeal) * 360 + degEach * i + 1}deg,
-                ${pink} ${(meals.length / maxMeal) * 360 + degEach * i + 2}deg,
-                ${grey} ${(meals.length / maxMeal) * 360 + degEach * i + 3}deg,
+                ${clockBackgroundColor} ${
+                (meals.length / maxMeal) * 360 + degEach * i
+            }deg,
+                ${indicatorColor} ${
+                (meals.length / maxMeal) * 360 + degEach * i + 1
+            }deg,
+                ${indicatorColor} ${
+                (meals.length / maxMeal) * 360 + degEach * i + 2
+            }deg,
+                ${clockBackgroundColor} ${
+                (meals.length / maxMeal) * 360 + degEach * i + 3
+            }deg,
                 `;
         }
         return returnStr;
@@ -80,15 +96,21 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
                 360
             }deg)`,
         },
-        // Translate amount of eaten meals and meals left into color segments on the meals-disk. First checks if any meals at all. Fills in Pink for amount of eaten. Then uses getMealsLeftIndicator to get segmented section.
+        // Translate amount of eaten meals and meals left into color segments on the meals-disk. First checks if any meals at all. Fills in indicatorColor for amount of eaten. Then uses getMealsLeftIndicator to get segmented section.
         disk: {
             background: `conic-gradient(
                 from 180deg,
-                ${meals.length ? `${pink} 0deg,` : getMealsLeftIndicator(true)}
-                ${pink} ${(meals.length / maxMeal) * 360}deg,
-                ${grey} ${(meals.length / maxMeal) * 360 + 1}deg,
+                ${
+                    meals.length
+                        ? `${indicatorColor} 0deg,`
+                        : getMealsLeftIndicator(true)
+                }
+                ${indicatorColor} ${(meals.length / maxMeal) * 360}deg,
+                ${clockBackgroundColor} ${
+                (meals.length / maxMeal) * 360 + 1
+            }deg,
                 ${getMealsLeftIndicator()}
-                ${grey} 360deg              
+                ${clockBackgroundColor} 360deg              
                 )`,
         },
     };
@@ -113,7 +135,8 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
                 <LunchDiningIcon
                     className="clockburger"
                     id={mealHour._id}
-                    style={{ fontSize: "small", color: "#e81e62" }}
+                    style={{ fontSize: "medium" }}
+                    color="secondary"
                 />
             </Tooltip>
         ) : (
@@ -131,10 +154,16 @@ const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
 
     return (
         <div className="clockContainer">
-            <div className="clock">
+            <div className="clock" style={styleBackgroundColor.clock}>
                 <div className="outer-clock-face">
                     {/* Meals-Disk and Current Time */}
-                    <div style={trackingStyle.disk} className="meals-disk">
+                    <div
+                        style={{
+                            ...trackingStyle.disk,
+                            ...styleBackgroundColor.disk,
+                        }}
+                        className="meals-disk"
+                    >
                         <div
                             style={trackingStyle.minutesInDay}
                             className="time "

@@ -81,6 +81,8 @@ const theme = createTheme({
     },
 });
 
+export { theme };
+
 const App = () => {
     const { token, userId, login, logout, authLoading } = useAuth();
 
