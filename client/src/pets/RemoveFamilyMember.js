@@ -92,7 +92,13 @@ export const RemoveFamilyMember = ({ pet, petUpdateHandler }) => {
                 )}
             </FormControl>
 
-            <Button type="submit" variant="contained" color="secondary">
+            <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                disabled={!values.memberId}
+            >
+                {" "}
                 Remove Family Member
             </Button>
         </Form>

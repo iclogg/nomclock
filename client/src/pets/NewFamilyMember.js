@@ -66,7 +66,12 @@ const NewFamilyMember = ({ petUpdateHandler }) => {
                 type="email"
                 error={inputErrors.email}
             />
-            <Button type="submit" variant="contained" color="secondary">
+            <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                disabled={!values.email || !!inputErrors.email}
+            >
                 Add Family Member
             </Button>
         </Form>
