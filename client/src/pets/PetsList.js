@@ -34,8 +34,8 @@ const PetsList = (props) => {
                         <Button
                             variant="contained"
                             size="large"
-                            onClick={() => {
-                                props.setTabValue(2);
+                            onClick={(e) => {
+                                props.setTabValue(e, 2);
                             }}
                             sx={{
                                 textDecoration: "none",

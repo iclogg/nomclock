@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Box, Tabs, Tab, Grid, Typography } from "@mui/material";
-import { theme } from "../utils/mui-theme-customization";
+import { Typography } from "@mui/material";
 
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
@@ -66,119 +65,49 @@ const User = () => {
         getPetFriends();
     }, [auth.userId]);
 
-    // TAB LOGIC
-    const [tabValue, setTabValue] = useState(0);
-
-    function TabPanel(props) {
-        const { children, value, index } = props;
-
+    // Component PetsPanel created inorder to pass the setTabValue prop recived by the 3rd div expected by the maingrid to the PetList component.
+    const PetsPanel = (props) => {
         return (
-            <div
-                role="tabpanel"
-                hidden={value !== index}
-                id={`simple-tabpanel-${index}`}
-                aria-labelledby={`simple-tab-${index}`}
-            >
-                {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+            <div>
+                {!isLoading && pets && (
+                    <PetsList
+                        setTabValue={props.handlechange}
+                        items={pets}
+                        ownPets={true}
+                    />
+                )}
+                {!isLoading && petFriends && petFriends[0] !== "noFamily" && (
+                    <>
+                        <Typography variant="h5" mt={3}>
+                            Your Extended Family
+                        </Typography>
+                        <PetsList
+                            setTabValue={props.handlechange}
+                            items={petFriends}
+                        />
+                    </>
+                )}
             </div>
         );
-    }
-
-    const handleChange = (event, newValue) => {
-        setTabValue(newValue);
-    };
-    function a11yProps(index) {
-        return {
-            id: `simple-tab-${index}`,
-            "aria-controls": `simple-tabpanel-${index}`,
-        };
-    }
-
-    // Tabs Border Styling
-    const lineStyle = `solid 2px ${theme.palette.secondary.main}`;
-    const transitionStyle = "border 0.1s linear";
-
-    const active = {
-        borderLeft: lineStyle,
-        borderTop: lineStyle,
-        borderRight: lineStyle,
-        transition: transitionStyle,
-    };
-
-    const inactive = {
-        borderBottom: lineStyle,
-        transition: transitionStyle,
-    };
-
-    const checkActive = (num) => (tabValue === num ? active : inactive);
-
-    const contentBorderStyle = {
-        borderRight: lineStyle,
-        borderLeft: lineStyle,
-        borderBottom: lineStyle,
     };
 
     return (
         <MainGrid>
-            {isLoading && <Loading />}
-            {error && <Error message={error} onClick={clearError} />}
-            <Grid item xs={10} mt={3}>
-                <Tabs
-                    value={tabValue}
-                    onChange={handleChange}
-                    aria-label="account tabs"
-                    textColor={"secondary"}
-                    variant="fullWidth"
-                    TabIndicatorProps={{
-                        style: {
-                            backgroundColor: "transparent",
-                        },
-                    }}
-                >
-                    <Tab label="Pets" {...a11yProps(0)} sx={checkActive(0)} />
-                    <Tab
-                        label="Account"
-                        {...a11yProps(1)}
-                        sx={checkActive(1)}
-                    />
-                    <Tab
-                        label="Add Pet"
-                        {...a11yProps(2)}
-                        sx={checkActive(2)}
-                    />
-                </Tabs>
-                <div style={contentBorderStyle}>
-                    <TabPanel value={tabValue} index={0}>
-                        {!isLoading && pets && (
-                            <PetsList
-                                setTabValue={setTabValue}
-                                items={pets}
-                                ownPets={true}
-                            />
-                        )}
+            {/* Error and Loading Components*/}
+            <div>
+                {" "}
+                {isLoading && <Loading />}
+                {error && <Error message={error} onClick={clearError} />}
+            </div>
 
-                        {!isLoading &&
-                            petFriends &&
-                            petFriends[0] !== "noFamily" && (
-                                <>
-                                    <Typography variant="h5" mt={3}>
-                                        Your Extended Family
-                                    </Typography>
-                                    <PetsList
-                                        setTabValue={setTabValue}
-                                        items={petFriends}
-                                    />
-                                </>
-                            )}
-                    </TabPanel>
-                    <TabPanel value={tabValue} index={1}>
-                        <Settings />
-                    </TabPanel>
-                    <TabPanel value={tabValue} index={2}>
-                        <NewPet />
-                    </TabPanel>
-                </div>
-            </Grid>
+            {/* PETS PANEL */}
+            <PetsPanel tablabel="Pets" />
+
+            {/* ACCOUNT PANEL */}
+            <Settings tablabel="account" />
+
+            {/* NEW PET PANEL */}
+            <NewPet tablabel="add pet" />
         </MainGrid>
     );
 };

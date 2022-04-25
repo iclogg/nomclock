@@ -2,7 +2,6 @@ import { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Typography, Paper, Button, Box } from "@mui/material";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 import NewFamilyMember from "../pets/NewFamilyMember";
 import RemoveFamilyMember from "../pets/RemoveFamilyMember";
