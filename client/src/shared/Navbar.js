@@ -38,7 +38,7 @@ const NavBar = (props) => {
                         fontFamily: "Shadows Into Light, cursive",
                         fontSize: "40px",
                         fontWeight: "bold",
-                        color: "secondary.main",
+                        color: "secondary.dark",
                         textShadow: "5px 1px 5px white",
                     }}
                 >

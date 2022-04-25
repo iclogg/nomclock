@@ -54,7 +54,7 @@ const AuthGrid = (props) => {
                     sx={{
                         fontFamily: "Shadows Into Light, cursive",
                         fontWeight: "bold",
-                        color: "secondary.main",
+                        color: "secondary.dark",
                         textShadow: "3px 1px 3px #eceff1" /* primary.main */,
                     }}
                 >
@@ -83,7 +83,7 @@ const AuthGrid = (props) => {
                     sx={{
                         fontFamily: "Shadows Into Light, cursive",
                         fontWeight: "bold",
-                        color: "secondary.main",
+                        color: "secondary.dark",
                         textShadow: "5px 1px 5px #eceff1" /* primary.main */,
                     }}
                 >
@@ -126,7 +126,7 @@ const AuthGrid = (props) => {
                                     fontFamily: "Shadows Into Light, cursive",
                                     fontSize: "1.5rem",
                                     fontWeight: "bold",
-                                    color: "secondary.main",
+                                    color: "secondary.dark",
                                     textShadow: "1px 1px 1px",
                                 }}
                             >

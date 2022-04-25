@@ -10,8 +10,8 @@ const theme = createTheme({
         },
         secondary: {
             light: "#ff5983",
-            main: "#00897b" /* f50057 */,
-            dark: "#bb002f",
+            main: "#ff3d00" /* f50057 */,
+            dark: "#212121",
             contrastText: "#000",
         },
     },
@@ -28,6 +28,9 @@ const theme = createTheme({
                 root: {
                     // Fixing verical placing of text caused by font.
                     paddingBottom: "0px",
+                    "&:hover": {
+                        color: "#ff3d00",
+                    },
                 },
             },
         },
