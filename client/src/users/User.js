@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { Box, Tabs, Tab, Grid, Typography } from "@mui/material";
+import { theme } from "../utils/mui-theme-customization";
 
 import Loading from "../shared/Loading";
 import Error from "../shared/Error";
@@ -65,8 +66,6 @@ const User = () => {
         getPetFriends();
     }, [auth.userId]);
 
-    // Getting
-
     // TAB LOGIC
     const [tabValue, setTabValue] = useState(0);
 
@@ -96,7 +95,7 @@ const User = () => {
     }
 
     // Tabs Border Styling
-    const lineStyle = "solid 2px #ff608f";
+    const lineStyle = `solid 2px ${theme.palette.secondary.main}`;
     const transitionStyle = "border 0.1s linear";
 
     const active = {

@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 
 import { AppBar, Box, Typography, Toolbar, Link } from "@mui/material";
 
+import { theme } from "../utils/mui-theme-customization";
+
 import { NavLink as RouterLink } from "react-router-dom";
 
 import Logout from "../users/Logout";
@@ -11,8 +13,6 @@ import { AuthContext } from "../utils/auth-context";
 
 const pages = [
     { auth: true, text: "Home", url: "/user" },
-    /*     { auth: true, text: "Add Pet", url: "/pets/new" },
-     */
     { auth: false, text: "Go to Signup", url: "/user/new" },
     { auth: false, text: "Go to Login", url: "/user/login" },
 ];
@@ -38,7 +38,7 @@ const NavBar = (props) => {
                         fontFamily: "Shadows Into Light, cursive",
                         fontSize: "40px",
                         fontWeight: "bold",
-                        color: "#e81e62",
+                        color: "secondary.main",
                         textShadow: "5px 1px 5px white",
                     }}
                 >
@@ -79,7 +79,7 @@ const NavBar = (props) => {
                                     key={page.url}
                                     activeStyle={{
                                         textDecoration: "none",
-                                        color: "#e81e62",
+                                        color: "secondary.main",
                                         textShadow: "1px 1px 1px #babdbe",
                                     }}
                                 >

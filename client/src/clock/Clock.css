@@ -196,7 +196,7 @@
     border-radius: 18px;
     margin-left: -9px;
     margin-top: -6px;
-    background: white; /* center of center circle. OBS! not updated with global theme */
+    background: white; /* center of center circle. primary.light OBS! not updated with global theme */
     border: black solid 3px; /* border of center circle */
     z-index: 11;
 }

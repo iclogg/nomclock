@@ -1,14 +1,17 @@
 import { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { theme } from "../utils/mui-theme-customization";
 
 import {
     Typography,
-    Container,
     Box,
     Button,
     Modal,
     Grid,
+    Tabs,
+    Tab,
     Avatar,
+    Paper,
 } from "@mui/material";
 
 import { useParams } from "react-router-dom";
@@ -19,6 +22,7 @@ import PageNotFound from "../shared/PageNotFound";
 import UpdatePet from "../pets/UpdatePet";
 import DailyMeals from "../meals/DailyMeals";
 import PetsFamily from "../pets/PetsFamily";
+import MainGrid from "../layout/MainGrid";
 
 import useAxios from "../utils/axios-hook";
 import { AuthContext } from "../utils/auth-context";
@@ -35,7 +39,7 @@ const ModalStyle = {
     p: 4,
 };
 
-const Pet = () => {
+const PetNewDesign = () => {
     const auth = useContext(AuthContext);
     const history = useHistory();
 
@@ -44,11 +48,9 @@ const Pet = () => {
     const { petId } = useParams();
     const [pet, setPet] = useState({});
 
-    const [isUpdating, setIsUpdating] = useState(false);
-
     //Delete Modal
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpenDeleteModal = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const petUpdateHandler = (obj) => {
@@ -92,16 +94,63 @@ const Pet = () => {
         }
     };
 
-    const toggleSetIsUpdating = () => {
-        setIsUpdating(!isUpdating);
+    // TAB LOGIC
+    const [tabValue, setTabValue] = useState(0);
+
+    function TabPanel(props) {
+        const { children, value, index } = props;
+
+        return (
+            <div
+                role="tabpanel"
+                hidden={value !== index}
+                id={`simple-tabpanel-${index}`}
+                aria-labelledby={`simple-tab-${index}`}
+            >
+                {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+            </div>
+        );
+    }
+
+    const handleChange = (event, newValue) => {
+        setTabValue(newValue);
+    };
+    function a11yProps(index) {
+        return {
+            id: `simple-tab-${index}`,
+            "aria-controls": `simple-tabpanel-${index}`,
+        };
+    }
+
+    // Tabs Border Styling
+    const lineStyle = `solid 2px ${theme.palette.secondary.main}`;
+    const transitionStyle = "border 0.1s linear";
+
+    const active = {
+        borderLeft: lineStyle,
+        borderTop: lineStyle,
+        borderRight: lineStyle,
+        transition: transitionStyle,
+    };
+
+    const inactive = {
+        borderBottom: lineStyle,
+        transition: transitionStyle,
+    };
+
+    const checkActive = (num) => (tabValue === num ? active : inactive);
+
+    const contentBorderStyle = {
+        borderRight: lineStyle,
+        borderLeft: lineStyle,
+        borderBottom: lineStyle,
     };
 
     return (
-        <Container>
+        <MainGrid>
             {isLoading && <Loading />}
             {error && <Error message={error} onClick={clearError} />}
             {!pet._id && !isLoading && <PageNotFound />}
-
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -133,62 +182,134 @@ const Pet = () => {
                 </Box>
             </Modal>
 
-            {pet && isUpdating && (
-                <UpdatePet
-                    toggleSetIsUpdating={toggleSetIsUpdating}
-                    petUpdateHandler={petUpdateHandler}
-                    pet={pet}
-                />
-            )}
-
-            {pet.name && !isLoading && !isUpdating && (
-                <Box sx={{ textAlign: "center" }}>
-                    <Typography variant="h1">{pet.name}'s own page</Typography>
-                    <Avatar
-                        sx={{
-                            width: 100,
-                            height: 100,
-                        }}
-                        alt={pet.name}
-                        src={"https://source.unsplash.com/random?pet"}
+            <Grid item xs={10} mt={3} mb={3}>
+                <Tabs
+                    value={tabValue}
+                    onChange={handleChange}
+                    aria-label="account tabs"
+                    textColor={"secondary"}
+                    variant="fullWidth"
+                    TabIndicatorProps={{
+                        style: {
+                            backgroundColor: "transparent",
+                        },
+                    }}
+                >
+                    <Tab label="Meals" {...a11yProps(0)} sx={checkActive(0)} />
+                    <Tab label="about" {...a11yProps(1)} sx={checkActive(1)} />
+                    <Tab
+                        label="Update Pet"
+                        {...a11yProps(2)}
+                        sx={checkActive(2)}
                     />
-                    <Typography>{pet.description}</Typography>
-                    <Typography variant="body1">
-                        {pet.name} is allowed {pet.maxMeals} meals each day.
-                    </Typography>
-                    <Button color="secondary" onClick={handleOpen}>
-                        Remove Pet
-                    </Button>
-                    <Button onClick={toggleSetIsUpdating} color="secondary">
-                        Update Pet
-                    </Button>
-                    <Grid
-                        container
-                        sx={{
-                            justifyContent: "center",
-                        }}
-                    >
-                        <Grid item xs={1}>
-                            {" "}
-                            <Typography
-                                sx={{
-                                    textTransform: "uppercase",
-                                    color: "secondary.main",
-                                    mt: "20px",
-                                }}
+                </Tabs>
+                <div style={contentBorderStyle}>
+                    {/* MEALS PANEL */}
+                    <TabPanel value={tabValue} index={0}>
+                        {pet.name && !isLoading && (
+                            <Grid container>
+                                <Grid item xs={12}>
+                                    <Typography variant="h4">
+                                        {pet.name}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    {" "}
+                                </Grid>
+
+                                <Typography variant="body1">
+                                    {pet.name} is allowed {pet.maxMeals} meals
+                                    each day.
+                                </Typography>
+
+                                <DailyMeals maxMeals={pet.maxMeals} />
+                            </Grid>
+                        )}
+                    </TabPanel>
+
+                    {/* ABOUT PANEL */}
+                    <TabPanel value={tabValue} index={1}>
+                        {pet.name && !isLoading && (
+                            <Grid
+                                container
+                                spacing={3}
+                                justifyContent="space-evenly"
+                                direction="row-reverse"
                             >
-                                Family:{" "}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs="auto">
-                            <PetsFamily family={pet.family} owner={pet.owner} />
-                        </Grid>
-                    </Grid>
-                    <DailyMeals maxMeals={pet.maxMeals} />
-                </Box>
-            )}
-        </Container>
+                                <Grid item xs={12}>
+                                    <Typography variant="h4">
+                                        {pet.name}
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item mt={1} xs="auto">
+                                    {" "}
+                                    <Avatar
+                                        sx={{
+                                            width: 300,
+                                            height: 300,
+                                            border: "5px solid black",
+                                        }}
+                                        alt={pet.name}
+                                        src="https://source.unsplash.com/random?pet"
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12} md={6}>
+                                    {" "}
+                                    <Paper>
+                                        <Grid container m={1} spacing={2}>
+                                            <Grid item xs={10}>
+                                                <Typography variant="h5">
+                                                    About the Darling:
+                                                </Typography>
+                                                <Typography
+                                                    variant="body1"
+                                                    m={3}
+                                                >
+                                                    {pet.description}
+                                                </Typography>
+                                            </Grid>
+
+                                            <Grid
+                                                item
+                                                container
+                                                xs={10}
+                                                container
+                                                spacing={2}
+                                            >
+                                                <Grid item xs={12}>
+                                                    {" "}
+                                                    <Typography variant="h5">
+                                                        Family:{" "}
+                                                    </Typography>
+                                                </Grid>
+                                                <PetsFamily
+                                                    family={pet.family}
+                                                    owner={pet.owner}
+                                                />
+                                            </Grid>
+                                        </Grid>
+                                    </Paper>
+                                </Grid>
+                            </Grid>
+                        )}
+                    </TabPanel>
+                    {/* UPDATE PANEL */}
+
+                    <TabPanel value={tabValue} index={2}>
+                        {pet.name && (
+                            <UpdatePet
+                                petUpdateHandler={petUpdateHandler}
+                                handleOpenDeleteModal={handleOpenDeleteModal}
+                                pet={pet}
+                            />
+                        )}
+                    </TabPanel>
+                </div>
+            </Grid>
+        </MainGrid>
     );
 };
 
-export default Pet;
+export default PetNewDesign;

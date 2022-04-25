@@ -126,7 +126,7 @@ const AuthGrid = (props) => {
                                     fontFamily: "Shadows Into Light, cursive",
                                     fontSize: "1.5rem",
                                     fontWeight: "bold",
-                                    color: "#e81e62",
+                                    color: "secondary.main",
                                     textShadow: "1px 1px 1px",
                                 }}
                             >

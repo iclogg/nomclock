@@ -1,10 +1,12 @@
 import React from "react";
 import { CssBaseline } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "./utils/mui-theme-customization";
 
 /* To support time pickers */
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DateAdapter from "@mui/lab/AdapterMoment";
+//
 
 import {
     BrowserRouter as Router,
@@ -13,75 +15,14 @@ import {
     Redirect,
 } from "react-router-dom";
 
-/* import Pet from "./pets/Pet";
- */ import PetNewDesign from "./pets/PetNewDesign";
-/* import NewPet from "./pets/NewPet";
- */
+import Pet from "./pets/Pet";
 import NewUser from "./users/NewUser";
 import User from "./users/User";
 import Navbar from "./shared/Navbar";
 import Login from "./users/Login";
 
-/* import Footer from "./shared/Footer";
- */
 import { AuthContext } from "./utils/auth-context";
 import { useAuth } from "./utils/auth-hook";
-
-const theme = createTheme({
-    palette: {
-        primary: {
-            light: "#ffffff",
-            main: "#eceff1",
-            dark: "#babdbe",
-            contrastText: "#000",
-        },
-        secondary: {
-            light: "#ff5983",
-            main: "#f50057",
-            dark: "#bb002f",
-            contrastText: "#000",
-        },
-    },
-    typography: {
-        fontFamily: `"Josefin Sans", sans-serif`,
-        fontSize: 17,
-        fontWeightLight: 300,
-        fontWeightRegular: 400,
-        fontWeightMedium: 500,
-    },
-    components: {
-        MuiButton: {
-            styleOverrides: {
-                root: {
-                    // Fixing verical placing of text caused by font.
-                    paddingBottom: "0px",
-                },
-            },
-        },
-        MuiPaper: {
-            defaultProps: {
-                elevation: 8,
-            },
-            styleOverrides: {
-                root: {
-                    backgroundColor: "rgba(255, 255, 255, 0.75)",
-                },
-            },
-        },
-        MuiInputBase: {
-            defaultProps: {
-                color: "secondary",
-            },
-        },
-        MuiInputLabel: {
-            defaultProps: {
-                color: "secondary",
-            },
-        },
-    },
-});
-
-export { theme };
 
 const App = () => {
     const { token, userId, login, logout, authLoading } = useAuth();
@@ -95,11 +36,8 @@ const App = () => {
                     <Route path="/user" exact>
                         <User />
                     </Route>
-                    {/* <Route path="/pets/new" exact>
-                        <NewPet />
-                    </Route> */}
                     <Route path="/pets/:petId" exact>
-                        <PetNewDesign />
+                        <Pet />
                     </Route>
                     <Redirect to="/user" />
                 </Switch>
@@ -136,7 +74,6 @@ const App = () => {
                         <Router>
                             <Navbar />
                             <>{routes}</>
-                            {/*  <Footer /> */}
                         </Router>
                     </AuthContext.Provider>
                 </ThemeProvider>
@@ -146,10 +83,3 @@ const App = () => {
 };
 
 export default App;
-
-/*   sx={{
-         minHeight: "calc(100vh - 164px)",
-         pt: "20px",
-          }} */
-/* sx={{ backgroundColor: "lightblue" }}
-                                component="main" */

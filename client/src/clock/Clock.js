@@ -4,7 +4,7 @@ import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import Tooltip from "@mui/material/Tooltip";
 
 import "./Clock.css";
-import { theme } from "../App";
+import { theme } from "../utils/mui-theme-customization";
 
 import useMeals from "../utils/meal-hooks";
 
