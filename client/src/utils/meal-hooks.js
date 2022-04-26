@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
 import { AuthContext } from "../utils/auth-context";
@@ -9,37 +9,40 @@ const useMeals = () => {
     const { sendRequest } = useAxios();
     const { petId } = useParams();
 
-    const getMeals = async (mealsUpdateHandler) => {
-        let preppedMeals;
-        try {
-            const response = await sendRequest(
-                `meals/${petId}`,
-                "get",
-                {},
-                { authorization: "Bearer " + auth.token }
-            );
+    const getMeals = useCallback(
+        async (mealsUpdateHandler) => {
+            let preppedMeals;
+            try {
+                const response = await sendRequest(
+                    `meals/${petId}`,
+                    "get",
+                    {},
+                    { authorization: "Bearer " + auth.token }
+                );
 
-            if (!response.data.noMeal) {
-                preppedMeals = [...response.data.meals].sort((x, y) => {
-                    return new Date(x.time) - new Date(y.time);
-                });
+                if (!response.data.noMeal) {
+                    preppedMeals = [...response.data.meals].sort((x, y) => {
+                        return new Date(x.time) - new Date(y.time);
+                    });
 
-                preppedMeals = preppedMeals.filter((meal) => {
-                    let mealDate = new Date(meal.time);
-                    let today = new Date();
+                    preppedMeals = preppedMeals.filter((meal) => {
+                        let mealDate = new Date(meal.time);
+                        let today = new Date();
 
-                    return (
-                        mealDate.setHours(0, 0, 0, 0) ===
-                        today.setHours(0, 0, 0, 0)
-                    );
-                });
+                        return (
+                            mealDate.setHours(0, 0, 0, 0) ===
+                            today.setHours(0, 0, 0, 0)
+                        );
+                    });
 
-                mealsUpdateHandler(preppedMeals);
+                    mealsUpdateHandler(preppedMeals);
+                }
+            } catch (err) {
+                console.log(err);
             }
-        } catch (err) {
-            console.log(err);
-        }
-    };
+        },
+        [auth.token, petId, sendRequest]
+    );
 
     const addMeal = async (mealsUpdateHandler, time, comment, meals) => {
         let rawTime;

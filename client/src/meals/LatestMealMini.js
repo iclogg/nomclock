@@ -1,10 +1,6 @@
-import { useState, useContext, useEffect } from "react";
 import moment from "moment";
 
 import { Typography } from "@mui/material";
-
-import useAxios from "../utils/axios-hook";
-import { AuthContext } from "../utils/auth-context";
 
 const LatestMealMini = ({ meal }) => {
     return (

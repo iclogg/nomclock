@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import moment from "moment";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import Tooltip from "@mui/material/Tooltip";
@@ -10,18 +9,6 @@ import useMeals from "../utils/meal-hooks";
 
 const Clock = ({ maxMeal, meals, mealsUpdateHandler }) => {
     const { deleteMeal, addMeal } = useMeals();
-
-    /* Keeping track of current time */
-    const [time, setTime] = useState(new Date());
-    useEffect(() => {
-        const intervalID = setInterval(() => {
-            setTime(new Date());
-        }, [1000 * 60]);
-
-        return () => {
-            clearInterval(intervalID);
-        };
-    }, []);
 
     // Colors for meals-disk
     const indicatorColor = theme.palette.secondary.main;

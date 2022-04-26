@@ -189,13 +189,7 @@ const Pet = () => {
                                     </Typography>
                                 </Grid>
 
-                                <Grid
-                                    item
-                                    container
-                                    xs={10}
-                                    container
-                                    spacing={2}
-                                >
+                                <Grid item xs={10} container spacing={2}>
                                     <Grid item xs={12}>
                                         {" "}
                                         <Typography variant="h5">

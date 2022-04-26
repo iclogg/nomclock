@@ -15,7 +15,6 @@ import {
 
 import NewMeal from "./NewMeal";
 import DeleteMeal from "./DeleteMeal";
-/* import LatestMeal from "./LatestMeal"; */
 import Clock from "../clock/Clock";
 
 import useMeals from "../utils/meal-hooks";
@@ -50,7 +49,7 @@ const DailyMeals = (props) => {
 
     useEffect(() => {
         getMeals(mealsUpdateHandler);
-    }, []);
+    }, [getMeals]);
 
     // Fontsize dynamic styling based on screen size for TimeLine
 
@@ -220,6 +219,8 @@ const DailyMeals = (props) => {
                                             </TimelineContent>
                                         </TimelineItem>
                                     );
+                                } else {
+                                    return <></>;
                                 }
                             })}
                     </Timeline>

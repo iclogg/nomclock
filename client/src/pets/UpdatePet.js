@@ -56,7 +56,7 @@ const UpdatePet = (props) => {
     };
 
     // Fix for setting saveBtn status
-    // TODO Check if there is a way to not have the component remount after update and not to have values or handle change run directely on mount. Behavior changed after I refactored to use the tabs to swap between update and pet component.
+    // TODO Check if there is a way to not have the component remount after update and not to have values or handle change run directely on mount. Behavior changed after I refactored to use the tabs to swap between update and pet component. Also gives warning for build as saveBtnStatus is not added as dependency, but if it is added this fix no longer works.
     useEffect(() => {
         if (saveBtnStatus === "initial") {
             setSaveBtnStatus(true);

@@ -26,8 +26,6 @@ const AuthGrid = (props) => {
             ? locationOptions.login
             : locationOptions.signup;
 
-    const logoStyle = {};
-
     return (
         <Grid
             container

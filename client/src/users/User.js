@@ -63,7 +63,7 @@ const User = () => {
         };
 
         getPetFriends();
-    }, [auth.userId]);
+    }, [auth.userId, auth.token, sendRequest]);
 
     // Component PetsPanel created inorder to pass the setTabValue prop recived by the 3rd div expected by the maingrid to the PetList component.
     const PetsPanel = (props) => {

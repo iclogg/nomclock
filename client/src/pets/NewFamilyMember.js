@@ -63,7 +63,6 @@ const NewFamilyMember = ({ petUpdateHandler }) => {
                 label="Email"
                 value={values.email}
                 onChange={handleInputChange}
-                type="email"
                 error={inputErrors.email}
             />
             <Button
