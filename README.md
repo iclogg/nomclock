@@ -2,7 +2,7 @@
 
 Meal-time tracking for pets aimed at households and flat-shares.
 
-## Description
+## Why use Nomclock?
 
 Create account and ad pets and family members and together as a group keep track of when your pet was last fed.
 
@@ -10,4 +10,4 @@ Create account and ad pets and family members and together as a group keep track
 
 ## Getting Started
 
-Just go to nomclock.netlify.app and sign up!
+Just go to https://nomclock.netlify.app and sign up!
